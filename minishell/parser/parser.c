@@ -28,9 +28,7 @@ void	check_for_command(char *line, int size)
 void	parser(void)
 {
 	struct termios term;
-	(void)term;
-	
-	
+
 	// char *buf;
 	// char *line_command;
 

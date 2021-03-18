@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 16:39:49 by fngoc             #+#    #+#             */
-/*   Updated: 2021/02/02 12:55:48 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/03/18 13:55:09 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+
+# define BUFFER_SIZE 16
 
 typedef struct		s_list
 {
@@ -117,5 +119,7 @@ int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 
 int					ft_atoi(const char *str);
+
+int					get_next_line(int fd, char **line);
 
 #endif

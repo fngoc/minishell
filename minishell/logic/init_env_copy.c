@@ -7,7 +7,6 @@ t_list *env_copy(char **env_original)
 	int len;
 	int i;
 	t_list	*head;
-	t_list *ptr;
 
 	head = NULL;
 	i = -1;

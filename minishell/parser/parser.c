@@ -27,13 +27,9 @@ void	check_for_command(char *line, int size)
 
 void	parser(void)
 {
-<<<<<<< HEAD
-//	struct termios term;
-=======
 	int		len;
 	char	str[2000];
 	struct	termios term;
->>>>>>> 0aec69c6d5911bc6e037f703688d191ece71e3a8
 
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);

@@ -10,5 +10,8 @@
 
 void	error(char *str);
 char	*get_path();
+char	**env_copy(char **env_original);
+int		arr_size(char **arr);
+char	*find_env_var(char **env, char *param);
 
 #endif

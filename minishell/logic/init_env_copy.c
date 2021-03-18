@@ -9,19 +9,16 @@ char **env_copy(char **env_original)
 	int i;
 
 	i = 0;
-	len = 0;
-	while (env_original[len])
-	{
-		len++;
-	}
-	env_copy = malloc((sizeof(char) * len) + 1);
-	while (env_copy[i])
+	len = arr_size(env_original);
+
+	env_copy = (char**)malloc((sizeof(char*) * len) + 1);
+	while (i < len)
 	{
 		env_copy[i] = ft_strdup(env_original[i]);
 		i++;
 	}
 
-
+	return (env_copy);
 }
 
 

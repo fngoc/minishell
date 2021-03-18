@@ -6,7 +6,7 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/04 11:50:57 by fngoc             #+#    #+#              #
-#    Updated: 2021/02/02 12:55:52 by fngoc            ###   ########.fr        #
+#    Updated: 2021/03/18 11:06:18 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,20 +40,20 @@ OPTION = -c
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADER)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 bonus: $(OBJ) $(OBJ_BONUS) $(HEADER)
-	ar rc $(NAME) $(OBJ) $(OBJ_BONUS)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJ) $(OBJ_BONUS)
+	@ranlib $(NAME)
 
 %.o: %.c
-	gcc $(FLAG) $(OPTION) $< -o $@
+	@gcc $(FLAG) $(OPTION) $< -o $@
 
 clean:
-	rm -rf $(OBJ) $(OBJ_BONUS)
+	@rm -rf $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all

@@ -8,6 +8,6 @@
 
 void    error(char *str);
 
-void    parser(char **map);
+void    parser(void);
 
 #endif

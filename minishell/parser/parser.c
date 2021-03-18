@@ -27,17 +27,21 @@ void	check_for_command(char *line, int size)
 
 void	parser(void)
 {
-	char *buf;
-	char *line_command;
+	struct termios term;
 
-	buf = malloc(sizeof(char ) + 1);
-	buf[1] = '\0';
-	if (!(line_command = (char *)malloc(sizeof(char) * 1)))
-		error("Alloc error\n");
-	while ((read(0, buf, 1)) != 0 && buf[0] != '\n')
-	{
-		line_command = ft_strjoin(line_command, buf);
-		check_for_command(line_command, ft_strlen(line_command));
-	}
-	printf("Вся линия: %s\n", line_command);
+	
+	
+	// char *buf;
+	// char *line_command;
+
+	// buf = malloc(sizeof(char ) + 1);
+	// buf[1] = '\0';
+	// if (!(line_command = (char *)malloc(sizeof(char) * 1)))
+	// 	error("Alloc error\n");
+	// while ((read(0, buf, 1)) != 0 && buf[0] != '\n')
+	// {
+	// 	line_command = ft_strjoin(line_command, buf);
+	// 	check_for_command(line_command, ft_strlen(line_command));
+	// }
+	// printf("Вся линия: %s\n", line_command);
 }

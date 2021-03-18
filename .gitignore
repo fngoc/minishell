@@ -1,9 +1,7 @@
 CMakeLists.txt
 /cmake-build-debug
-libft/libft.a
 /.idea
 a.out
-minishell
 .vscode/*
 .DS_Store
 libft.a

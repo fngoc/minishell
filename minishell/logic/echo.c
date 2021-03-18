@@ -1,8 +1,9 @@
 #include "logic.h"
 
-//что будет приходить?
-void 	echo(char *str, char n_flag) {
-	if (n_flag == 'n')
+//str - аргумент, который надо напечатать, n flag - перевод строки
+void 	echo(char *str, int n_flag)
+{
+	if (n_flag == 1)
 		printf("%s\n", str);
 	else
 		printf("%s",str);

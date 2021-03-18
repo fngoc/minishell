@@ -11,6 +11,7 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
+	t_list *list;
     ft_putendl_fd("Welcome to Minishell Fngoc and Drarlean!", 1);
 	parser();
 	// char **copy = env_copy(env);

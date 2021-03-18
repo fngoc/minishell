@@ -2,13 +2,13 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
+//env - переменные окружения, param - то, что нужно найти
 char *find_env_var(char **env, char *param)
 {
 	int i;
 	int len;
 	int flag;
-	int j;
-	//comm
+
 	len = arr_size(env);
 	i = -1;
 	flag = 0;
@@ -20,6 +20,5 @@ char *find_env_var(char **env, char *param)
 			break;
 		}
 	}
-
 	return (flag ? env[i]+ft_strlen(param) + 1 : "");
 }

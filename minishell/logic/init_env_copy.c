@@ -2,23 +2,28 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-char **env_copy(char **env_original)
+t_list *env_copy(char **env_original)
 {
-	char **env_copy;
 	int len;
 	int i;
+	t_list	*head;
 
-	i = 0;
+	head = NULL;
+	i = -1;
 	len = arr_size(env_original);
 
-	env_copy = (char**)malloc((sizeof(char*) * len) + 1);
-	while (i < len)
+//	env_copy = (char**)malloc((sizeof(char*) * len) + 1);
+//	while (i < len)
+//	{
+//		env_copy[i] = ft_strdup(env_original[i]);
+//		i++;
+//	}
+	while (++i < len)
 	{
-		env_copy[i] = ft_strdup(env_original[i]);
-		i++;
+		ft_lstadd_back(&head, ft_lstnew(env_original[i]));
 	}
 
-	return (env_copy);
+	return (head);
 }
 
 

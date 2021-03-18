@@ -1,6 +1,6 @@
 #include "logic.h"
 
-char	*get_path()
+char	*pwd()
 {
 	char	*cwd;
 	char	buff[4097];

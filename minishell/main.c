@@ -11,15 +11,14 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-	t_list *list;
+
+	params = malloc(sizeof(g_list));
+
     ft_putendl_fd("Welcome to Minishell Fngoc and Drarlean!", 1);
-	list = env_copy(env);
+	params->env = env_copy(env);
+	printf("%s\n",env_var_param(params->env, "PWD"));
+	cd("..");
+	printf("%s\n",env_var_param(params->env, "PWD"));
 
-	while (list)
-	{
-		printf("%s\n",(char *)list->content);
-		list = list->next;
-	}
-
-    return 0;
+	return 0;
 }

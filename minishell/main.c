@@ -7,14 +7,18 @@
 ** main: запуск программыю
 */
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
-    char **map[10];
-
+	char **map[10];
 //    while (1)
 //    {
 //
 //    }
-    parser((char **) map);
-    return 0;
+//	parser((char **) map);
+
+//	printf("%s\n", get_path());
+
+	execve("/bin/ls", argv, env);
+
+	return 0;
 }

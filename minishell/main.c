@@ -11,7 +11,6 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-<<<<<<< HEAD
 
 	params = malloc(sizeof(g_list));
 
@@ -22,12 +21,11 @@ int main(int argc, char **argv, char **env)
 	printf("%s\n",env_var_param(params->env, "PWD"));
 
 	return 0;
-=======
+
 	t_list *list;
     ft_putendl_fd("Welcome to Minishell Fngoc and Drarlean!", 1);
 	parser();
 	// char **copy = env_copy(env);
 	// printf("%s\n", find_env_var(copy, "OLDPWD"));
     return 0;
->>>>>>> 0aec69c6d5911bc6e037f703688d191ece71e3a8
 }

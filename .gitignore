@@ -6,3 +6,5 @@ a.out
 minishell
 .vscode/*
 .DS_Store
+libft.a
+minishell

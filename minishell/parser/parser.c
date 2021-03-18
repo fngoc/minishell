@@ -29,8 +29,7 @@ void	parser(void)
 {
 	struct termios term;
 
-	
-	
+
 	// char *buf;
 	// char *line_command;
 

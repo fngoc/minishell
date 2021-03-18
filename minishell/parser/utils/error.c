@@ -1,6 +1,6 @@
-#include "../logic/logic.h"
-#include "../parser/parser.h"
-#include "../libft/libft.h"
+#include "../../logic/logic.h"
+#include "../../parser/parser.h"
+#include "../../libft/libft.h"
 
 /*
 ** error: печатает текст ошибки и выходит из программы.

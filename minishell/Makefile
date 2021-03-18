@@ -16,7 +16,9 @@ CLEAN = clean
 FCLEAN = fclean
 
 SRC = main.c \
-	parser/parser.c utils/error.c logic/utils/arr_size.c logic/find_env_variable.c logic/init_env_copy.c
+	parser/parser.c \
+	parser/utils/error.c \
+	parser/utils/ft_putchar.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -42,7 +44,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) 
 	@cd $(LIBFT_DIR) && mv ./libft.a ../
-	@$(CC) $(FLAG) $(SRC) libft.a $(OPTIONOBJ) $(NAME)
+	@$(CC) $(FLAG) $(SRC) libft.a -ltermcap $(OPTIONOBJ) $(NAME)
 	@echo $(GREEN)"Start!"$(WHITE)
 
 $(LIBFT):

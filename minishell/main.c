@@ -3,14 +3,19 @@
 #include "libft/libft.h"
 
 /*
-** main: запуск программыю
+** main: запуск программы
 */
 
 int main(int argc, char **argv, char **env)
 {
-
-
+	(void)argc;
+	(void)argv;
+	(void)env;
     ft_putendl_fd("Welcome to Minishell Fngoc and Drarlean!", 1);
-    parser();
+//    parser();
+//	int		fd = open(*env, O_RDONLY);
+
+
+
     return 0;
 }

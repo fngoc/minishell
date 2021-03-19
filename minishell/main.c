@@ -16,10 +16,10 @@ int main(int argc, char **argv, char **env)
 	parser();
 
 	/* Тестирование */
-	params = malloc(sizeof(g_list));
-	params->env = env_copy(env);
-	printf("%s\n",env_var_param(params->env, "PWD"));
-	cd("..");
-	printf("%s\n",env_var_param(params->env, "PWD"));
+	// params = malloc(sizeof(g_list));
+	// params->env = env_copy(env);
+	// printf("%s\n",env_var_param(params->env, "PWD"));
+	// cd("..");
+	// printf("%s\n",env_var_param(params->env, "PWD"));
     return 0;
 }

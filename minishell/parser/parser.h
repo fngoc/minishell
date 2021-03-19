@@ -7,6 +7,8 @@
 # include <stdlib.h>
 # include <term.h>
 
+#include <fcntl.h> // для open
+
 # include <string.h> // для strcmp, позже удалить
 
 void    parser(void);

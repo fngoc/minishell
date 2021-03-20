@@ -6,21 +6,6 @@
 ** main: запуск программы
 */
 
-void	free_lst_map(t_list **lst)
-{
-	t_list *p;
-	int i = 0;
-	while (*lst)
-	{
-		p = (*lst)->next;
-		free(*lst);
-		*lst = p;
-		i++;
-	}
-	printf("%d\n", i);
-	*lst = NULL;
-}
-
 int main(int argc, char **argv, char **env)
 {
 	(void)argc;

@@ -35,7 +35,7 @@ void set_line(char *str, int fd)
 ** get_line: считываем линию.
 */
 
-void	get_line(int *len, char *str, int fd)
+void	get_line(int *len, char *str, int fd, int *coll_backspace)
 {
 	*len = read(0, str, 100);
 	str[*len] = 0;
@@ -56,6 +56,8 @@ void	get_line(int *len, char *str, int fd)
 		tputs(cursor_left, 1, ft_putchar);
 		tputs(tgetstr("dc", 0), 1, ft_putchar);
 		set_line(str, fd);
+		write(1, str, *len);
+		++*coll_backspace;
 	}
 	else // печать символа
 	{
@@ -74,10 +76,15 @@ int make_file(void)
 
 	if (!(fd = open("minishell_history", O_CREAT, S_IWRITE | S_IREAD)))
 		error("Error when creating a file with the history");
-	if (!(fd = open("minishell_history", O_RDWR)))
+	if (!(fd = open("minishell_history", O_RDWR | O_TRUNC)))
 		error("An error occurred while opening the history file");
 	return (fd);
 }
+
+// void delet_backspace(int fd, int *coll_backspace)
+// {
+	
+// }
 
 /*
 ** parser: запуск парсера.
@@ -88,8 +95,10 @@ void	parser(void)
 	int		fd;
 	int		len;
 	char	str[2000];
+	int		coll_backspace;
 	struct	termios term;
 
+	coll_backspace = 0;
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
@@ -100,13 +109,15 @@ void	parser(void)
 	{
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		get_line(&len, str, fd);
+		get_line(&len, str, fd, &coll_backspace);
 		while (strcmp(str, "\n") && strcmp(str, "\4"))
 		{
-			get_line(&len, str, fd);
+			// delet_backspace(fd, &coll_backspace);
+			get_line(&len, str, fd, &coll_backspace);
 		}
 	}
 	write(1, "\n", 1);
+	printf("coll: %d\n", coll_backspace);
 	term.c_lflag |= ~(ECHO);
 	term.c_lflag |= ~(ICANON);
 }

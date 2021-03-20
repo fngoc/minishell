@@ -1,8 +1,12 @@
-CMakeLists.txt
 minishell/cmake-build-debug/*
 minishell/.idea/*
-a.out
+minishell/.idea/workspace.xml
+minishell/a.out
+minishell/minishell.dSYM/*
+minishell/minishell
+minishell/libft/*.o
+minishell/minishell_history
+minishell/libft.a
+CMakeLists.txt
 .vscode/*
 .DS_Store
-libft.a
-minishell/.idea/workspace.xml

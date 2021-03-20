@@ -63,6 +63,7 @@ fclean: clean
 	@$(DEL) libft.a
 	@$(DEL) $(NAME)
 	@cd $(LIBFT_DIR) && $(MAKEB) $(FCLEAN)
+	@$(DEL) minishell_history
 	@echo $(GREEN)"Everything was cleaned up along with the library."$(WHITE)
 
 run: $(NAME)

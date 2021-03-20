@@ -16,17 +16,9 @@ void cd(char *dir)
 	}
 	else
 	{
-//		params->env = env_list_pos(ptr, "PWD");
-//		free(params->env->content);
-//		params->env->content = change_value_by_key("PWD", pwd());
-//		params->env = env_list_pos(ptr, "OLDPWD");
-//		free(params->env->content);
-//		params->env->content = old_content;
-//		free(old_content);
 		ptr = env_list_pos(params->env, "PWD");
 		free(ptr->content);
 		ptr->content = change_value_by_key("PWD", pwd());
-
 		ptr = env_list_pos(params->env, "OLDPWD");
 		free(ptr->content);
 		ptr->content = old_content;

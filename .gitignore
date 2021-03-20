@@ -1,6 +1,7 @@
 minishell/cmake-build-debug/*
 minishell/.idea/*
 minishell/.idea/workspace.xml
+.idea/workspace.xml
 minishell/a.out
 minishell/minishell.dSYM/*
 minishell/minishell

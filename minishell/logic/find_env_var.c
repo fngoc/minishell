@@ -36,7 +36,9 @@ char *env_var_full_param(t_list *env, char *param)
 		}
 		env = env->next;
 	}
-	return (flag ? env->content : "");
+	if (flag)
+		return (env->content);
+	return ("");
 }
 
 char *change_value_by_key(char *key, char *value)
@@ -58,5 +60,7 @@ t_list *env_list_pos(t_list *env, char *param)
 		}
 		env = env->next;
 	}
-	return (flag ? env : NULL);
+	if (flag)
+		return (env);
+	return (NULL);
 }

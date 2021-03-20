@@ -1,4 +1,4 @@
-.PHONY: all clean bonus fclean re
+.PHONY: all clean bonus fclean re run
 
 NAME = minishell
 
@@ -64,5 +64,8 @@ fclean: clean
 	@$(DEL) $(NAME)
 	@cd $(LIBFT_DIR) && $(MAKEB) $(FCLEAN)
 	@echo $(GREEN)"Everything was cleaned up along with the library."$(WHITE)
+
+run: $(NAME)
+	@./minishell
 
 re: fclean all

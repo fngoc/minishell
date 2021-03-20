@@ -39,25 +39,25 @@ void	get_line(int *len, char *str, int fd)
 {
 	*len = read(0, str, 100);
 	str[*len] = 0;
-	if (!strcmp(str, "\e[A"))
+	if (!strcmp(str, "\e[A")) //стрелочка вверх
 	{
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "previous", 8);
 	}
-	else if (!strcmp(str, "\e[B"))
+	else if (!strcmp(str, "\e[B")) //стрелочка вниз
 	{
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "next", 4);
 	}
-	else if (!strcmp(str, "\177"))
+	else if (!strcmp(str, "\177")) //клавиша backspase
 	{
 		tputs(cursor_left, 1, ft_putchar);
 		tputs(tgetstr("dc", 0), 1, ft_putchar);
 		set_line(str, fd);
 	}
-	else
+	else // печать символа
 	{
 		write(1, str, *len);
 		set_line(str, fd);
@@ -99,6 +99,7 @@ void	parser(void)
 	while (strcmp(str, "\4"))
 	{
 		tputs(save_cursor, 1, &ft_putchar);
+		write(1, "\033[0;35m$minishell: \033[0m", 23);
 		get_line(&len, str, fd);
 		while (strcmp(str, "\n") && strcmp(str, "\4"))
 		{

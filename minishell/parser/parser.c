@@ -27,9 +27,8 @@ void	check_for_command(char *line, int size)
 
 void set_line(char *str, int fd)
 {
-	// write(1, "I AM HERE", 9);
-	write(fd, str, 1); // != (int)ft_strlen(str))
-		// error("Failed to write a string to a file");
+	if (write(fd, str, 1) != (int)ft_strlen(str))
+		error("Failed to write a string to a file");
 }
 
 /*
@@ -45,14 +44,12 @@ void	get_line(int *len, char *str, int fd)
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "previous", 8);
-		set_line(str, fd);
 	}
 	else if (!strcmp(str, "\e[B"))
 	{
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "next", 4);
-		set_line(str, fd);
 	}
 	else if (!strcmp(str, "\177"))
 	{
@@ -77,8 +74,8 @@ int make_file(void)
 
 	if (!(fd = open("minishell_history", O_CREAT, S_IWRITE | S_IREAD)))
 		error("Error when creating a file with the history");
-	if (!(fd = open("minishell_history", O_TRUNC, S_IWRITE | S_IREAD)))
-		error("Error when creating a file with the history");
+	if (!(fd = open("minishell_history", O_RDWR)))
+		error("An error occurred while opening the history file");
 	return (fd);
 }
 
@@ -88,8 +85,8 @@ int make_file(void)
 
 void	parser(void)
 {
-	int		len;
 	int		fd;
+	int		len;
 	char	str[2000];
 	struct	termios term;
 

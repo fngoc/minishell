@@ -14,12 +14,11 @@ void cd(char *dir)
 		printf("no such file or directory %s\n", dir);
 		return;
 	}
-
 	else
-		{
+	{
 		params->env = env_list_pos(ptr, "PWD");
 		params->env->content = change_value_by_key("PWD", pwd());
 		params->env = env_list_pos(ptr, "OLDPWD");
 		params->env->content = old_content;
-		}
+	}
 }

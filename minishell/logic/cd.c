@@ -18,7 +18,7 @@ void cd(char *dir)
 	{
 		ptr = env_list_pos(params->env, "PWD");
 		free(ptr->content);
-		ptr->content = change_value_by_key("PWD", pwd());
+		ptr->content = change_value_by_key("PWD", get_pwd());
 		ptr = env_list_pos(params->env, "OLDPWD");
 		free(ptr->content);
 		ptr->content = old_content;

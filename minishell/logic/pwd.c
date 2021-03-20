@@ -1,10 +1,19 @@
 #include "logic.h"
 
-char	*pwd()
+char	*get_pwd()
 {
 	char	*cwd;
 	char	buff[4097];
 
 	cwd = getcwd(buff, 4096);
 	return cwd;
+}
+
+void 	print_pwd()
+{
+	char	*cwd;
+	char	buff[4097];
+
+	cwd = getcwd(buff, 4096);
+	printf("%s", cwd);
 }

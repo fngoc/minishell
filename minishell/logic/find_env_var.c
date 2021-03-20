@@ -4,6 +4,7 @@
 
 //возвращаем только содержимое переменной
 //env - наша копия листа, param - параметр, который мы ищем
+
 char *env_var_param(t_list *env, char *param)
 {
 	int flag;
@@ -18,7 +19,9 @@ char *env_var_param(t_list *env, char *param)
 		}
 		env = env->next;
 	}
-	return (flag ? env->content+ft_strlen(param) + 1 : "");
+	if (flag)
+		return (env->content+ft_strlen(param) + 1);
+	return ("");
 }
 
 //возвращаем всю строку с переменной

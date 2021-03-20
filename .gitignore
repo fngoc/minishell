@@ -5,3 +5,4 @@ a.out
 .vscode/*
 .DS_Store
 libft.a
+minishell/.idea/workspace.xml

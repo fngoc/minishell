@@ -35,10 +35,12 @@ void set_line(char *str, int fd)
 ** get_line: считываем линию.
 */
 
-void	get_line(int *len, char *str, int fd, int *coll_backspace)
+void	get_line(char *str, int fd, int *coll_backspace)
 {
-	*len = read(0, str, 100);
-	str[*len] = 0;
+	int len;
+
+	len = read(0, str, 100);
+	str[len] = 0;
 	if (!strcmp(str, "\e[A")) //стрелочка вверх
 	{
 		tputs(restore_cursor, 1, ft_putchar);
@@ -56,12 +58,12 @@ void	get_line(int *len, char *str, int fd, int *coll_backspace)
 		tputs(cursor_left, 1, ft_putchar);
 		tputs(tgetstr("dc", 0), 1, ft_putchar);
 		set_line(str, fd);
-		write(1, str, *len);
+		write(1, str, len);
 		++*coll_backspace;
 	}
 	else // печать символа
 	{
-		write(1, str, *len);
+		write(1, str, len);
 		set_line(str, fd);
 	}
 }
@@ -93,7 +95,6 @@ int make_file(void)
 void	parser(void)
 {
 	int		fd;
-	int		len;
 	char	str[2000];
 	int		coll_backspace;
 	struct	termios term;
@@ -109,12 +110,9 @@ void	parser(void)
 	{
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		get_line(&len, str, fd, &coll_backspace);
+		get_line(str, fd, &coll_backspace);
 		while (strcmp(str, "\n") && strcmp(str, "\4"))
-		{
-			// delet_backspace(fd, &coll_backspace);
-			get_line(&len, str, fd, &coll_backspace);
-		}
+			get_line(str, fd, &coll_backspace);
 	}
 	write(1, "\n", 1);
 	printf("coll: %d\n", coll_backspace);

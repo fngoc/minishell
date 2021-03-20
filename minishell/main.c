@@ -12,7 +12,7 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	(void)env;
 
-	ft_putendl_fd("Welcome to Minishell Fngoc and Drarlean!", 1);
+	write(1, "Welcome to Minishell Fngoc and Drarlean!\n", 41);
 	parser();
 
 	/* Тестирование */

@@ -41,8 +41,6 @@ char *env_var_full_param(t_list *env, char *param)
 
 char *change_value_by_key(char *key, char *value)
 {
-	(void)key;
-	(void)value;
 	return (ft_strjoin(key, value));
 }
 

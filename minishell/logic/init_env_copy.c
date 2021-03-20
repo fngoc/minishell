@@ -13,7 +13,7 @@ t_list *env_copy(char **env_original)
 	len = arr_size(env_original);
 	while (++i < len)
 	{
-		ft_lstadd_back(&head, ft_lstnew(env_original[i]));
+		ft_lstadd_back(&head, ft_lstnew(ft_strdup(env_original[i])));
 	}
 
 	return (head);

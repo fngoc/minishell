@@ -17,7 +17,8 @@ FCLEAN = fclean
 
 SRC = main.c \
 	parser/parser.c logic/utils/arr_size.c logic/init_env_copy.c logic/find_env_var.c \
-	parser/utils/error.c logic/cd.c logic/pwd.c parser/utils/ft_putchar.c logic/export.c
+	parser/utils/error.c logic/cd.c logic/pwd.c parser/utils/ft_putchar.c logic/export.c \
+	logic/utils/free_lst.c logic/utils/list_copy.c
 
 OBJ = $(SRC:.c=.o)
 

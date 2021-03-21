@@ -2,11 +2,15 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-void 	print_env(t_list *env)
+void 	print_env()
 {
-	while (env)
+	t_list *tmp;
+
+	tmp = params->env;
+	while (params->env)
 	{
-		printf("%s", (char *)env->content);
-		env = env->next;
+		printf("%s\n", params->env->content);
+		params->env = params->env->next;
 	}
+	params->env = tmp;
 }

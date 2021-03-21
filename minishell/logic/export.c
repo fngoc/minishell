@@ -36,6 +36,7 @@ static void		print_export(t_list *tmp_src, t_list *copy)
 	copy = tmp_src;
 	free_lst_map(&copy);
 }
+
 void 			export()
 {
 	t_list *new;

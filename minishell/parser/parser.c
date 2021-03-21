@@ -82,7 +82,6 @@ void reed_line(int fd)
 		set_line(ft_strjoin(str, "\n"), fd);
 		ft_bzero(str, ft_strlen(str));
 	}
-	printf("line: [%s]\n", str);
 }
 
 /*

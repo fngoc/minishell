@@ -21,8 +21,11 @@ t_list			*env_list_pos(t_list *env, char *param);
 void 			echo(char *str, int n_flag);
 void			cd(char *dir);
 void			export();
+void			sort_export(t_list *new);
+void			free_lst_map(t_list **lst);
+t_list			*list_copy();
 
-typedef struct	list
+		typedef struct	list
 {
 	t_list *env;
 }				g_list;

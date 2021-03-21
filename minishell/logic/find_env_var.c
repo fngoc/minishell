@@ -12,7 +12,8 @@ char *env_var_param(t_list *env, char *param)
 	flag = 0;
 	while (env)
 	{
-		if(ft_strncmp(env->content, param, ft_strlen(param)) == 0)
+		if(ft_strncmp(env->content, param, ft_strlen(param)) == 0
+		&& ((int)(env->content[ft_strlen(param)])) == '=')
 		{
 			flag = 1;
 			break;
@@ -20,7 +21,7 @@ char *env_var_param(t_list *env, char *param)
 		env = env->next;
 	}
 	if (flag)
-		return (env->content+ft_strlen(param) + 1);
+		return (env->content + ft_strlen(param) + 1);
 	return ("");
 }
 
@@ -46,7 +47,13 @@ char *env_var_full_param(t_list *env, char *param)
 
 char *change_value_by_key(char *key, char *value)
 {
-	return (ft_strjoin(key, value));
+	char *str;
+	char *str_tmp;
+
+	str_tmp = ft_strjoin(key,"=");
+	str = ft_strjoin(str_tmp, value);
+	free(str_tmp);
+	return (str);
 }
 
 t_list *env_list_pos(t_list *env, char *param)

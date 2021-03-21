@@ -2,21 +2,32 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-static void		print_export(t_list *tmp_src)
+
+
+static void		print_export(t_list *tmp_src, t_list *copy)
 {
-	params->env = tmp_src;
-	while (params->env)
+	copy = tmp_src;
+	while (copy)
 	{
-		if (params->env->next != NULL)
-			printf("declare -x %s\n", (char*)params->env->content);
+		if (copy->next != NULL)
+			printf("declare -x %s\n", (char*)copy->content);
 		else
-			printf("declare -x %s", (char*)params->env->content);
-		params->env = params->env->next;
+			printf("declare -x %s", (char*)copy->content);
+		copy = copy->next;
 	}
-	params->env = tmp_src;
+	copy = tmp_src;
+	free_lst_map(&copy);
 }
 
-void			export()
+void 			export()
+{
+	t_list *new;
+
+	new = list_copy();
+	sort_export(new);
+}
+
+void			sort_export(t_list *new)
 {
 	t_list *tmp_src;
 	char *tmp_str;
@@ -24,23 +35,23 @@ void			export()
 	int i;
 	int j;
 
-	tmp_src = params->env;
-	len = ft_lstsize(params->env) - 1;
+	tmp_src = new;
+	len = ft_lstsize(new) - 1;
 	i = -1;
 	while (++i < len)
 	{
 		j = -1;
-		params->env = tmp_src;
+		new = tmp_src;
 		while (++j < len)
 		{
-			if (ft_strncmp(params->env->content, params->env->next->content, ft_strlen(params->env->content)) > 0)
+			if (ft_strncmp(new->content, new->next->content, ft_strlen(new->content)) > 0)
 			{
-				tmp_str = params->env->next->content;
-				params->env->next->content = params->env->content;
-				params->env->content = tmp_str;
+				tmp_str = new->next->content;
+				new->next->content = new->content;
+				new->content = tmp_str;
 			}
-			params->env = params->env->next;
+			new = new->next;
 		}
 	}
-	print_export(tmp_src);
+	print_export(tmp_src, new);
 }

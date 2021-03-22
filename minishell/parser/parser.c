@@ -25,9 +25,12 @@ void	check_command(char *line, int size)
 ** get_history_previous: взять предыдущую историю.
 */
 
-void get_history_previous()
+void get_history_previous(t_parser *p)
 {
-
+	ft_bzero(p->str, ft_strlen(p->str));
+	p->str = ft_strdup(p->map[p->step_history]);
+	--p->step_history;
+	write(1, p->str, ft_strlen(p->str));
 }
 
 /*
@@ -42,7 +45,7 @@ char	*get_line(t_parser *p)
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		get_history_previous();
+		get_history_previous(p);
 		// write(1, "previous\n", 8);
 	}
 	else if (!ft_strcmp(p->buf, "\e[B")) //стрелочка вниз
@@ -78,6 +81,7 @@ void reed_line(int fd)
 	t_parser p;
 
 	p.coll_previous = 0;
+	p.step_history = 0;
 	p.len_map = 0;
 	p.map = ft_calloc(500, sizeof(char *));
 	p.buf = ft_calloc(2, sizeof(char));
@@ -91,7 +95,8 @@ void reed_line(int fd)
 		{
 			p.backspace = 0;
 			p.buf = get_line(&p);
-			if (ft_strcmp(p.buf, "\e[C") && ft_strcmp(p.buf, "\e[D") && ft_strcmp(p.buf, "\177"))
+			if (ft_strcmp(p.buf, "\e[C") && ft_strcmp(p.buf, "\e[D")
+			&& ft_strcmp(p.buf, "\177") && ft_strcmp(p.buf, "\e[A"))
 			{
 				p.str = ft_strjoin(p.str, p.buf);
 				free(p.str);
@@ -100,13 +105,16 @@ void reed_line(int fd)
 				p.str = delet_backspace(p.str, 1);
 		}
 		write(1, "\n", 1);
-		set_line(ft_strjoin(p.str, "\n"), fd, p.map, &p.len_map);
+		set_line(ft_strjoin(p.str, "\n"), fd, &p);
 		ft_bzero(p.str, ft_strlen(p.str));
 	}
 	/* Проверка */
-	while (p.len_map != 0)
+	int i;
+
+	i = 0;
+	while (i < p.len_map)
 	{
-		printf("%s\n", p.map[p.len_map--]);
+		printf("%s\n", p.map[i++]);
 	}
 }
 

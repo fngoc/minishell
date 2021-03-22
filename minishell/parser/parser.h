@@ -17,6 +17,7 @@ typedef struct s_parser
 	int		len;
 	int		backspace;
 	int		coll_previous;
+    int		step_history;
 }               t_parser;
 
 
@@ -33,7 +34,7 @@ int     make_file(void);
 
 int     ft_strcmp(const char *str1, const char *str2);
 
-void	set_line(char *str, int fd, char **map, int *len_map);
+void	set_line(char *str, int fd, t_parser *p);
 
 char    *delet_backspace(char *str, int coll_backspace);
 

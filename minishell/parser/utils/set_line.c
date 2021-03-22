@@ -5,13 +5,15 @@
 ** set_line: установка линиии в историю.
 */
 
-void set_line(char *str, int fd, char **map, int *len_map)
+void set_line(char *str, int fd, t_parser *p)
 {
 	if (str[0] != '\n')
 	{
 		if (write(fd, ft_strjoin(str, "\n"), ft_strlen(str)) != (int)ft_strlen(str))
 			error("Failed to write a string to a file");
-		map[++*len_map] = ft_strdup(delet_backspace(str, 1));
+		p->map[p->len_map++] = ft_strdup(delet_backspace(str, 1));
+		if (p->len_map > 1)
+			++p->step_history;
 	}
 	// free(str);
 }

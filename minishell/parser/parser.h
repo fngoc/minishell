@@ -6,10 +6,20 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <term.h>
+# include <fcntl.h> 
 
-# include <fcntl.h> // для open
+typedef struct s_parser
+{
+    char	**map;
+	int		len_map;
+	char	*buf;
+	char	*str;
+	int		len;
+	int		backspace;
+	int		coll_previous;
+}               t_parser;
 
-# include <string.h> // для strcmp, позже удалить
+
 
 void    parser(void);
 

@@ -22,42 +22,51 @@ void	check_command(char *line, int size)
 }
 
 /*
+** get_history_previous: взять предыдущую историю.
+*/
+
+void get_history_previous()
+{
+
+}
+
+/*
 ** get_line: считываем линию.
 */
 
-char	*get_line(char *buf, char *str, int len, int *backspace)
+char	*get_line(t_parser *p)
 {
-	buf[len] = 0;
-	if (!ft_strcmp(buf, "\e[A")) //стрелочка вверх
+	p->buf[p->len] = 0;
+	if (!ft_strcmp(p->buf, "\e[A")) //стрелочка вверх
 	{
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		// get_history_end();
-		write(1, "previous\n", 8);
+		get_history_previous();
+		// write(1, "previous\n", 8);
 	}
-	else if (!ft_strcmp(buf, "\e[B")) //стрелочка вниз
+	else if (!ft_strcmp(p->buf, "\e[B")) //стрелочка вниз
 	{
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
 		write(1, "next\n", 4);
 	}
-	else if (!ft_strcmp(buf, "\177")) //клавиша backspase
+	else if (!ft_strcmp(p->buf, "\177")) //клавиша backspase
 	{
-		if (ft_strlen(str) != 0)
+		if (ft_strlen(p->str) != 0)
 		{
 			tputs(cursor_left, 1, ft_putchar);
 			tputs(tgetstr("dc", 0), 1, ft_putchar);
-			write(1, buf, len);
-			++*backspace;
+			write(1, p->buf, p->len);
+			++p->backspace;
 		}
 	}
-	else if (!ft_strcmp(buf, "\e[C") || !ft_strcmp(buf, "\e[D")) //замена клавишь влево и вправо
-		return (buf);
+	else if (!ft_strcmp(p->buf, "\e[C") || !ft_strcmp(p->buf, "\e[D")) //замена клавишь влево и вправо
+		return (p->buf);
 	else // печать символа
-		write(1, buf, len);
-	return (buf);
+		write(1, p->buf, p->len);
+	return (p->buf);
 }
 
 /*
@@ -66,42 +75,39 @@ char	*get_line(char *buf, char *str, int len, int *backspace)
 
 void reed_line(int fd)
 {
-	char	**map;
-	int		len_map;
-	char	*buf;
-	char	*str;
-	int		len;
-	int		backspace;
+	t_parser p;
 
-	len_map = 0;
-	map = ft_calloc(500, sizeof(char *));
-	buf = ft_calloc(2, sizeof(char));
-	str = ft_calloc(2, sizeof(char));
-	while (ft_strcmp(buf, "\4"))
+	p.coll_previous = 0;
+	p.len_map = 0;
+	p.map = ft_calloc(500, sizeof(char *));
+	p.buf = ft_calloc(2, sizeof(char));
+	p.str = ft_calloc(2, sizeof(char));
+	while (ft_strcmp(p.buf, "\4"))
 	{
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		while (((len = read(0, buf, 100)) != -1) &&
-		ft_strcmp(buf, "\n") && ft_strcmp(buf, "\4"))
+		while (((p.len = read(0, p.buf, 100)) != -1) &&
+		ft_strcmp(p.buf, "\n") && ft_strcmp(p.buf, "\4"))
 		{
-			backspace = 0;
-			buf = get_line(buf, str, len, &backspace);
-			if (ft_strcmp(buf, "\e[C") && ft_strcmp(buf, "\e[D") && ft_strcmp(buf, "\177"))
+			p.backspace = 0;
+			p.buf = get_line(&p);
+			if (ft_strcmp(p.buf, "\e[C") && ft_strcmp(p.buf, "\e[D") && ft_strcmp(p.buf, "\177"))
 			{
-				str = ft_strjoin(str, buf);
-				free(str);
+				p.str = ft_strjoin(p.str, p.buf);
+				free(p.str);
 			}
-			if (backspace)
-				str = delet_backspace(str, 1);
+			if (p.backspace)
+				p.str = delet_backspace(p.str, 1);
 		}
 		write(1, "\n", 1);
-		set_line(ft_strjoin(str, "\n"), fd, map, &len_map);
-		ft_bzero(str, ft_strlen(str));
+		set_line(ft_strjoin(p.str, "\n"), fd, p.map, &p.len_map);
+		ft_bzero(p.str, ft_strlen(p.str));
 	}
-	// while (len_map != 0)
-	// {
-	// 	printf("%s\n", map[len_map--]);
-	// }
+	/* Проверка */
+	while (p.len_map != 0)
+	{
+		printf("%s\n", p.map[p.len_map--]);
+	}
 }
 
 /*

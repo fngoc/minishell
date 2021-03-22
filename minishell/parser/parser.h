@@ -23,6 +23,8 @@ int     make_file(void);
 
 int     ft_strcmp(const char *str1, const char *str2);
 
-void	set_line(char *str, int fd);
+void	set_line(char *str, int fd, char **map, int *len_map);
+
+char    *delet_backspace(char *str, int coll_backspace);
 
 #endif

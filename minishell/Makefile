@@ -19,7 +19,8 @@ SRC = main.c \
 	parser/parser.c logic/utils/arr_size.c logic/init_env_copy.c logic/find_env_var.c \
 	parser/utils/error.c logic/cd.c logic/pwd.c parser/utils/ft_putchar.c logic/export.c \
 	parser/utils/init.c parser/utils/make_file.c parser/utils/ft_strcmp.c parser/utils/set_line.c \
-	logic/utils/free_lst.c logic/utils/list_copy.c logic/export_var.c logic/unset_var.c logic/env.c
+	logic/utils/free_lst.c logic/utils/list_copy.c logic/export_var.c logic/unset_var.c logic/env.c \
+	parser/utils/delet_backspace.c
 
 OBJ = $(SRC:.c=.o)
 

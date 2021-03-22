@@ -17,6 +17,11 @@ int main(int argc, char **argv, char **env)
 	params = malloc(sizeof (g_list));
 	params->env = env_copy(env);
 
+	while (1)
+	{
+	
+	}
+	
 //	export();
 //	printf("%s\n", env_var_full_param(params->env, "PWD"));
 //	cd("");

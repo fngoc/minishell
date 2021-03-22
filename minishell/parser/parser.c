@@ -25,7 +25,7 @@ void	check_command(char *line, int size)
 ** get_line: считываем линию.
 */
 
-char	*get_line(char *buf, int len)
+char	*get_line(char *buf, char *str, int len, int *coll_backspace)
 {
 	buf[len] = 0;
 	if (!ft_strcmp(buf, "\e[A")) //стрелочка вверх
@@ -44,15 +44,36 @@ char	*get_line(char *buf, int len)
 	}
 	else if (!ft_strcmp(buf, "\177")) //клавиша backspase
 	{
-		tputs(cursor_left, 1, ft_putchar);
-		tputs(tgetstr("dc", 0), 1, ft_putchar);
-		write(1, buf, len);
+		if (ft_strlen(str) != 0)
+		{
+			tputs(cursor_left, 1, ft_putchar);
+			tputs(tgetstr("dc", 0), 1, ft_putchar);
+			write(1, buf, len);
+			++*coll_backspace;
+		}
 	}
+	else if (!ft_strcmp(buf, "\e[C") || !ft_strcmp(buf, "\e[D")) //замена клавишь влево и вправо
+		return (buf);
 	else // печать символа
-	{
 		write(1, buf, len);
-	}
 	return (buf);
+}
+
+/*
+** delet_backspace: удаление из строки к-во backspace.
+*/
+
+char *delet_backspace(char *str, int coll_backspace)
+{
+	int len;
+
+	coll_backspace += 2;
+	len = ft_strlen(str) + 1;
+	while (coll_backspace-- != 0)
+	{
+		str[len--] = '\0';
+	}
+	return (str);
 }
 
 /*
@@ -64,21 +85,30 @@ void reed_line(int fd)
 	char	*buf;
 	char	*str;
 	int		len;
+	int		coll_backspace;
 
 	buf = ft_calloc(2, sizeof(char));
 	str = ft_calloc(2, sizeof(char));
 	while (ft_strcmp(buf, "\4"))
 	{
+		coll_backspace = 0;
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
 		while (((len = read(0, buf, 100)) != -1) &&
 		ft_strcmp(buf, "\n") && ft_strcmp(buf, "\4"))
 		{
-			buf = get_line(buf, len);
-			if (ft_strcmp(buf, "\e[C") && ft_strcmp(buf, "\e[D"))
+			buf = get_line(buf, str, len, &coll_backspace);
+			if (ft_strcmp(buf, "\e[C") && ft_strcmp(buf, "\e[D") && ft_strcmp(buf, "\177"))
+			{
 				str = ft_strjoin(str, buf);
+				free(str);
+			}
+			if (coll_backspace)
+				str = delet_backspace(str, 1);
 		}
 		write(1, "\n", 1);
+		printf("coll_backspace: %d\n", coll_backspace);
+		printf("str: %s\n", str);
 		set_line(ft_strjoin(str, "\n"), fd);
 		ft_bzero(str, ft_strlen(str));
 	}

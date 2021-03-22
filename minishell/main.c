@@ -12,7 +12,7 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 
 	write(1, "Welcome to Minishell Fngoc and Drarlean!\n", 41);
-//	parser();
+	parser();
 
 	params = malloc(sizeof (g_list));
 	params->env = env_copy(env);

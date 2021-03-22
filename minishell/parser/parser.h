@@ -16,7 +16,6 @@ typedef struct s_parser
 	char	*str;
 	int		len;
 	int		backspace;
-	int		coll_previous;
     int		step_history;
 }               t_parser;
 

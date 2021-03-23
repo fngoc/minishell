@@ -28,6 +28,7 @@ void			export_var(char *var);
 void			unset_var(char *var);
 void			print_env();
 char			*get_key_by_full_param(char *full_param);
+int del_env_list(t_list **env, char *param);
 
 		typedef struct	list
 {

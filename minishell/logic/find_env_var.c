@@ -8,10 +8,7 @@
 char *get_var_param(t_list *env, char *param)
 {
 	int flag;
-//	t_list *tmp;
-//	char *str;
-//
-//	tmp = params->env;
+
 	flag = 0;
 	while (env)
 	{

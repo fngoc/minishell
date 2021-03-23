@@ -17,6 +17,8 @@ typedef struct s_parser
 	int		len;
 	int		backspace;
     int		step_history;
+	int		flag_step_history_next;
+	int		flag_step_history_previou;
 }               t_parser;
 
 

@@ -29,7 +29,17 @@ void get_history_previous(t_parser *p)
 {
 	ft_bzero(p->str, ft_strlen(p->str));
 	p->str = ft_strdup(p->map[p->step_history]);
-	--p->step_history;
+	if (p->flag_step_history_previou == 0)
+	{
+		--p->step_history;
+		p->flag_step_history_previou = 0;
+		p->flag_step_history_next = 1;
+	}
+	else
+	{
+		p->step_history -= 2;
+		p->flag_step_history_previou = 0;
+	}
 	write(1, p->str, ft_strlen(p->str));
 }
 
@@ -40,7 +50,17 @@ void get_history_previous(t_parser *p)
 void get_history_next(t_parser *p)
 {
 	ft_bzero(p->str, ft_strlen(p->str));
-	++p->step_history;
+	if (p->flag_step_history_next == 0)
+	{
+		++p->step_history;
+		p->flag_step_history_previou = 1;
+		p->flag_step_history_next = 0;
+	}
+	else
+	{
+		p->step_history += 2;
+		p->flag_step_history_next = 0;
+	}
 	p->str = ft_strdup(p->map[p->step_history]);
 	write(1, p->str, ft_strlen(p->str));
 }
@@ -110,6 +130,8 @@ void reed_line(int fd)
 
 	p.step_history = -1;
 	p.len_map = -1;
+	p.flag_step_history_next = 0;
+	p.flag_step_history_previou = 0;
 	p.map = ft_calloc(500, sizeof(char *));
 	p.str = ft_calloc(2, sizeof(char));
 	while (ft_strcmp(p.buf, "\4"))

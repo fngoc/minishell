@@ -71,6 +71,12 @@ char	*get_line(t_parser *p)
 			write(1, "\033[0;35m$minishell: \033[0m", 23);
 			get_history_next(p);
 		}
+		else if (p->step_history == p->len_map)
+		{
+			tputs(restore_cursor, 1, ft_putchar);
+			tputs(tigetstr("ed"), 1, ft_putchar);
+			write(1, "\033[0;35m$minishell: \033[0m", 23);
+		}
 	}
 	else if (!ft_strcmp(p->buf, "\177")) //клавиша backspase
 	{

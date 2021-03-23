@@ -19,10 +19,10 @@ static	int cd_error(int fd, char *dir)
 void	cd(char *dir)
 {
 	char *old_content;
-	t_list *start;
+	char *tmp;
 	int fd;
+	t_list *start;
 
-	start = params->env;
 	old_content = ft_strdup(get_var_param(params->env, "PWD"));
 	if (*dir == '\0')
 		dir = get_var_param(params->env, "HOME");
@@ -33,13 +33,21 @@ void	cd(char *dir)
 	else
 	{
 		chdir(dir);
-		params->env = get_env_list_pos(start, "PWD");
-		free(params->env->content);
-		params->env->content = change_value_by_key("PWD", get_pwd());
-		params->env = get_env_list_pos(start, "OLDPWD");
-		free(params->env->content);
-		params->env->content = change_value_by_key("OLDPWD", old_content);
-		params->env = start;
+		start = get_env_list_pos(params->env, "PWD");
+		free(start->content);
+		start->content = change_value_by_key("PWD", get_pwd());
+		start = get_env_list_pos(params->env, "OLDPWD");
+		if (start == NULL)
+		{
+			tmp = change_value_by_key("OLDPWD", old_content);
+			export_var(tmp);
+			free(tmp);
+		}
+		else
+			{
+				free(start->content);
+				start->content = change_value_by_key("OLDPWD", old_content);
+			}
 		free(old_content);
 	}
 }

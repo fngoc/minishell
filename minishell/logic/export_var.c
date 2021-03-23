@@ -47,7 +47,7 @@ void 	export_var(char *var)
 		tmp = get_env_list_pos(params->env, key);
 		free(tmp->content);
 		tmp->content = ft_strdup(var);
-		free(key);
 	}
+	free(key);
 }
 

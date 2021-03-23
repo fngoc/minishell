@@ -65,8 +65,8 @@ char *change_value_by_key(char *key, char *value)
 t_list *get_env_list_pos(t_list *env, char *param)
 {
 	int flag;
-
 	flag = 0;
+
 	while (env)
 	{
 		if(ft_strncmp(env->content, param, ft_strlen(param)) == 0
@@ -77,7 +77,7 @@ t_list *get_env_list_pos(t_list *env, char *param)
 		}
 		env = env->next;
 	}
-	if (flag)
+	if (flag == 1)
 		return (env);
 	return (NULL);
 }

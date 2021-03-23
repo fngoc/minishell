@@ -6,10 +6,20 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <term.h>
+# include <fcntl.h> 
 
-# include <fcntl.h> // для open
+typedef struct s_parser
+{
+    char	**map;
+	int		len_map;
+	char	*buf;
+	char	*str;
+	int		len;
+	int		backspace;
+    int		step_history;
+}               t_parser;
 
-# include <string.h> // для strcmp, позже удалить
+
 
 void    parser(void);
 
@@ -23,6 +33,8 @@ int     make_file(void);
 
 int     ft_strcmp(const char *str1, const char *str2);
 
-void	set_line(char *str, int fd);
+void	set_line(char *str, int fd, t_parser *p);
+
+char    *delet_backspace(char *str, int coll_backspace);
 
 #endif

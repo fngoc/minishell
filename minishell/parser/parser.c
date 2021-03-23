@@ -42,8 +42,6 @@ void get_history_next(t_parser *p)
 	ft_bzero(p->str, ft_strlen(p->str));
 	++p->step_history;
 	p->str = ft_strdup(p->map[p->step_history]);
-	
-	// printf("str: %s", p->str);
 	write(1, p->str, ft_strlen(p->str));
 }
 
@@ -87,7 +85,12 @@ char	*get_line(t_parser *p)
 	else if (!ft_strcmp(p->buf, "\e[C") || !ft_strcmp(p->buf, "\e[D")) //замена клавишь влево и вправо
 		return (p->buf);
 	else // печать символа
-		write(1, p->buf, p->len);
+	{
+		if (!ft_strcmp(p->buf, "\n"))
+			return ("\0");
+		else
+			write(1, p->buf, p->len);
+	}
 	return (p->buf);
 }
 
@@ -102,10 +105,10 @@ void reed_line(int fd)
 	p.step_history = -1;
 	p.len_map = -1;
 	p.map = ft_calloc(500, sizeof(char *));
-	p.buf = ft_calloc(2, sizeof(char));
 	p.str = ft_calloc(2, sizeof(char));
 	while (ft_strcmp(p.buf, "\4"))
 	{
+		p.buf = ft_calloc(2, sizeof(char));
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
 		while (((p.len = read(0, p.buf, 100)) != -1) &&
@@ -117,6 +120,8 @@ void reed_line(int fd)
 			&& ft_strcmp(p.buf, "\e[D") && ft_strcmp(p.buf, "\177")
 			&& ft_strcmp(p.buf, "\e[A"))
 			{
+				if (!ft_strcmp(p.buf, "\0"))
+					break ;
 				p.str = ft_strjoin(p.str, p.buf);
 				free(p.str);
 			}

@@ -16,10 +16,28 @@ static	int cd_error(int fd, char *dir)
 	return (1);
 }
 
+static void 	null_check(char *old_content, t_list *start, char *param)
+{
+	char *tmp;
+
+	if (ft_strcmp(param, "PWD") == 0)
+		old_content = get_pwd();
+	if (start == NULL)
+	{
+		tmp = change_value_by_key(param, old_content);
+		export_var(tmp);
+		free(tmp);
+	}
+	else
+	{
+		free(start->content);
+		start->content = change_value_by_key(param, old_content);
+	}
+}
+
 void	cd(char *dir)
 {
 	char *old_content;
-	char *tmp;
 	int fd;
 	t_list *start;
 
@@ -27,27 +45,16 @@ void	cd(char *dir)
 	if (*dir == '\0')
 		dir = get_var_param(params->env, "HOME");
 	fd = open(dir, O_DIRECTORY);
-
 	if (!cd_error(fd, dir))
 		return ;
 	else
 	{
 		chdir(dir);
 		start = get_env_list_pos(params->env, "PWD");
-		free(start->content);
+		null_check(old_content, start, "PWD");
 		start->content = change_value_by_key("PWD", get_pwd());
 		start = get_env_list_pos(params->env, "OLDPWD");
-		if (start == NULL)
-		{
-			tmp = change_value_by_key("OLDPWD", old_content);
-			export_var(tmp);
-			free(tmp);
-		}
-		else
-			{
-				free(start->content);
-				start->content = change_value_by_key("OLDPWD", old_content);
-			}
+		null_check(old_content, start, "OLDPWD");
 		free(old_content);
 	}
 }

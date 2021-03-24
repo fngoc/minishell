@@ -14,5 +14,5 @@ void set_line(char *str, int fd, t_parser *p)
 		p->map[++p->len_map] = ft_strdup(delet_backspace(str, 1));
 		++p->step_history;
 	}
-	// free(str);
+	free(str);
 }

@@ -7,10 +7,10 @@ static void 	print_chars(t_list *copy, int equal_sign)
 	int i;
 
 	i = 0;
-	printf("declare -x ");
+	ft_putstr_fd("declare -x ", 1);
 	while (copy->content[i])
 	{
-		printf("%c", copy->content[i]);
+		ft_putchar(copy->content[i]);
 		if ((copy->content[i] == '=' && equal_sign == 0) ||
 			copy->content[i + 1] == '\0')
 		{
@@ -19,7 +19,7 @@ static void 	print_chars(t_list *copy, int equal_sign)
 		}
 		i++;
 	}
-	printf("\n");
+	ft_putchar('\n');
 }
 
 static void		print_export(t_list *tmp_src, t_list *copy)

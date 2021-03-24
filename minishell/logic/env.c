@@ -9,7 +9,7 @@ void 	print_env()
 	tmp = params->env;
 	while (params->env)
 	{
-		printf("%s\n", params->env->content);
+		ft_putstr_fd(params->env->content, 1);
 		params->env = params->env->next;
 	}
 	params->env = tmp;

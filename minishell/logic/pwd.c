@@ -15,5 +15,5 @@ void 	print_pwd()
 	char	buff[4097];
 
 	cwd = getcwd(buff, 4096);
-	printf("%s", cwd);
+	ft_putstr_fd(cwd, 1);
 }

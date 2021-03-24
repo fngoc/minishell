@@ -8,9 +8,17 @@ static	int cd_error(int fd, char *dir)
 	{
 		fd = open(dir, O_RDONLY);
 		if (fd == -1)
-			printf("cd : %s: No such file or directory\n", dir);
+		{
+			ft_putstr_fd("cd : ", 1);
+			ft_putstr_fd(dir, 1);
+			ft_putstr_fd(": No such file or directory\n", 1);
+		}
 		else
-			printf("cd : %s: Not a directory\n", dir);
+			{
+				ft_putstr_fd("cd : ", 1);
+				ft_putstr_fd(dir, 1);
+				ft_putstr_fd(" Not a directory\n", 1);
+			}
 		return (0);
 	}
 	return (1);

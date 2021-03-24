@@ -13,7 +13,6 @@ char *get_command_path(int i)
 	arr[4] = "/usr/sbin";
 	arr[5] = "/sbin";
 	arr[6] = "/usr/local/munki";
-
 	return (arr[i]);
 }
 
@@ -28,7 +27,7 @@ void 	exec(char *command, char **argv, char **ev)
 		str = ft_strjoin("/",command);
 		str = ft_strjoin(get_command_path(i),str);
 		fd = open(str, O_RDONLY);
-		if (fd == 3)
+		if (fd)
 			execve(str, argv, ev);
 		free(str);
 	}

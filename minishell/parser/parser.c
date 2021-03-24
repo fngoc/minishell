@@ -1,24 +1,56 @@
 #include "parser.h"
 #include "../libft/libft.h"
+#include "../logic/logic.h"
+
+int	ft_istab(char line)
+{
+	if (line == ' ')
+		return (1);
+	return (0);
+}
+
+void chek_pwd(char *line)
+{
+	++line;
+	if (*line == 'w' || *line == 'W')
+	{
+		++line;
+		if ((*line == 'd' || *line == 'D'))
+		{
+			++line;
+			if (*line == ' ' || *line == '\n' || *line == '\0')
+			{
+				print_pwd();
+				write(1, "\n", 1);
+			}
+		}
+		else
+			return ;
+	}
+	 else
+	 	return ;
+}
 
 void	check_command(char *line, int size)
 {
-	char	*p;
+	(void)size;
 
-	if ((p = ft_strnstr("echo", line, size)) != NULL)
-		printf("Делаем команду echo\n");
-	if ((p = ft_strnstr("cd", line, size)) != NULL)
-		printf("Делаем команду cd\n");
-	if ((p = ft_strnstr("pwd", line, size)) != NULL)
-		printf("Делаем команду pwd\n");
-	if ((p = ft_strnstr("export", line, size)) != NULL)
-		printf("Делаем команду export\n");
-	if ((p = ft_strnstr("unset", line, size)) != NULL)
-		printf("Делаем команду unset\n");
-	if ((p = ft_strnstr("env", line, size)) != NULL)
-		printf("Делаем команду env\n");
-	if ((p = ft_strnstr("exit", line, size)) != NULL)
-		printf("Делаем команду exit\n");
+	while (*line != '\0')
+	{
+		if (ft_istab(*line))
+			++line;
+		else if (*line == 'p' || *line == 'P')
+		{
+			chek_pwd(line);
+		}
+		// else
+		// {
+		// 	write(1, "minishell: ", 11);
+		// 	write(1, line, ft_strlen(line));
+		// 	ft_putstr_fd(": command not found\n", 1);
+		// }
+		++line;
+	}
 }
 
 /*
@@ -168,18 +200,11 @@ void reed_line(int fd)
 				p.str = delet_backspace(p.str, 1);
 		}
 		write(1, "\n", 1);
-		free(p.buf);
 		p.step_history = p.len_map;
 		set_line(ft_strjoin(p.str, "\n"), fd, &p);
+		// if (ft_strlen(p.str) > 1)
+			check_command(p.str, ft_strlen(p.str));
 		ft_bzero(p.str, ft_strlen(p.str));
-	}
-	/* Проверка */
-	int i;
-
-	i = 0;
-	while (i <= p.len_map)
-	{
-		printf("%s\n", p.map[i++]);
 	}
 }
 

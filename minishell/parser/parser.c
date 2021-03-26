@@ -9,28 +9,6 @@ int	ft_istab(char line)
 	return (0);
 }
 
-void chek_pwd(char *line)
-{
-	++line;
-	if (*line == 'w' || *line == 'W')
-	{
-		++line;
-		if ((*line == 'd' || *line == 'D'))
-		{
-			++line;
-			if (*line == ' ' || *line == '\n' || *line == '\0')
-			{
-				print_pwd();
-				write(1, "\n", 1);
-			}
-		}
-		else
-			return ;
-	}
-	 else
-	 	return ;
-}
-
 void	check_command(char *line, int size)
 {
 	(void)size;
@@ -39,16 +17,7 @@ void	check_command(char *line, int size)
 	{
 		if (ft_istab(*line))
 			++line;
-		else if (*line == 'p' || *line == 'P')
-		{
-			chek_pwd(line);
-		}
-		// else
-		// {
-		// 	write(1, "minishell: ", 11);
-		// 	write(1, line, ft_strlen(line));
-		// 	ft_putstr_fd(": command not found\n", 1);
-		// }
+		
 		++line;
 	}
 }
@@ -59,7 +28,7 @@ void	check_command(char *line, int size)
 
 void get_history_previous(t_parser *p)
 {
-	ft_bzero(p->str, ft_strlen(p->str));
+	free(p->str);
 	if (p->step_history <= p->len_map)
 		p->str = ft_strdup(p->map[p->step_history]);
 	// if (p->flag_step_history_previou == 0)
@@ -82,7 +51,7 @@ void get_history_previous(t_parser *p)
 
 void get_history_next(t_parser *p)
 {
-	ft_bzero(p->str, ft_strlen(p->str));
+	free(p->str);
 	// if (p->flag_step_history_next == 0)
 	// {
 		++p->step_history;
@@ -149,14 +118,18 @@ char	*get_line(t_parser *p)
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		return ("\0");
+		free(p->buf);
+		return (NULL);
 	}
 	else if (!ft_strcmp(p->buf, "\e[C") || !ft_strcmp(p->buf, "\e[D")) //замена клавишь влево и вправо
 		return (p->buf);
 	else // печать символа
 	{
 		if (!ft_strcmp(p->buf, "\n"))
-			return ("\0");
+		{
+			free(p->buf);
+			return (NULL);
+		}
 		else
 			write(1, p->buf, p->len);
 	}
@@ -177,8 +150,11 @@ void reed_line(int fd)
 	p.flag_step_history_previou = 0;
 	p.map = ft_calloc(500, sizeof(char *));
 	p.str = ft_calloc(2, sizeof(char));
-	while (ft_strcmp(p.buf, "\4"))
+	p.buf = NULL;
+	while (p.buf == NULL || ft_strcmp(p.buf, "\4"))
 	{
+		if (p.buf != NULL)
+			free(p.buf);
 		p.buf = ft_calloc(2, sizeof(char));
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
@@ -187,24 +163,32 @@ void reed_line(int fd)
 		{
 			p.backspace = 0;
 			p.buf = get_line(&p);
-			if (ft_strcmp(p.buf, "\e[C") && ft_strcmp(p.buf, "\e[B")
-			&& ft_strcmp(p.buf, "\e[D") && ft_strcmp(p.buf, "\177")
-			&& ft_strcmp(p.buf, "\e[A"))
+			if (p.buf == NULL)
+				break ;
+			if (!is_arrow(p.buf))
 			{
-				if (!ft_strcmp(p.buf, "\0"))
-					break ;
-				p.str = ft_strjoin(p.str, p.buf);
+				char * tmp_p_str;
+				tmp_p_str = ft_strjoin(p.str, p.buf);
 				free(p.str);
+				p.str = tmp_p_str;
 			}
 			if (p.backspace)
 				p.str = delet_backspace(p.str, 1);
 		}
 		write(1, "\n", 1);
 		p.step_history = p.len_map;
-		set_line(ft_strjoin(p.str, "\n"), fd, &p);
+		set_line(p.str, fd, &p);
 		// if (ft_strlen(p.str) > 1)
-			check_command(p.str, ft_strlen(p.str));
+			// check_command(p.str, ft_strlen(p.str));
 		ft_bzero(p.str, ft_strlen(p.str));
+	}
+	/* Проверка */
+	int i;
+
+	i = 0;
+	while (i <= p.len_map)
+	{
+		printf("%s\n", p.map[i++]);
 	}
 }
 

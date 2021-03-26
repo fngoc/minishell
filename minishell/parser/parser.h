@@ -6,7 +6,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <term.h>
-# include <fcntl.h> 
+# include <fcntl.h>
+#include "../libft/libft.h"
 
 typedef struct s_parser
 {
@@ -21,8 +22,6 @@ typedef struct s_parser
 	int		flag_step_history_previou;
 }               t_parser;
 
-
-
 void    parser(void);
 
 void    error(char *str);
@@ -35,7 +34,9 @@ int     make_file(void);
 
 int     ft_strcmp(const char *str1, const char *str2);
 
-void	set_line(char *str, int fd, t_parser *p);
+void	set_line(char const *str, int fd, t_parser *p);
+
+int		is_arrow(char const *buf);
 
 char    *delet_backspace(char *str, int coll_backspace);
 

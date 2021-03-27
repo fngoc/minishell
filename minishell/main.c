@@ -13,13 +13,18 @@ int main(int argc, char **argv, char **env)
 	(void)env;
 
 	write(1, "Welcome to Minishell Fngoc and Drarlean!\n", 41);
+
 //	parser();
 
 
 	int check;
-	char *arr[] = {"ls", "-l"};
+	char **arr= {"ls", "-l"};
 
 	execve("/bin/ls", arr, env);
+
+
+	parser();
+	
 
 //	 params = malloc(sizeof (g_list));
 //	 params->env = env_copy(env);

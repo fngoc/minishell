@@ -1,24 +1,54 @@
 #include "parser.h"
 #include "../libft/libft.h"
+#include "../logic/logic.h"
 
-void	check_command(char *line, int size)
+/*
+** send_command_execute: отправка команд на выполнение.
+*/
+
+void send_command_execute(char **map_comand)
 {
-	char	*p;
+	(void)map_comand;
+}
 
-	if ((p = ft_strnstr("echo", line, size)) != NULL)
-		printf("Делаем команду echo\n");
-	if ((p = ft_strnstr("cd", line, size)) != NULL)
-		printf("Делаем команду cd\n");
-	if ((p = ft_strnstr("pwd", line, size)) != NULL)
-		printf("Делаем команду pwd\n");
-	if ((p = ft_strnstr("export", line, size)) != NULL)
-		printf("Делаем команду export\n");
-	if ((p = ft_strnstr("unset", line, size)) != NULL)
-		printf("Делаем команду unset\n");
-	if ((p = ft_strnstr("env", line, size)) != NULL)
-		printf("Делаем команду env\n");
-	if ((p = ft_strnstr("exit", line, size)) != NULL)
-		printf("Делаем команду exit\n");
+/*
+** check_command: проверка строки на команды.
+*/
+
+void	check_command(char *line, t_parser *p)
+{
+	char *name;
+	int i;
+
+	p->map_comand = ft_calloc(500, sizeof(char *));
+	i = -1;
+	while (*line != '\0')
+	{
+		if (ft_istab(*line))
+			++line;
+		else if (*line == ';')
+		{
+			send_command_execute(p->map_comand);
+			++line;
+		}
+		else
+		{
+			name = NULL;
+			while (!ft_istab(*line) && *line != '\0')
+			{
+				name = ft_strjoin_char_free(name, *line);
+				++line;
+			}
+			p->map_comand[++i] = ft_strdup(name);
+			free(name);
+		}
+	}
+	/* Проверка */
+	// int u;
+	// u = 0;
+	// while (u <= i)
+	// 	printf("%s\n", p->map_comand[u++]);
+	free_map(p->map_comand);
 }
 
 /*
@@ -27,9 +57,9 @@ void	check_command(char *line, int size)
 
 void get_history_previous(t_parser *p)
 {
-	ft_bzero(p->str, ft_strlen(p->str));
+	free(p->str);
 	if (p->step_history <= p->len_map)
-		p->str = ft_strdup(p->map[p->step_history]);
+		p->str = ft_strdup(p->map_history[p->step_history]);
 	// if (p->flag_step_history_previou == 0)
 	// {
 		--p->step_history;
@@ -50,7 +80,7 @@ void get_history_previous(t_parser *p)
 
 void get_history_next(t_parser *p)
 {
-	ft_bzero(p->str, ft_strlen(p->str));
+	free(p->str);
 	// if (p->flag_step_history_next == 0)
 	// {
 		++p->step_history;
@@ -63,7 +93,7 @@ void get_history_next(t_parser *p)
 	// 	p->flag_step_history_next = 0;
 	// }
 	if (p->step_history <= p->len_map)
-		p->str = ft_strdup(p->map[p->step_history]);
+		p->str = ft_strdup(p->map_history[p->step_history]);
 	write(1, p->str, ft_strlen(p->str));
 }
 
@@ -73,7 +103,7 @@ void get_history_next(t_parser *p)
 
 char	*get_line(t_parser *p)
 {
-	p->buf[p->len] = 0;
+	p->buf[p->len_str] = 0;
 	if (!ft_strcmp(p->buf, "\e[A")) //стрелочка вверх
 	{
 		if (p->step_history >= 0)
@@ -107,7 +137,7 @@ char	*get_line(t_parser *p)
 		{
 			tputs(cursor_left, 1, ft_putchar);
 			tputs(tgetstr("dc", 0), 1, ft_putchar);
-			write(1, p->buf, p->len);
+			write(1, p->buf, p->len_str);
 			++p->backspace;
 		}
 	}
@@ -117,70 +147,79 @@ char	*get_line(t_parser *p)
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		return ("\0");
+		free(p->buf);
+		return (NULL);
 	}
 	else if (!ft_strcmp(p->buf, "\e[C") || !ft_strcmp(p->buf, "\e[D")) //замена клавишь влево и вправо
 		return (p->buf);
 	else // печать символа
 	{
 		if (!ft_strcmp(p->buf, "\n"))
-			return ("\0");
+		{
+			free(p->buf);
+			return (NULL);
+		}
 		else
-			write(1, p->buf, p->len);
+			write(1, p->buf, p->len_str);
 	}
 	return (p->buf);
 }
 
 /*
-** reed_line: чтение линии.
+** read_line: чтение линии.
 */
 
-void reed_line(int fd)
+void read_line(int fd, t_parser *p)
 {
-	t_parser p;
-
-	p.step_history = -1;
-	p.len_map = -1;
-	p.flag_step_history_next = 0;
-	p.flag_step_history_previou = 0;
-	p.map = ft_calloc(500, sizeof(char *));
-	p.str = ft_calloc(2, sizeof(char));
-	while (ft_strcmp(p.buf, "\4"))
+	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
-		p.buf = ft_calloc(2, sizeof(char));
+		if (p->buf != NULL)
+			free(p->buf);
+		p->buf = ft_calloc(2, sizeof(char));
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		while (((p.len = read(0, p.buf, 100)) != -1) &&
-		ft_strcmp(p.buf, "\n") && ft_strcmp(p.buf, "\4"))
+		while (((p->len_str = read(0, p->buf, 100)) != -1) &&
+		ft_strcmp(p->buf, "\n") && ft_strcmp(p->buf, "\4"))
 		{
-			p.backspace = 0;
-			p.buf = get_line(&p);
-			if (ft_strcmp(p.buf, "\e[C") && ft_strcmp(p.buf, "\e[B")
-			&& ft_strcmp(p.buf, "\e[D") && ft_strcmp(p.buf, "\177")
-			&& ft_strcmp(p.buf, "\e[A"))
+			p->backspace = 0;
+			p->buf = get_line(p);
+			if (p->buf == NULL)
+				break ;
+			if (!is_arrow(p->buf))
 			{
-				if (!ft_strcmp(p.buf, "\0"))
-					break ;
-				p.str = ft_strjoin(p.str, p.buf);
-				free(p.str);
+				char * tmp_p_str;
+				tmp_p_str = ft_strjoin(p->str, p->buf);
+				free(p->str);
+				p->str = tmp_p_str;
 			}
-			if (p.backspace)
-				p.str = delet_backspace(p.str, 1);
+			if (p->backspace)
+				p->str = delet_backspace(p->str, 1);
 		}
 		write(1, "\n", 1);
-		free(p.buf);
-		p.step_history = p.len_map;
-		set_line(ft_strjoin(p.str, "\n"), fd, &p);
-		ft_bzero(p.str, ft_strlen(p.str));
+		p->step_history = p->len_map;
+		set_line(p->str, fd, p);
+		if (ft_strlen(p->str) > 1)
+			check_command(p->str, p);
+		ft_bzero(p->str, ft_strlen(p->str));
 	}
-	/* Проверка */
-	int i;
+	free(p->buf);
+	free(p->str);
+	free_map(p->map_history);
+}
 
-	i = 0;
-	while (i <= p.len_map)
-	{
-		printf("%s\n", p.map[i++]);
-	}
+/*
+** init_parser: начальные значения структуры парсера.
+*/
+
+void init_parser(t_parser *p)
+{
+	p->step_history = -1;
+	p->len_map = -1;
+	p->flag_step_history_next = 0;
+	p->flag_step_history_previou = 0;
+	p->map_history = ft_calloc(500, sizeof(char *));
+	p->str = ft_calloc(2, sizeof(char));
+	p->buf = NULL;
 }
 
 /*
@@ -190,11 +229,13 @@ void reed_line(int fd)
 void	parser(void)
 {
 	int				fd;
+	t_parser		p;
 	struct	termios	term;
 
 	term = init();
 	fd = make_file();
-	reed_line(fd);
+	init_parser(&p);
+	read_line(fd, &p);
 	term.c_lflag |= ~(ECHO);
 	term.c_lflag |= ~(ICANON);
 }

@@ -54,12 +54,16 @@ void	cd(char *dir)
 		dir = get_var_param(params->env, "HOME");
 	fd = open(dir, O_DIRECTORY);
 	if (!cd_error(fd, dir))
-		return ;
+	{
+		free(old_content);
+		return;
+	}
 	else
 	{
 		chdir(dir);
 		start = get_env_list_pos(params->env, "PWD");
 		null_check(old_content, start, "PWD");
+		free(start->content);
 		start->content = change_value_by_key("PWD", get_pwd());
 		start = get_env_list_pos(params->env, "OLDPWD");
 		null_check(old_content, start, "OLDPWD");

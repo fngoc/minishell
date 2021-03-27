@@ -15,21 +15,10 @@ int main(int argc, char **argv, char **env)
 	write(1, "Welcome to Minishell Fngoc and Drarlean!\n", 41);
 
 //	parser();
+	params = malloc(sizeof (g_list));
+	params->env = env_copy(env);
 
-
-	int check;
-	char **arr= {"ls", "-l"};
-
-	execve("/bin/ls", arr, env);
-
-
-	parser();
-	
-
-//	 params = malloc(sizeof (g_list));
-//	 params->env = env_copy(env);
-//	 exec("echo", argv, env);
-
+	exec("pwd", argv, env);
 
 //	printf("%s\n", env_var_full_param(params->env, "PWD"));
 //	cd("");

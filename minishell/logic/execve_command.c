@@ -2,35 +2,29 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-char *get_command_path(int i)
-{
-	char *arr[7];
-
-	arr[0] = "/.brew/bin";
-	arr[1] = "/usr/local/bin";
-	arr[2] = "/usr/bin";
-	arr[3] = "/bin";
-	arr[4] = "/usr/sbin";
-	arr[5] = "/sbin";
-	arr[6] = "/usr/local/munki";
-	return (arr[i]);
-}
-
 void 	exec(char *command, char **argv, char **ev)
 {
-	int i = -1;
 	int fd;
 	char *str;
+	char *str2;
+	char **splitted;
 
-	while (++i < 7)
+	str2 = get_var_param(params->env, "PATH");
+	if (!str2)
+		return ;
+	splitted = ft_split(str2, ':');
+
+	while (*splitted)
 	{
 		str = ft_strjoin("/",command);
-		str = ft_strjoin(get_command_path(i),str);
+
+		str = ft_strjoin(*splitted,str);
 		fd = open(str, O_RDONLY);
 		if (fd)
 			execve(str, argv, ev);
 		free(str);
+		splitted++;
 	}
-
+	free_map(splitted);
 }
 

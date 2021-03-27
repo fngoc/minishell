@@ -13,7 +13,7 @@ void set_line(char const *str, int fd, t_parser *p)
 	{
 		if (write(fd, str_in_history, ft_strlen(str_in_history)) != (int)ft_strlen(str_in_history))
 			error("Failed to write a string to a file");
-		p->map[++p->len_map] = ft_strdup(delet_backspace(str_in_history, 1));
+		p->map_history[++p->len_map] = ft_strdup(delet_backspace(str_in_history, 1));
 		++p->step_history;
 	}
 	free(str_in_history);

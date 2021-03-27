@@ -11,7 +11,7 @@
 
 typedef struct s_parser
 {
-    char	**map;
+    char	**map_history;
 	char	**map_comand;
 	int		len_map;
 	char	*buf;

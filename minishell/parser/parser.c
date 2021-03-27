@@ -3,12 +3,20 @@
 #include "../logic/logic.h"
 
 /*
+** send_command_execute: отправка команд на выполнение.
+*/
+
+void send_command_execute(char **map_comand)
+{
+	(void)map_comand;
+}
+
+/*
 ** check_command: проверка строки на команды.
 */
 
-void	check_command(char *line, int size, t_parser *p)
+void	check_command(char *line, t_parser *p)
 {
-	(void)size;
 	char *name;
 	int i;
 
@@ -20,7 +28,7 @@ void	check_command(char *line, int size, t_parser *p)
 			++line;
 		else if (*line == ';')
 		{
-			// send_command_execute();
+			send_command_execute(p->map_comand);
 			++line;
 		}
 		else
@@ -51,7 +59,7 @@ void get_history_previous(t_parser *p)
 {
 	free(p->str);
 	if (p->step_history <= p->len_map)
-		p->str = ft_strdup(p->map[p->step_history]);
+		p->str = ft_strdup(p->map_history[p->step_history]);
 	// if (p->flag_step_history_previou == 0)
 	// {
 		--p->step_history;
@@ -85,7 +93,7 @@ void get_history_next(t_parser *p)
 	// 	p->flag_step_history_next = 0;
 	// }
 	if (p->step_history <= p->len_map)
-		p->str = ft_strdup(p->map[p->step_history]);
+		p->str = ft_strdup(p->map_history[p->step_history]);
 	write(1, p->str, ft_strlen(p->str));
 }
 
@@ -191,12 +199,12 @@ void read_line(int fd, t_parser *p)
 		p->step_history = p->len_map;
 		set_line(p->str, fd, p);
 		if (ft_strlen(p->str) > 1)
-			check_command(p->str, ft_strlen(p->str), p);
+			check_command(p->str, p);
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
 	free(p->buf);
 	free(p->str);
-	free_map(p->map);
+	free_map(p->map_history);
 }
 
 /*
@@ -209,7 +217,7 @@ void init_parser(t_parser *p)
 	p->len_map = -1;
 	p->flag_step_history_next = 0;
 	p->flag_step_history_previou = 0;
-	p->map = ft_calloc(500, sizeof(char *));
+	p->map_history = ft_calloc(500, sizeof(char *));
 	p->str = ft_calloc(2, sizeof(char));
 	p->buf = NULL;
 }

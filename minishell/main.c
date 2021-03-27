@@ -14,11 +14,6 @@ int main(int argc, char **argv, char **env)
 
 	write(1, "Welcome to Minishell Fngoc and Drarlean!\n", 41);
 	parser();
-
-	while (1)
-	{
-		/* code */
-	}
 	
 //	 params = malloc(sizeof (g_list));
 //	 params->env = env_copy(env);

@@ -15,7 +15,7 @@ typedef struct s_parser
 	int		len_map;
 	char	*buf;
 	char	*str;
-	int		len;
+	int		len_str;
 	int		backspace;
     int		step_history;
 	int		flag_step_history_next;

@@ -74,7 +74,7 @@ void get_history_next(t_parser *p)
 
 char	*get_line(t_parser *p)
 {
-	p->buf[p->len] = 0;
+	p->buf[p->len_str] = 0;
 	if (!ft_strcmp(p->buf, "\e[A")) //стрелочка вверх
 	{
 		if (p->step_history >= 0)
@@ -108,7 +108,7 @@ char	*get_line(t_parser *p)
 		{
 			tputs(cursor_left, 1, ft_putchar);
 			tputs(tgetstr("dc", 0), 1, ft_putchar);
-			write(1, p->buf, p->len);
+			write(1, p->buf, p->len_str);
 			++p->backspace;
 		}
 	}
@@ -131,7 +131,7 @@ char	*get_line(t_parser *p)
 			return (NULL);
 		}
 		else
-			write(1, p->buf, p->len);
+			write(1, p->buf, p->len_str);
 	}
 	return (p->buf);
 }
@@ -140,56 +140,54 @@ char	*get_line(t_parser *p)
 ** reed_line: чтение линии.
 */
 
-void reed_line(int fd)
+void reed_line(int fd, t_parser *p)
 {
-	t_parser p;
-
-	p.step_history = -1;
-	p.len_map = -1;
-	p.flag_step_history_next = 0;
-	p.flag_step_history_previou = 0;
-	p.map = ft_calloc(500, sizeof(char *));
-	p.str = ft_calloc(2, sizeof(char));
-	p.buf = NULL;
-	while (p.buf == NULL || ft_strcmp(p.buf, "\4"))
+	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
-		if (p.buf != NULL)
-			free(p.buf);
-		p.buf = ft_calloc(2, sizeof(char));
+		if (p->buf != NULL)
+			free(p->buf);
+		p->buf = ft_calloc(2, sizeof(char));
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m$minishell: \033[0m", 23);
-		while (((p.len = read(0, p.buf, 100)) != -1) &&
-		ft_strcmp(p.buf, "\n") && ft_strcmp(p.buf, "\4"))
+		while (((p->len_str = read(0, p->buf, 100)) != -1) &&
+		ft_strcmp(p->buf, "\n") && ft_strcmp(p->buf, "\4"))
 		{
-			p.backspace = 0;
-			p.buf = get_line(&p);
-			if (p.buf == NULL)
+			p->backspace = 0;
+			p->buf = get_line(p);
+			if (p->buf == NULL)
 				break ;
-			if (!is_arrow(p.buf))
+			if (!is_arrow(p->buf))
 			{
 				char * tmp_p_str;
-				tmp_p_str = ft_strjoin(p.str, p.buf);
-				free(p.str);
-				p.str = tmp_p_str;
+				tmp_p_str = ft_strjoin(p->str, p->buf);
+				free(p->str);
+				p->str = tmp_p_str;
 			}
-			if (p.backspace)
-				p.str = delet_backspace(p.str, 1);
+			if (p->backspace)
+				p->str = delet_backspace(p->str, 1);
 		}
 		write(1, "\n", 1);
-		p.step_history = p.len_map;
-		set_line(p.str, fd, &p);
-		// if (ft_strlen(p.str) > 1)
-			// check_command(p.str, ft_strlen(p.str));
-		ft_bzero(p.str, ft_strlen(p.str));
+		p->step_history = p->len_map;
+		set_line(p->str, fd, p);
+		if (ft_strlen(p->str) > 1)
+			check_command(p->str, ft_strlen(p->str));
+		ft_bzero(p->str, ft_strlen(p->str));
 	}
-	/* Проверка */
-	int i;
+}
 
-	i = 0;
-	while (i <= p.len_map)
-	{
-		printf("%s\n", p.map[i++]);
-	}
+/*
+** init_parser: начальные значения структуры парсера.
+*/
+
+void init_parser(t_parser *p)
+{
+	p->step_history = -1;
+	p->len_map = -1;
+	p->flag_step_history_next = 0;
+	p->flag_step_history_previou = 0;
+	p->map = ft_calloc(500, sizeof(char *));
+	p->str = ft_calloc(2, sizeof(char));
+	p->buf = NULL;
 }
 
 /*
@@ -199,11 +197,13 @@ void reed_line(int fd)
 void	parser(void)
 {
 	int				fd;
+	t_parser		p;
 	struct	termios	term;
 
 	term = init();
 	fd = make_file();
-	reed_line(fd);
+	init_parser(&p);
+	reed_line(fd, &p);
 	term.c_lflag |= ~(ECHO);
 	term.c_lflag |= ~(ICANON);
 }

@@ -8,7 +8,31 @@
 
 void send_command_execute(char **map_comand)
 {
-	(void)map_comand;
+	if (!ft_strcmp(map_comand[0], "pwd"))
+	{
+		print_pwd();
+		write(1, "\n", 1);
+	}
+	else if (!ft_strcmp(map_comand[0], "cd"))
+	{
+		if (map_comand[1] != NULL && !ft_strcmp(map_comand[1], ".."))
+			cd("..");
+		else if(map_comand[1] == NULL)
+			cd("");
+		else if(map_comand[1] != NULL)
+			cd(map_comand[1]);
+	}
+	else if (!ft_strcmp(map_comand[0], "export"))
+		if (map_comand[1] != NULL)
+			export_var(map_comand[1]);
+		else
+			export();
+	else
+	{
+		write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		ft_putstr_fd(map_comand[0], 1);
+		ft_putstr_fd(": command not found\n", 1);
+	}
 }
 
 /*
@@ -22,15 +46,10 @@ void	check_command(char *line, t_parser *p)
 
 	p->map_comand = ft_calloc(500, sizeof(char *));
 	i = -1;
-	while (*line != '\0')
+	while (*line != ';' && *line != '\0')
 	{
 		if (ft_istab(*line))
 			++line;
-		else if (*line == ';')
-		{
-			send_command_execute(p->map_comand);
-			++line;
-		}
 		else
 		{
 			name = NULL;
@@ -43,12 +62,17 @@ void	check_command(char *line, t_parser *p)
 			free(name);
 		}
 	}
+	send_command_execute(p->map_comand);
+	free_map(p->map_comand);
+	if (ft_strlen(line) > 1)
+		check_command(++line, p);
+
 	/* Проверка */
 	// int u;
 	// u = 0;
 	// while (u <= i)
 	// 	printf("%s\n", p->map_comand[u++]);
-	free_map(p->map_comand);
+	// free_map(p->map_comand);
 }
 
 /*
@@ -110,7 +134,7 @@ char	*get_line(t_parser *p)
 		{
 			tputs(restore_cursor, 1, ft_putchar);
 			tputs(tigetstr("ed"), 1, ft_putchar);
-			write(1, "\033[0;35m$minishell: \033[0m", 23);
+			write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 			get_history_previous(p);
 		}
 	}
@@ -120,7 +144,7 @@ char	*get_line(t_parser *p)
 		{
 			tputs(restore_cursor, 1, ft_putchar);
 			tputs(tigetstr("ed"), 1, ft_putchar);
-			write(1, "\033[0;35m$minishell: \033[0m", 23);
+			write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 			get_history_next(p);
 		}
 		else if (p->step_history >= p->len_map)
@@ -128,7 +152,7 @@ char	*get_line(t_parser *p)
 			ft_bzero(p->str, ft_strlen(p->str));
 			tputs(restore_cursor, 1, ft_putchar);
 			tputs(tigetstr("ed"), 1, ft_putchar);
-			write(1, "\033[0;35m$minishell: \033[0m", 23);
+			write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		}
 	}
 	else if (!ft_strcmp(p->buf, "\177")) //клавиша backspase
@@ -146,7 +170,7 @@ char	*get_line(t_parser *p)
 		ft_bzero(p->str, ft_strlen(p->str));
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(tigetstr("ed"), 1, ft_putchar);
-		write(1, "\033[0;35m$minishell: \033[0m", 23);
+		write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		free(p->buf);
 		return (NULL);
 	}
@@ -177,7 +201,7 @@ void read_line(int fd, t_parser *p)
 			free(p->buf);
 		p->buf = ft_calloc(2, sizeof(char));
 		tputs(save_cursor, 1, &ft_putchar);
-		write(1, "\033[0;35m$minishell: \033[0m", 23);
+		write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		while (((p->len_str = read(0, p->buf, 100)) != -1) &&
 		ft_strcmp(p->buf, "\n") && ft_strcmp(p->buf, "\4"))
 		{
@@ -198,7 +222,7 @@ void read_line(int fd, t_parser *p)
 		write(1, "\n", 1);
 		p->step_history = p->len_map;
 		set_line(p->str, fd, p);
-		if (ft_strlen(p->str) > 1)
+		if (ft_strlen(p->str) > 0)
 			check_command(p->str, p);
 		ft_bzero(p->str, ft_strlen(p->str));
 	}

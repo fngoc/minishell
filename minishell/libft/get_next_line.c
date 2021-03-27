@@ -6,14 +6,14 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 16:33:25 by fngoc             #+#    #+#             */
-/*   Updated: 2021/03/25 11:06:19 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/03/27 13:28:59 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
-** ft_strjoin_fix:  чистит себя.
+** ft_strjoin_fix: чистит себя.
 */
 
 char	*ft_strjoin_fix(char *s1, char *s2)

@@ -12,6 +12,7 @@
 typedef struct s_parser
 {
     char	**map;
+	char	**map_comand;
 	int		len_map;
 	char	*buf;
 	char	*str;
@@ -38,6 +39,12 @@ void	set_line(char const *str, int fd, t_parser *p);
 
 int		is_arrow(char const *buf);
 
+int		ft_istab(char c);
+
+void	free_map(char **map);
+
 char    *delet_backspace(char *str, int coll_backspace);
+
+char	*ft_strjoin_char_free(char *s1, char c);
 
 #endif

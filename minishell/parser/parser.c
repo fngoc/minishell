@@ -2,24 +2,45 @@
 #include "../libft/libft.h"
 #include "../logic/logic.h"
 
-int	ft_istab(char line)
-{
-	if (line == ' ')
-		return (1);
-	return (0);
-}
+/*
+** check_command: проверка строки на команды.
+*/
 
-void	check_command(char *line, int size)
+void	check_command(char *line, int size, t_parser *p)
 {
 	(void)size;
+	char *name;
+	int i;
 
+	p->map_comand = ft_calloc(500, sizeof(char *));
+	i = -1;
 	while (*line != '\0')
 	{
 		if (ft_istab(*line))
 			++line;
-		
-		++line;
+		else if (*line == ';')
+		{
+			// send_command_execute();
+			++line;
+		}
+		else
+		{
+			name = NULL;
+			while (!ft_istab(*line) && *line != '\0')
+			{
+				name = ft_strjoin_char_free(name, *line);
+				++line;
+			}
+			p->map_comand[++i] = ft_strdup(name);
+			free(name);
+		}
 	}
+	/* Проверка */
+	// int u;
+	// u = 0;
+	// while (u <= i)
+	// 	printf("%s\n", p->map_comand[u++]);
+	free_map(p->map_comand);
 }
 
 /*
@@ -137,10 +158,10 @@ char	*get_line(t_parser *p)
 }
 
 /*
-** reed_line: чтение линии.
+** read_line: чтение линии.
 */
 
-void reed_line(int fd, t_parser *p)
+void read_line(int fd, t_parser *p)
 {
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
@@ -170,9 +191,12 @@ void reed_line(int fd, t_parser *p)
 		p->step_history = p->len_map;
 		set_line(p->str, fd, p);
 		if (ft_strlen(p->str) > 1)
-			check_command(p->str, ft_strlen(p->str));
+			check_command(p->str, ft_strlen(p->str), p);
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
+	free(p->buf);
+	free(p->str);
+	free_map(p->map);
 }
 
 /*
@@ -203,7 +227,7 @@ void	parser(void)
 	term = init();
 	fd = make_file();
 	init_parser(&p);
-	reed_line(fd, &p);
+	read_line(fd, &p);
 	term.c_lflag |= ~(ECHO);
 	term.c_lflag |= ~(ICANON);
 }

@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:32:47 by fngoc             #+#    #+#             */
-/*   Updated: 2021/03/26 17:02:45 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/03/27 11:59:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ size_t	ft_strlen(const char *s)
 	size_t i;
 
 	i = 0;
+	if (!s)
+		return (i);
 	while (s[i] != '\0')
 		++i;
 	return (i);

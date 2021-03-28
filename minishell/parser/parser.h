@@ -47,4 +47,8 @@ char    *delet_backspace(char *str, int coll_backspace);
 
 char	*ft_strjoin_char_free(char *s1, char c);
 
+void	get_history_next(t_parser *p);
+
+void	get_history_previous(t_parser *p);
+
 #endif

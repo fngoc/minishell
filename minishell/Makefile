@@ -21,7 +21,7 @@ SRC = main.c \
 	parser/utils/init.c parser/utils/make_file.c parser/utils/ft_strcmp.c parser/utils/set_line.c \
 	logic/utils/free_lst.c logic/utils/list_copy.c logic/export_var.c logic/unset_var.c logic/env.c \
 	parser/utils/delet_backspace.c logic/execve_command.c parser/utils/is_arrow.c parser/utils/ft_istab.c\
-	parser/utils/free_map.c parser/utils/ft_strjoin_char_free.c
+	parser/utils/free_map.c parser/utils/ft_strjoin_char_free.c parser/utils/get_history.c
 
 OBJ = $(SRC:.c=.o)
 

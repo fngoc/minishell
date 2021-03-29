@@ -24,7 +24,7 @@ void send_command_execute(char **map_comand)
 	{
 		if (map_comand[1] != NULL && !ft_strcmp(map_comand[1], ".."))
 			cd("..");
-		else if(map_comand[1] == NULL)
+		else if(map_comand[1] == NULL || !ft_strcmp(map_comand[1], "~"))
 			cd("");
 		else if(map_comand[1] != NULL)
 			cd(map_comand[1]);

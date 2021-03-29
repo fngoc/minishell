@@ -34,33 +34,35 @@ void 	export_var(char *var)
 {
 	t_list *tmp;
 	char *key;
+	char *tmp_var;
 
+	tmp_var = remove_double_quotes(var);
 	tmp = params->env;
-	key = get_key_by_full_param(var);
-	if (get_env_list_pos(tmp, key) == NULL)
+	key = get_key_by_full_param(tmp_var);
+
+	// если не нашли переменную в енв, добавляем новую
+	if (get_env_list_pos(params->env, key) == NULL)
 	{
-		if (var[ft_strlen(key) + 1] == '\0')
-			ft_lstadd_back(&tmp, ft_lstnew(remove_double_quotes(key)));
-		else
-			ft_lstadd_back(&tmp, ft_lstnew(remove_double_quotes(var)));
-		params->env = tmp;
+		ft_lstadd_back(&tmp, ft_lstnew(remove_double_quotes(var)));
+		tmp = params->env;
 	}
-	else
+	// если есть символ равно в новой переменной, проvеряем что внутри
+	else if (*(tmp_var + ft_strlen(key)) == '=')
 	{
 		tmp = get_env_list_pos(params->env, key);
-		free(tmp->content);
-		if (*(key + 1) == '=') {
-			tmp->content = remove_double_quotes(key);
-			free(key);
+		if (*(tmp_var + ft_strlen(key) + 1) != 0)
+		{
+			free(tmp->content);
+			tmp->content = ft_strdup(tmp_var);
 		}
-
-		else if (*(key + 1) == '\0')
-			return;
-		else {
-			tmp->content = remove_double_quotes(var);
-			free(key);
+		else
+		{
+			free(tmp->content);
+			tmp->content = ft_strdup(key);
 		}
 	}
+	free(tmp_var);
+	free(key);
 
 }
 

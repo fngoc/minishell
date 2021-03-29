@@ -17,15 +17,10 @@ int main(int argc, char **argv, char **env)
 	params = malloc(sizeof (g_list));
 	params->env = env_copy(env);
 
-	export_var("a=2");
-	export();
-	export_var("a=5");
-	export();
-	export_var("a");
-	export();
-//	parser();
-
+//	export_var("a=\"10\"");
+//	export();
 	parser();
+
 
 	// params = malloc(sizeof (g_list));
 	// params->env = env_copy(env);

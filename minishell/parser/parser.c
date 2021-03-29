@@ -108,10 +108,10 @@ void	check_command(char *line, t_parser *p)
 }
 
 /*
-** get_line: считываем линию.
+** check_bufer: провека буфера.
 */
 
-char	*get_line(t_parser *p)
+char	*check_bufer(t_parser *p)
 {
 	p->buf[p->len_str] = 0;
 	if (!ft_strcmp(p->buf, "\e[A")) //стрелочка вверх
@@ -179,7 +179,7 @@ char	*get_line(t_parser *p)
 ** read_line: чтение линии.
 */
 
-void read_line(int fd, t_parser *p)
+static	void	read_line(int fd, t_parser *p)
 {
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
@@ -192,7 +192,7 @@ void read_line(int fd, t_parser *p)
 		ft_strcmp(p->buf, "\n") && ft_strcmp(p->buf, "\4"))
 		{
 			p->backspace = 0;
-			p->buf = get_line(p);
+			p->buf = check_bufer(p);
 			if (p->buf == NULL)
 				break ;
 			if (!is_arrow(p->buf))
@@ -221,7 +221,7 @@ void read_line(int fd, t_parser *p)
 ** init_parser: начальные значения структуры парсера.
 */
 
-void init_parser(t_parser *p)
+static	void	init_parser(t_parser *p)
 {
 	p->step_history = -1;
 	p->len_map = -1;

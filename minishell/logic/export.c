@@ -14,7 +14,7 @@ static void 	print_chars(t_list *copy, int equal_sign)
 		if ((copy->content[i] == '=' && equal_sign == 0) ||
 			copy->content[i + 1] == '\0')
 		{
-			printf("\"");
+			write(1, "\"", 1);
 			equal_sign = 1;
 		}
 		i++;

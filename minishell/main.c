@@ -24,6 +24,9 @@ int main(int argc, char **argv, char **env)
 	export_var("a");
 	export();
 //	parser();
+
+	parser();
+
 	// params = malloc(sizeof (g_list));
 	// params->env = env_copy(env);
 	// pid_t pid;

@@ -17,7 +17,11 @@ int main(int argc, char **argv, char **env)
 	params = malloc(sizeof (g_list));
 	params->env = env_copy(env);
 
-	parser();
+	export_var("a=2");
+	export();
+	unset("a");
+	export();
+//	parser();
 	// params = malloc(sizeof (g_list));
 	// params->env = env_copy(env);
 	// pid_t pid;
@@ -37,10 +41,5 @@ int main(int argc, char **argv, char **env)
 	// {
 
 	// }
-
-//	printf("%s\n", env_var_full_param(params->env, "PWD"));
-//	cd("");
-//	printf("%s\n", env_var_full_param(params->env, "PWD"));
-
 	return (0);
 }

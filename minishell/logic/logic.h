@@ -25,10 +25,9 @@ void			sort_export(t_list *new);
 void			free_lst_map(t_list **lst);
 t_list			*list_copy();
 void			export_var(char *var);
-void			unset_var(char *var);
 void			print_env();
 char			*get_key_by_full_param(char *full_param);
-int				del_env_list(t_list **env, char *param);
+int				unset(char *param);
 void			exec(char *command, char **argv, char **ev);
 
 		typedef struct	list

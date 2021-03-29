@@ -11,6 +11,7 @@ void 	print_env()
 	{
 		ft_putstr_fd(params->env->content, 1);
 		params->env = params->env->next;
+		write(1, "\n", 1);
 	}
 	params->env = tmp;
 }

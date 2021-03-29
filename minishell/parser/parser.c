@@ -34,6 +34,11 @@ void send_command_execute(char **map_comand)
 			export_var(map_comand[1]);
 		else
 			export();
+	else if (!ft_strcmp(map_comand[0], "unset"))
+	{
+		if (map_comand[1] != NULL)
+			unset(map_comand[1]);
+	}
 	else if (!ft_strcmp(map_comand[0], "env"))
 	{
 		if (map_comand[1] == NULL)

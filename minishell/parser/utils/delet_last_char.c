@@ -2,10 +2,10 @@
 #include "../../libft/libft.h"
 
 /*
-** delet_backspace: удаление из строки к-во backspace.
+** delet_last_char: удаление из строки к-во char.
 */
 
-char    *delet_backspace(char *str, int coll_backspace)
+char    *delet_last_char(char *str, int coll_backspace)
 {
 	int len;
 

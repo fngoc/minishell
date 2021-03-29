@@ -8,7 +8,14 @@
 
 void send_command_execute(char **map_comand)
 {
-	if (!ft_strcmp(map_comand[0], "pwd"))
+	if (!ft_strcmp(map_comand[0], "$?"))
+	{
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		ft_putstr_fd("command not found: ", 2);
+		ft_putstr_fd(ft_itoa(errno), 2);
+		ft_putstr_fd("\n", 2);
+	}
+	else if (!ft_strcmp(map_comand[0], "pwd"))
 	{
 		print_pwd();
 		write(1, "\n", 1);
@@ -27,11 +34,36 @@ void send_command_execute(char **map_comand)
 			export_var(map_comand[1]);
 		else
 			export();
+	else if (!ft_strcmp(map_comand[0], "env"))
+	{
+		if (map_comand[1] == NULL)
+			print_env();
+		else
+		{
+			ft_putstr_fd(map_comand[0], 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(map_comand[1], 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+		}
+	}
+	else if (!ft_strcmp(map_comand[0], "exit"))
+	{
+		if (map_comand[1] == NULL)
+		{
+			ft_putstr_fd("exit\n", 2);
+			exit(0);
+		}
+		else
+		{
+			ft_putstr_fd("exit\n", 2);
+			exit(ft_atoi(map_comand[1]));
+		}
+	}
 	else
 	{
-		write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		ft_putstr_fd(map_comand[0], 1);
-		ft_putstr_fd(": command not found\n", 1);
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		ft_putstr_fd(map_comand[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 	}
 }
 
@@ -171,7 +203,7 @@ void read_line(int fd, t_parser *p)
 				p->str = tmp_p_str;
 			}
 			if (p->backspace)
-				p->str = delet_backspace(p->str, 1);
+				p->str = delet_last_char(p->str, 1);
 		}
 		write(1, "\n", 1);
 		p->step_history = p->len_map;

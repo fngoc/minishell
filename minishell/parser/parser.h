@@ -7,6 +7,7 @@
 # include <stdlib.h>
 # include <term.h>
 # include <fcntl.h>
+# include <errno.h>
 #include "../libft/libft.h"
 
 typedef struct s_parser
@@ -43,7 +44,7 @@ int		ft_istab(char c);
 
 void	free_map(char **map);
 
-char    *delet_backspace(char *str, int coll_backspace);
+char    *delet_last_char(char *str, int coll_backspace);
 
 char	*ft_strjoin_char_free(char *s1, char c);
 

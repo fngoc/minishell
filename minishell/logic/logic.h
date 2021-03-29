@@ -29,6 +29,7 @@ void			print_env();
 char			*get_key_by_full_param(char *full_param);
 int				unset(char *param);
 void			exec(char *command, char **argv, char **ev);
+char			*remove_double_quotes(const char *var);
 
 		typedef struct	list
 {

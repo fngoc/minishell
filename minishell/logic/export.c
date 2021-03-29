@@ -2,21 +2,33 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-static void 	print_chars(t_list *copy, int equal_sign)
+static void 	print_chars(t_list *copy)
 {
 	int i;
+	int check;
 
 	i = 0;
+	check = 0;
 	ft_putstr_fd("declare -x ", 1);
 	while (copy->content[i])
 	{
 		ft_putchar(copy->content[i]);
-		if ((copy->content[i] == '=' && equal_sign == 0) ||
-			copy->content[i + 1] == '\0')
+		if (copy->content[i] == '=' && check == 0)
 		{
 			write(1, "\"", 1);
-			equal_sign = 1;
+			check = 1;
 		}
+		else if(check == 1 && copy->content[i + 1] == '\0')
+		{
+			write(1, "\"", 1);
+			check = 2;
+		}
+//		if ((copy->content[i] == '=' && equal_sign == 0) ||
+//			copy->content[i + 1] == '\0')
+//		{
+//			write(1, "\"", 1);
+//			equal_sign = 1;
+//		}
 		i++;
 	}
 	ft_putchar('\n');
@@ -30,7 +42,7 @@ static void		print_export(t_list *tmp_src, t_list *copy)
 	while (copy)
 	{
 		equal_sign = 0;
-		print_chars(copy, equal_sign);
+		print_chars(copy);
 		copy = copy->next;
 	}
 	copy = tmp_src;

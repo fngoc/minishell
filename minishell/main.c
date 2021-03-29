@@ -19,7 +19,9 @@ int main(int argc, char **argv, char **env)
 
 	export_var("a=2");
 	export();
-	unset("a");
+	export_var("a=5");
+	export();
+	export_var("a");
 	export();
 //	parser();
 	// params = malloc(sizeof (g_list));

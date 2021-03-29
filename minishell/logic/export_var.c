@@ -37,17 +37,57 @@ void 	export_var(char *var)
 
 	tmp = params->env;
 	key = get_key_by_full_param(var);
-	if (get_var_param(tmp,key) == NULL)
+	if (get_env_list_pos(tmp, key) == NULL)
 	{
-		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(var)));
+		if (var[ft_strlen(key) + 1] == '\0')
+			ft_lstadd_back(&tmp, ft_lstnew(remove_double_quotes(key)));
+		else
+			ft_lstadd_back(&tmp, ft_lstnew(remove_double_quotes(var)));
 		params->env = tmp;
 	}
 	else
 	{
 		tmp = get_env_list_pos(params->env, key);
 		free(tmp->content);
-		tmp->content = ft_strdup(var);
+		if (*(key + 1) == '=') {
+			tmp->content = remove_double_quotes(key);
+			free(key);
+		}
+
+		else if (*(key + 1) == '\0')
+			return;
+		else {
+			tmp->content = remove_double_quotes(var);
+			free(key);
+		}
 	}
-	free(key);
+
+}
+
+char  	*remove_double_quotes(const char *var)
+{
+	char *content;
+	int len;
+	int i;
+
+	len = 0;
+	i = -1;
+	while (var[++i])
+	{
+		if (*var != '\"')
+			len++;
+	}
+	content = (char *)malloc( len + 1);
+	i = -1;
+	int j = 0;
+	while (++i < len)
+	{
+		if (var[i] != '\"')
+		{
+			content[j] = var[i];
+			j++;
+		}
+	}
+	return (content);
 }
 

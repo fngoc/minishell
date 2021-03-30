@@ -1,10 +1,10 @@
 #include "../../parser/parser.h"
 
 /*
-** check_bufer: провека буфера.
+** check_buffer: провека буфера.
 */
 
-char	*check_bufer(t_parser *p)
+char	*check_buffer(t_parser *p)
 {
 	p->buf[p->len_str] = 0;
 	if (!ft_strcmp(p->buf, "\e[A")) //стрелочка вверх

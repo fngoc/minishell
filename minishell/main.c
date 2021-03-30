@@ -16,7 +16,9 @@ int main(int argc, char **argv, char **env)
 
 	params = malloc(sizeof (g_list));
 	params->env = env_copy(env);
+
 	parser();
+
 
 	// params = malloc(sizeof (g_list));
 	// params->env = env_copy(env);

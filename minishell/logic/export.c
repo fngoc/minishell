@@ -36,12 +36,9 @@ static void 	print_chars(t_list *copy)
 
 static void		print_export(t_list *tmp_src, t_list *copy)
 {
-	int equal_sign;
-
 	copy = tmp_src;
 	while (copy)
 	{
-		equal_sign = 0;
 		print_chars(copy);
 		copy = copy->next;
 	}

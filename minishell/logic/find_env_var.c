@@ -65,6 +65,7 @@ char *change_value_by_key(char *key, char *value)
 t_list *get_env_list_pos(t_list *env, char *param)
 {
 	int flag;
+
 	flag = 0;
 
 	while (env)

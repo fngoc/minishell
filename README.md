@@ -1,3 +1,3 @@
 # minishell
 
-Цель этого проекта состоит в создании простой оболочки shell.
+With a partner, we wrote a simple shell shell.

@@ -28,8 +28,9 @@ void			export_var(char *var);
 void			print_env();
 char			*get_key_by_full_param(char *full_param);
 int				unset(char *param);
-void			exec(char *command, char **argv, char **ev);
+int				exec(char *command, char **argv);
 char			*remove_double_quotes(const char *var);
+char			**list_to_arr();
 
 		typedef struct	list
 {

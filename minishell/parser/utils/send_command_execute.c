@@ -29,10 +29,12 @@ void send_command_execute(char **map_comand)
 			cd(map_comand[1]);
 	}
 	else if (!ft_strcmp(map_comand[0], "export"))
+	{
 		if (map_comand[1] != NULL)
 			export_var(map_comand[1]);
 		else
 			export();
+	}
 	else if (!ft_strcmp(map_comand[0], "unset"))
 	{
 		if (map_comand[1] != NULL)
@@ -62,6 +64,13 @@ void send_command_execute(char **map_comand)
 			ft_putstr_fd("exit\n", 2);
 			exit(ft_atoi(map_comand[1]));
 		}
+	}
+	else if (!ft_strcmp(map_comand[0], "echo"))
+	{
+		if (!ft_strcmp(map_comand[1], "-n") && map_comand[2] != NULL)
+			echo(map_comand[1], 1);
+		else if (map_comand[1] != NULL && ft_strcmp(map_comand[1], "-n"))
+			echo(map_comand[1], 0);
 	}
 	else 
 	{

@@ -13,4 +13,3 @@ void 	echo(char *str, int n_flag)
 	else
 		ft_putstr_fd(str, 1);
 }
-

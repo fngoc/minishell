@@ -63,10 +63,16 @@ void send_command_execute(char **map_comand)
 			exit(ft_atoi(map_comand[1]));
 		}
 	}
-	else
+	else 
 	{
-		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		ft_putstr_fd(map_comand[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		if (map_comand[0] != NULL)
+		{
+			if (!exec(map_comand[0], map_comand))
+			{
+				write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+				ft_putstr_fd(map_comand[0], 2);
+				ft_putstr_fd(": command not found\n", 2);
+			}
+		}
 	}
 }

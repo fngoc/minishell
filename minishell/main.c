@@ -17,27 +17,6 @@ int main(int argc, char **argv, char **env)
 	params = malloc(sizeof (g_list));
 	params->env = env_copy(env);
 
-//	exec("lstwes", argv, env);
-	exec("ls", argv);
-
-	// params = malloc(sizeof (g_list));
-	// params->env = env_copy(env);
-	// pid_t pid;
-
-	// pid = fork();
-	// if (pid > 0)
-	// {
-	// 	int status;
-	// 	waitpid(pid, &status, 0);
-	// }
-	// else
-	// {
-	// 	exec("pwd", argv, env);
-	// }
-
-	// while (1)
-	// {
-
-	// }
+	parser();
 	return (0);
 }

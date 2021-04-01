@@ -32,15 +32,16 @@ int 	exec(char *command, char **argv)
 	pid_t pid;
 
 	pid = fork();
-	if (pid == 0) {
+	if (pid == 0)
+	{
 		ev = list_to_arr();
 		str2 = get_var_param(params->env, "PATH");
 		if (!str2)
-			return -1;
+			return (-1);
 		splitted = ft_split(str2, ':');
 		char **tmp = splitted;
-
-		while (*splitted) {
+		while (*splitted)
+		{
 			str = ft_strjoin("/", command);
 			str = ft_strjoin(*splitted, str);
 //			free(splitted);
@@ -52,11 +53,10 @@ int 	exec(char *command, char **argv)
 		}
 		free_map(tmp);
 		free_map(ev);
-		if (fd == -1) {
+		if (fd == -1)
 			return -1;
-		}
 	}
 	else if (pid == -1)
 		error("failed to fork");
-	return 1;
+	return (1);
 }

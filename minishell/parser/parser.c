@@ -19,7 +19,7 @@ static	void	read_line(int fd, t_parser *p)
 		ft_strcmp(p->buf, "\n") && ft_strcmp(p->buf, "\4"))
 		{
 			p->backspace = 0;
-			p->buf = check_bufer(p);
+			p->buf = check_buffer(p);
 			if (p->buf == NULL)
 				break ;
 			if (!is_arrow(p->buf))

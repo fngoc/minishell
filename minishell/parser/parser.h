@@ -8,7 +8,7 @@
 # include <term.h>
 # include <fcntl.h>
 # include <errno.h>
-#include "../libft/libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_parser
 {
@@ -52,7 +52,7 @@ void	get_history_next(t_parser *p);
 
 void	get_history_previous(t_parser *p);
 
-char	*check_bufer(t_parser *p);
+char	*check_buffer(t_parser *p);
 
 void	send_command_execute(char **map_comand);
 

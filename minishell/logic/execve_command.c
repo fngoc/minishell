@@ -8,23 +8,27 @@ void 	exec(char *command, char **argv, char **ev)
 	char *str;
 	char *str2;
 	char **splitted;
+	pid_t pid;
 
-	str2 = get_var_param(params->env, "PATH");
-	if (!str2)
-		return ;
-	splitted = ft_split(str2, ':');
+	pid = fork();
 
-	while (*splitted)
-	{
-		str = ft_strjoin("/",command);
+	if (pid == 0) {
+		str2 = get_var_param(params->env, "PATH");
+		if (!str2)
+			return;
+		splitted = ft_split(str2, ':');
 
-		str = ft_strjoin(*splitted,str);
-		fd = open(str, O_RDONLY);
-		if (fd)
-			execve(str, argv, ev);
-		free(str);
-		splitted++;
+		while (*splitted) {
+			str = ft_strjoin("/", command);
+
+			str = ft_strjoin(*splitted, str);
+			fd = open(str, O_RDONLY);
+			if (fd)
+				execve(str, argv, ev);
+			free(str);
+			splitted++;
+		}
+		free_map(splitted);
 	}
-	free_map(splitted);
 }
 

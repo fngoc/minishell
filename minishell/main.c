@@ -20,7 +20,6 @@ int main(int argc, char **argv, char **env)
 
 	parser();
 
-
 	// params = malloc(sizeof (g_list));
 	// params->env = env_copy(env);
 	// pid_t pid;

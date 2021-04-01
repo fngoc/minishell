@@ -36,14 +36,15 @@ void 	export_var(char *var)
 	char *key;
 	char *tmp_var;
 
-	tmp_var = remove_double_quotes(var);
+//	tmp_var = remove_double_quotes(var);
+	tmp_var = ft_strdup(var);
 	tmp = params->env;
 	key = get_key_by_full_param(tmp_var);
 
 	// если не нашли переменную в енв, добавляем новую
 	if (get_env_list_pos(params->env, key) == NULL)
 	{
-		ft_lstadd_back(&tmp, ft_lstnew(remove_double_quotes(var)));
+		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(var)));
 		tmp = params->env;
 	}
 	// если есть символ равно в новой переменной, проvеряем что внутри
@@ -66,30 +67,30 @@ void 	export_var(char *var)
 
 }
 
-char  	*remove_double_quotes(const char *var)
-{
-	char *content;
-	int len;
-	int i;
-
-	len = 0;
-	i = -1;
-	while (var[++i])
-	{
-		if (*var != '\"')
-			len++;
-	}
-	content = (char *)malloc( len + 1);
-	i = -1;
-	int j = 0;
-	while (++i < len)
-	{
-		if (var[i] != '\"')
-		{
-			content[j] = var[i];
-			j++;
-		}
-	}
-	return (content);
-}
+//char  	*remove_double_quotes(const char *var)
+//{
+//	char *content;
+//	int len;
+//	int i;
+//
+//	len = 0;
+//	i = -1;
+//	while (var[++i])
+//	{
+//		if (*var != '\"')
+//			len++;
+//	}
+//	content = (char *)malloc( len + 1);
+//	i = -1;
+//	int j = 0;
+//	while (++i < len)
+//	{
+//		if (var[i] != '\"')
+//		{
+//			content[j] = var[i];
+//			j++;
+//		}
+//	}
+//	return (content);
+//}
 

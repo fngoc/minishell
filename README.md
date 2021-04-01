@@ -1,3 +1,3 @@
 # minishell
 
-With a partner, we wrote a simple shell shell.
+With a partner, we wrote a simple shell.

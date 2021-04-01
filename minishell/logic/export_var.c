@@ -66,31 +66,3 @@ void 	export_var(char *var)
 	free(key);
 
 }
-
-//char  	*remove_double_quotes(const char *var)
-//{
-//	char *content;
-//	int len;
-//	int i;
-//
-//	len = 0;
-//	i = -1;
-//	while (var[++i])
-//	{
-//		if (*var != '\"')
-//			len++;
-//	}
-//	content = (char *)malloc( len + 1);
-//	i = -1;
-//	int j = 0;
-//	while (++i < len)
-//	{
-//		if (var[i] != '\"')
-//		{
-//			content[j] = var[i];
-//			j++;
-//		}
-//	}
-//	return (content);
-//}
-

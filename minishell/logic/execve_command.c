@@ -17,7 +17,6 @@ char	**list_to_arr() {
 		arr[++i] = ft_strdup(tmp->content);
 		tmp = tmp->next;
 	}
-
 	return arr;
 }
 
@@ -45,7 +44,6 @@ int 	exec(char *command, char **argv)
 		{
 			str = ft_strjoin("/", command);
 			str = ft_strjoin(*splitted, str);
-//			free(splitted);
 			fd = open(str, O_RDONLY);
 			if (fd != -1) {
 				execve(str, argv, ev);

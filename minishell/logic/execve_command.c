@@ -32,6 +32,7 @@ int 	exec(char *command, char **argv)
 	pid_t pid;
 
 	pid = fork();
+
 	if (pid == 0)
 	{
 		ev = list_to_arr();
@@ -46,8 +47,9 @@ int 	exec(char *command, char **argv)
 			str = ft_strjoin(*splitted, str);
 //			free(splitted);
 			fd = open(str, O_RDONLY);
-			if (fd != -1)
+			if (fd != -1) {
 				execve(str, argv, ev);
+			}
 			free(str);
 			splitted++;
 		}
@@ -58,5 +60,6 @@ int 	exec(char *command, char **argv)
 	}
 	else if (pid == -1)
 		error("failed to fork");
+	wait(&pid);
 	return (1);
 }

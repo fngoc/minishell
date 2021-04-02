@@ -1,15 +1,23 @@
 #include "../../parser/parser.h"
 
-// void	parser_echo(char *line, t_parser *p)
-// {
+/*
+** parser_echo: парсинг echo.
+*/
 
+// void	parser_echo(char **line, t_parser *p)
+// {
+// 	(void)p;
+// 	while (**line != ';' && **line != '\0')
+// 	{
+
+// 	}
 // }
 
 /*
 ** quotation_mark_found: найдена кавычка.
 */
 
-void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, char **line)
+static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, char **line)
 {
 	if (*p_c != NULL && **p_c == ' ')
 		*name = NULL;
@@ -39,7 +47,7 @@ void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, char **l
 ** quotation_mark_not_found: кавычка не найдена.
 */
 
-void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **name, char **line)
+static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **name, char **line)
 {
 	if (*p_c != NULL && **p_c == ' ')
 		*name = NULL;
@@ -55,6 +63,8 @@ void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **name, char
 		if (ft_strlen(*name) > 0)
 		{
 			p->map_comand[++*i] = ft_strdup(*name);
+			// if (!ft_strcmp(*name, "echo"))
+				// parser_echo(line, p);
 			free(*name);
 		}
 		else
@@ -72,13 +82,13 @@ void	check_command(char *line, t_parser *p)
 	char *name;
 	char *previous_char;
 	int i;
-	
+
 	p->map_comand = ft_calloc(500, sizeof(char *));
 	previous_char = NULL;
 	name = NULL;
 	i = -1;
 	while (*line != ';' && *line != '\0')
-	{	
+	{
 		if (ft_istab(*line))
 		{
 			previous_char = line;

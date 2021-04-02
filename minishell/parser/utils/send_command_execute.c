@@ -66,13 +66,15 @@ void send_command_execute(char **map_comand)
 		}
 	}
 	else if (!ft_strcmp(map_comand[0], "echo"))
-	{
-		if (!ft_strcmp(map_comand[1], "-n") && map_comand[2] != NULL)
-			echo(map_comand[1], 1);
+	{	
+		if (map_comand[1] != NULL && !ft_strcmp(map_comand[1], "-n") && map_comand[2] != NULL)
+			ft_echo(map_comand[2], 1);
 		else if (map_comand[1] != NULL && ft_strcmp(map_comand[1], "-n"))
-			echo(map_comand[1], 0);
+			ft_echo(map_comand[1], 0);
+		else if (map_comand[1] == NULL)
+			write(1, "\n", 1);
 	}
-	else 
+	else
 	{
 		if (map_comand[0] != NULL)
 		{

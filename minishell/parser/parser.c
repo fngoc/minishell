@@ -57,6 +57,7 @@ static	void	init_parser(t_parser *p)
 	p->map_history = ft_calloc(500, sizeof(char *));
 	p->str = ft_calloc(2, sizeof(char));
 	p->buf = NULL;
+	p->flag_echo = 0;
 }
 
 /*

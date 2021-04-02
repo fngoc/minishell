@@ -28,8 +28,11 @@ int 	exec(char *command, char **argv)
 	char *str2;
 	char **splitted;
 	char **ev;
+	int check;
 	pid_t pid;
 
+
+	check = 0;
 	pid = fork();
 
 	if (pid == 0)
@@ -46,7 +49,7 @@ int 	exec(char *command, char **argv)
 			str = ft_strjoin(*splitted, str);
 			fd = open(str, O_RDONLY);
 			if (fd != -1) {
-				execve(str, argv, ev);
+				check = execve(str, argv, ev);
 			}
 			free(str);
 			splitted++;
@@ -54,10 +57,12 @@ int 	exec(char *command, char **argv)
 		free_map(tmp);
 		free_map(ev);
 		if (fd == -1)
-			return -1;
+			return 0;
 	}
 	else if (pid == -1)
 		error("failed to fork");
 	wait(&pid);
+	if (check == -1)
+		return 0;
 	return (1);
 }

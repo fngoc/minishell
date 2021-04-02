@@ -12,8 +12,6 @@ char *get_var_param(t_list *env, char *param)
 	flag = 0;
 	while (env)
 	{
-		//TODO edit strcmp instead strn
-
 		if((ft_strncmp(env->content, param, ft_strlen(param)) == 0)
 		&& ((int)(env->content[ft_strlen(param)])) == '=')
 		{

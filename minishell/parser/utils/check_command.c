@@ -1,19 +1,6 @@
 #include "../../parser/parser.h"
 
 /*
-** parser_echo: парсинг echo.
-*/
-
-// void	parser_echo(char **line, t_parser *p)
-// {
-// 	(void)p;
-// 	while (**line != ';' && **line != '\0')
-// 	{
-
-// 	}
-// }
-
-/*
 ** quotation_mark_found: найдена кавычка.
 */
 
@@ -53,6 +40,8 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 		*name = NULL;
 	while (!ft_istab(**line) && **line != '\0')
 	{
+		if (**line == '$')
+			p->flag_echo = 1;
 		if (**line == '\"' || **line == '\'')
 			break ;
 		*name = ft_strjoin_char_free(*name, **line);
@@ -95,13 +84,20 @@ void	check_command(char *line, t_parser *p)
 		else
 		{
 			if (*line == '\"' || *line == '\'')
+			{
+				if (*line == '\"')
+					p->flag_echo = 1;
+				if (*line == '\'')
+					p->flag_echo = 0;
 				quotation_mark_found(p, &i, &previous_char, &name, &line);
+			}
 			else
 				quotation_mark_not_found(p, &i, &previous_char, &name, &line);
 		}
 	}
-	send_command_execute(p->map_comand);
+	send_command_execute(p->map_comand, p->flag_echo);
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
 		check_command(++line, p);
+	p->flag_echo = 0;
 }

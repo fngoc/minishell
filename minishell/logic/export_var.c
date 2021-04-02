@@ -2,6 +2,17 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
+static int is_digit_in_key(const char *key)
+{
+	while (*key)
+	{
+		if (ft_isdigit(*key))
+			return (1);
+		key++;
+	}
+	return (0);
+}
+
 char 	*get_key_by_full_param(char *full_param)
 {
 	int length;
@@ -41,6 +52,12 @@ void 	export_var(char *var)
 	tmp = params->env;
 	key = get_key_by_full_param(tmp_var);
 
+	if (is_digit_in_key(key) == 1)
+	{
+		ft_putstr_fd("export: '", 1);
+		ft_putstr_fd(var, 1);
+		ft_putstr_fd("': not a valid identifier\n", 1);
+	}
 	// если не нашли переменную в енв, добавляем новую
 	if (get_env_list_pos(params->env, key) == NULL)
 	{

@@ -12,8 +12,9 @@ int unset(char *param)
 	prev = &params->env;
 	while ((*prev))
 	{
-		if(ft_strncmp((*prev)->content, param, ft_strlen(param)) == 0
-		   && ((int)((*prev)->content[ft_strlen(param)])) == '=')
+		if((ft_strncmp((*prev)->content, param, ft_strlen(param)) == 0
+		   && ((int)((*prev)->content[ft_strlen(param)])) == '=') ||
+		   ((int)((*prev)->content[ft_strlen(param)])) == '\0')
 		{
 			temp = (*prev)->next;
 			free((*prev)->content);

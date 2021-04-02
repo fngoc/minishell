@@ -63,8 +63,6 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 		if (ft_strlen(*name) > 0)
 		{
 			p->map_comand[++*i] = ft_strdup(*name);
-			// if (!ft_strcmp(*name, "echo"))
-				// parser_echo(line, p);
 			free(*name);
 		}
 		else
@@ -106,11 +104,4 @@ void	check_command(char *line, t_parser *p)
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
 		check_command(++line, p);
-
-	/* Проверка */
-	// int u;
-	// u = 0;
-	// while (u <= i)
-	// 	printf("%s\n", p->map_comand[u++]);
-	// free_map(p->map_comand);
 }

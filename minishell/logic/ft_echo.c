@@ -6,10 +6,10 @@
 void 	ft_echo(char *str, int n_flag)
 {
 	if (n_flag == 1)
+		ft_putstr_fd(str, 1);
+	else
 	{
 		ft_putstr_fd(str, 1);
 		ft_putchar('\n');
 	}
-	else
-		ft_putstr_fd(str, 1);
 }

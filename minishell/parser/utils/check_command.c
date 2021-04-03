@@ -6,13 +6,26 @@
 
 static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, char **line)
 {
+	char what;
 	if (*p_c != NULL && **p_c == ' ')
 		*name = NULL;
+	what = **line;
 	++(*line);
-	while ((**line != '\"' && **line != '\'') && **line != '\0')
+	if (what == '\'')
 	{
-		*name = ft_strjoin_char_free(*name, **line);
-		++(*line);
+		while (what == '\'' && **line != '\'' && **line != '\0')//(**line != '\"' && **line != '\'') && **line != '\0')
+		{
+			*name = ft_strjoin_char_free(*name, **line);
+			++(*line);
+		}
+	}
+	else
+	{
+		while ((**line != '\"' && **line != '\'') && **line != '\0')
+		{
+			*name = ft_strjoin_char_free(*name, **line);
+			++(*line);
+		}
 	}
 	if (**line == '\0')
 		error("Incorrect number of quotation marks");

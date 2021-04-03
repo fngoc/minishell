@@ -18,17 +18,11 @@ static void 	print_chars(t_list *copy)
 			write(1, "\"", 1);
 			check = 1;
 		}
-		else if(check == 1 && copy->content[i + 1] == '\0')
+		if((check == 1 && copy->content[i + 1] == '\0'))
 		{
 			write(1, "\"", 1);
 			check = 2;
 		}
-//		if ((copy->content[i] == '=' && equal_sign == 0) ||
-//			copy->content[i + 1] == '\0')
-//		{
-//			write(1, "\"", 1);
-//			equal_sign = 1;
-//		}
 		i++;
 	}
 	ft_putchar('\n');

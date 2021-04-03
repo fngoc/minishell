@@ -10,41 +10,47 @@ static	char	*delet_first(char *str)
 	return (new_char);
 }
 
-void 	ft_echo(char *str, int n_flag, int flag_param, int flag_quotation_mark)
+void 	ft_echo(char **map, int n_flag, int flag_param, int flag_quotation_mark)
 {
 	t_list *tmp;
+	int i;
 
 	tmp = params->env;
 	char *str_print;
-
 	str_print = NULL;
-
 	if (n_flag == 0)
-	{
-		if (flag_param == 0)
-		{
-			ft_putstr_fd(str, 1);
-			ft_putchar('\n');
-		}
-		else
-		{
-			if ((str_print = get_var_param(tmp, delet_first(str))))
-				ft_putstr_fd(str_print, 1);
-			if (flag_quotation_mark)
-				ft_putstr_fd(str, 1);
-			ft_putchar('\n');
-		}
-	}
+		i = 0;
 	else
+		i = 1;
+	while (map[++i] != NULL)
 	{
-		if (flag_param == 0)
-			ft_putstr_fd(str, 1);
+		if (n_flag == 0)
+		{
+			if (flag_param == 0)
+			{
+				ft_putstr_fd(map[i], 1);
+				ft_putchar('\n');
+			}
+			else
+			{
+				if ((str_print = get_var_param(tmp, delet_first(map[i]))))
+					ft_putstr_fd(str_print, 1);
+				else if (flag_quotation_mark || map[i] != NULL)
+					ft_putstr_fd(map[i], 1);
+				ft_putchar('\n');
+			}
+		}
 		else
 		{
-			if ((str_print = get_var_param(tmp, delet_first(str))))
-				ft_putstr_fd(str_print, 1);
-			if (flag_quotation_mark)
-				ft_putstr_fd(str, 1);
+			if (flag_param == 0)
+				ft_putstr_fd(map[i], 1);
+			else
+			{
+				if ((str_print = get_var_param(tmp, delet_first(map[i]))))
+					ft_putstr_fd(str_print, 1);
+				else if (flag_quotation_mark)
+					ft_putstr_fd(map[i], 1);
+			}
 		}
 	}
 }

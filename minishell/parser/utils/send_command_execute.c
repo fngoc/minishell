@@ -5,7 +5,7 @@
 ** send_command_execute: отправка команд на выполнение.
 */
 
-void send_command_execute(char **map_comand, int flag_echo)
+void send_command_execute(char **map_comand, t_parser *p)
 {
 	if (!ft_strcmp(map_comand[0], "$?"))
 	{
@@ -68,9 +68,9 @@ void send_command_execute(char **map_comand, int flag_echo)
 	else if (!ft_strcmp(map_comand[0], "echo"))
 	{
 		if (map_comand[1] != NULL && !ft_strcmp(map_comand[1], "-n") && map_comand[2] != NULL)
-			ft_echo(map_comand[2], 1, flag_echo);
+			ft_echo(map_comand[2], 1, p->flag_echo, p->flag_quotation_mark);
 		else if (map_comand[1] != NULL && ft_strcmp(map_comand[1], "-n"))
-			ft_echo(map_comand[1], 0, flag_echo);
+			ft_echo(map_comand[1], 0, p->flag_echo, p->flag_quotation_mark);
 		else if (map_comand[1] == NULL)
 			ft_putchar('\n');
 	}

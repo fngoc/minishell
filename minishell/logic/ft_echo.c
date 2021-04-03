@@ -10,9 +10,7 @@ static	char	*delet_first(char *str)
 	return (new_char);
 }
 
-// Доделать такой пример: echo -n "fghn"
-
-void 	ft_echo(char *str, int n_flag, int flag_param)
+void 	ft_echo(char *str, int n_flag, int flag_param, int flag_quotation_mark)
 {
 	t_list *tmp;
 
@@ -32,6 +30,8 @@ void 	ft_echo(char *str, int n_flag, int flag_param)
 		{
 			if ((str_print = get_var_param(tmp, delet_first(str))))
 				ft_putstr_fd(str_print, 1);
+			if (flag_quotation_mark)
+				ft_putstr_fd(str, 1);
 			ft_putchar('\n');
 		}
 	}
@@ -43,6 +43,8 @@ void 	ft_echo(char *str, int n_flag, int flag_param)
 		{
 			if ((str_print = get_var_param(tmp, delet_first(str))))
 				ft_putstr_fd(str_print, 1);
+			if (flag_quotation_mark)
+				ft_putstr_fd(str, 1);
 		}
 	}
 }

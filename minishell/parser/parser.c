@@ -58,6 +58,7 @@ static	void	init_parser(t_parser *p)
 	p->str = ft_calloc(2, sizeof(char));
 	p->buf = NULL;
 	p->flag_echo = 0;
+	p->flag_quotation_mark = 0;
 }
 
 /*

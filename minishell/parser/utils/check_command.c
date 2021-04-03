@@ -86,7 +86,10 @@ void	check_command(char *line, t_parser *p)
 			if (*line == '\"' || *line == '\'')
 			{
 				if (*line == '\"')
+				{
 					p->flag_echo = 1;
+					p->flag_quotation_mark = 1;
+				}
 				if (*line == '\'')
 					p->flag_echo = 0;
 				quotation_mark_found(p, &i, &previous_char, &name, &line);
@@ -95,9 +98,10 @@ void	check_command(char *line, t_parser *p)
 				quotation_mark_not_found(p, &i, &previous_char, &name, &line);
 		}
 	}
-	send_command_execute(p->map_comand, p->flag_echo);
+	send_command_execute(p->map_comand, p);
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
 		check_command(++line, p);
 	p->flag_echo = 0;
+	p->flag_quotation_mark = 0;
 }

@@ -23,6 +23,7 @@ typedef struct s_parser
 	int		flag_step_history_next;
 	int		flag_step_history_previou;
 	int		flag_echo;
+	int		flag_quotation_mark;
 }               t_parser;
 
 void    parser(void);
@@ -55,7 +56,7 @@ void	get_history_previous(t_parser *p);
 
 char	*check_buffer(t_parser *p);
 
-void	send_command_execute(char **map_comand, int flag_echo);
+void	send_command_execute(char **map_comand, t_parser *p);
 
 void	check_command(char *line, t_parser *p);
 

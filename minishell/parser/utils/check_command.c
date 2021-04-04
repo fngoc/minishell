@@ -7,27 +7,44 @@
 static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, char **line)
 {
 	char what;
+	int coll_mark;
 	if (*p_c != NULL && **p_c == ' ')
 		*name = NULL;
 	what = **line;
 	++(*line);
 	if (what == '\'')
 	{
+		coll_mark = 0;
 		while (what == '\'' && **line != '\'' && **line != '\0')//(**line != '\"' && **line != '\'') && **line != '\0')
 		{
+			if (**line == '\\')
+			{
+				++(*line);
+				*name = ft_strjoin_char_free(*name, **line);
+				++(*line);
+			}
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
+			++coll_mark;
 		}
 	}
 	else
 	{
+		coll_mark = 0;
 		while ((**line != '\"' && **line != '\'') && **line != '\0')
 		{
+			if (**line == '\\')
+			{
+				++(*line);
+				*name = ft_strjoin_char_free(*name, **line);
+				++(*line);
+			}
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
+			++coll_mark;
 		}
 	}
-	if (**line == '\0')
+	if (**line == '\0' && coll_mark % 2 != 0)
 		error("Incorrect number of quotation marks");
 	++(*line);
 	if ((ft_istab(**line) || **line == '\0') && ft_strlen(*line) >= 0)
@@ -57,6 +74,12 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 			p->flag_echo = 1;
 		if (**line == '\"' || **line == '\'')
 			break ;
+		if (**line == '\\')
+		{
+			++(*line);
+			*name = ft_strjoin_char_free(*name, **line);
+			++(*line);
+		}
 		*name = ft_strjoin_char_free(*name, **line);
 		++(*line);
 	}

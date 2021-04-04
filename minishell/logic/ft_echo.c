@@ -14,10 +14,13 @@ void 	ft_echo(char **map, int n_flag, int flag_param, int flag_quotation_mark)
 {
 	t_list *tmp;
 	int i;
+	int j;
+	char **map_split;
 
 	tmp = params->env;
 	char *str_print;
 	str_print = NULL;
+	j = -1;
 	if (n_flag == 0)
 		i = 0;
 	else
@@ -33,11 +36,16 @@ void 	ft_echo(char **map, int n_flag, int flag_param, int flag_quotation_mark)
 			}
 			else
 			{
-				if ((str_print = get_var_param(tmp, delet_first(map[i]))))
-					ft_putstr_fd(str_print, 1);
-				else if (flag_quotation_mark || map[i] != NULL)
-					ft_putstr_fd(map[i], 1);
-				ft_putchar('\n');
+				map_split = ft_split(map[i], ' ');
+				while (map_split[++j] != NULL)
+				{
+					if ((str_print = get_var_param(tmp, delet_first(map_split[j]))))
+						ft_putstr_fd(str_print, 1);
+					else if (flag_quotation_mark || map_split[j] != NULL)
+						ft_putstr_fd(map_split[j], 1);
+					ft_putchar('\n');
+				}
+				free_map(map_split);
 			}
 		}
 		else

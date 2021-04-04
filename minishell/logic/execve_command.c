@@ -9,7 +9,6 @@ static void free_tmp(char **first, char **second)
 	free_map(second);
 }
 
-
 static	char	*delet_first(char *str)
 {
 	char *new_char;
@@ -21,8 +20,16 @@ static	char	*delet_first(char *str)
 static void err_exit(int err, char *command)
 {
 	char *str_print;
-
-	if ((str_print = get_var_param(params->env, delet_first(command))))
+	if (*command == '$')
+	{
+		if ((str_print = get_var_param(params->env, delet_first(command))))
+		{
+			write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+			ft_putstr_fd(str_print, 2);
+			ft_putstr_fd(": command not found\n", 2);
+		}
+	}
+	else if ((str_print = get_var_param(params->env, delet_first(command))))
 	{
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		ft_putstr_fd(str_print, 2);

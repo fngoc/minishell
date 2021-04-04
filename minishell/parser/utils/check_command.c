@@ -87,6 +87,11 @@ void	check_command(char *line, t_parser *p)
 	previous_char = NULL;
 	name = NULL;
 	i = -1;
+	if (*line == ';')
+	{
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		error("You can not write at the beginning of the command ;");
+	}
 	while (*line != ';' && *line != '\0')
 	{
 		if (ft_istab(*line))

@@ -122,6 +122,11 @@ void parser_echo(t_parser *p, char **line, int *i)
 {
 	char *name;
 
+	if (!**line)
+	{
+		p->map_comand[++*i] = NULL;
+		return ;
+	}
 	name = NULL;
 	while (**line != ';' && **line != '\0')
 	{

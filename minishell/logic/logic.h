@@ -20,7 +20,7 @@ char			*get_var_param(t_list *env, char *param);
 char			*get_var_full_param(t_list *env, char *param);
 char			*change_value_by_key(char *key, char *value);
 t_list			*get_env_list_pos(t_list *env, char *param);
-void 			ft_echo(char **map, int n_flag, int flag_param, int flag_quotation_mark);
+void 			ft_echo(char *str, int n_flag);
 void			cd(char *dir);
 void			export();
 void			sort_export(t_list *new);

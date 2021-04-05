@@ -67,10 +67,8 @@ void send_command_execute(char **map_comand, t_parser *p)
 	}
 	else if (!ft_strcmp(map_comand[0], "echo"))
 	{
-		if (map_comand[1] != NULL && !ft_strcmp(map_comand[1], "-n") && map_comand[2] != NULL)
-			ft_echo(map_comand, 1, p->flag_echo, p->flag_quotation_mark);
-		else if (map_comand[1] != NULL && ft_strcmp(map_comand[1], "-n"))
-			ft_echo(map_comand, 0, p->flag_echo, p->flag_quotation_mark);
+		if (map_comand[1] != NULL)
+			ft_echo(map_comand[1], p->flag_echo_n);
 		else if (map_comand[1] == NULL)
 			ft_putchar('\n');
 	}

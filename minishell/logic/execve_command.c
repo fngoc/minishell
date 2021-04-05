@@ -17,7 +17,7 @@ static	char	*delet_first(char *str)
 	return (new_char);
 }
 
-static void err_exit(int err, char *command)
+static int err_exit(int err, char *command)
 {
 	char *str_print;
 	if (*command == '$')
@@ -41,7 +41,7 @@ static void err_exit(int err, char *command)
 		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": command not found\n", 2);
 	}
-	exit(err);
+	return (err);
 }
 
 char	**list_to_arr() {
@@ -62,6 +62,50 @@ char	**list_to_arr() {
 
 	return arr;
 }
+
+int 	is_path_command(char **path, char *command)
+{
+	struct stat sb;
+	char *str;
+	char *tmp_join;
+
+
+	while (*path)
+	{
+		tmp_join = ft_strjoin("/", command);
+		str = ft_strjoin(*path, tmp_join);
+		if (lstat(str, &sb) != -1) {
+			if (sb.st_mode & S_IFREG) {
+				if (sb.st_mode & S_IXUSR)
+				{
+					return 1;
+				}
+			}
+		}
+		path++;
+		free(tmp_join);
+		free(str);
+	}
+	return 0;
+}
+
+int check_executable(char *command)
+{
+	struct stat f;
+
+	lstat(command, &f);
+
+		if (f.st_mode & S_IFREG) {
+			if (f.st_mode & S_IXUSR) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+
+	return 0;
+}
+
 
 
 int 	exec(char *command, char **argv)

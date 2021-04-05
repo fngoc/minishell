@@ -22,7 +22,7 @@ typedef struct s_parser
     int		step_history;
 	int		flag_step_history_next;
 	int		flag_step_history_previou;
-	int		flag_echo;
+	int		flag_echo_n;
 	int		flag_quotation_mark;
 }               t_parser;
 

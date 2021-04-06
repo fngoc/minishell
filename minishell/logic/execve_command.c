@@ -3,11 +3,11 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-static void free_tmp(char **first, char **second)
-{
-	free_map(first);
-	free_map(second);
-}
+//static void free_tmp(char **first, char **second)
+//{
+//	free_map(first);
+//	free_map(second);
+//}
 
 static	char	*delet_first(char *str)
 {
@@ -17,7 +17,7 @@ static	char	*delet_first(char *str)
 	return (new_char);
 }
 
-static int err_exit(int err, char *command)
+static int err_exit(int err, char *command, char err_name)
 {
 	char *str_print;
 	if (*command == '$')
@@ -34,6 +34,20 @@ static int err_exit(int err, char *command)
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		ft_putstr_fd(str_print, 2);
 		ft_putstr_fd(": command not found\n", 2);
+	}
+
+	else if (err_name == 'p')
+	{
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		ft_putstr_fd(command, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
+
+	else if (err_name == 'f')
+	{
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		ft_putstr_fd(command, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 	else
 	{
@@ -63,12 +77,32 @@ char	**list_to_arr() {
 	return arr;
 }
 
+void 	exec_command(char *command, char **argv, char **env)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		errno_exit();
+	}
+
+	if (pid == 0)
+	{
+		if(execve(command,argv, env) == -1)
+			errno_exit();
+		exit(0);
+	}
+	if (pid > 0)
+		wait(&pid);
+}
+
+
 int 	is_path_command(char **path, char *command)
 {
 	struct stat sb;
 	char *str;
 	char *tmp_join;
-
 
 	while (*path)
 	{
@@ -106,8 +140,6 @@ int check_executable(char *command)
 	return 0;
 }
 
-
-
 int 	exec(char *command, char **argv)
 {
 	int fd;
@@ -117,61 +149,67 @@ int 	exec(char *command, char **argv)
 	char **ev;
 	char **tmp;
 	int check;
-	pid_t pid;
+//	pid_t pid;
 	char *tmp_join;
-	struct stat sb;
+//	struct stat sb;
 
 	check = 0;
-	pid = fork();
 
-	if (pid == 0)
+	(void)argv;
+	ev = list_to_arr();
+	str2 = get_var_param(params->env, "PATH");
+	if (!str2)
+		return (-1);
+	splitted = ft_split(str2, ':');
+	//tmp to free splitted
+	tmp = splitted;
+
+	fd = open(command, O_RDONLY);
+
+	//check for permission denied or executable
+	if (fd > 0)
 	{
-		ev = list_to_arr();
-		str2 = get_var_param(params->env, "PATH");
-		if (!str2)
-			return (-1);
-		splitted = ft_split(str2, ':');
-
-		tmp = splitted;
-		if (command[0] == '.') {
-			if (stat(command, &sb) == 0 && sb.st_mode & S_IXUSR) {
-				check = execve(command, argv, ev);
-				free_tmp(tmp, ev);
-				exit(check);
+		if(ft_strchr(command, '/'))
+		{
+			if (check_executable(command)) {
+				exec_command(command, argv, ev);
+			} else {
+				err_exit(126, command, 'p');
 			}
-			else
-			{
-				write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-				ft_putstr_fd(command, 2);
-				ft_putstr_fd(": Permission denied\n", 2);
-				free_tmp(tmp, ev);
-				exit(0);
-			}
+			close(fd);
+			free_map(tmp);
+			free_map(ev);
+			return(1);
 		}
+	}
+
 		while (*splitted)
 		{
 			tmp_join = ft_strjoin("/", command);
 			str = ft_strjoin(*splitted, tmp_join);
 			fd = open(str, O_RDONLY);
-			if (fd != -1) {
-
-				check = execve(str, argv, ev);
+			if (fd > 0)
+			{
+				exec_command(str, argv, ev);
+				free(tmp_join);
+				free(str);
+				break;
 			}
-
 			close(fd);
-			free(str);
 			free(tmp_join);
+			free(str);
 			splitted++;
 		}
-		free_tmp(tmp, ev);
-		if (fd == -1) {
-			err_exit(check, command);
+		free_map(tmp);
+		free_map(ev);
+		if (fd == -1 && ft_strchr(command, '/'))
+		{
+			err_exit(127, command, 'f');
 		}
-		exit(check);
-	}
-	else if (pid == -1)
-		error("failed to fork");
-	wait(&pid);
 
-	return (1);
+		else if (fd == -1)
+		{
+			err_exit(127, command, ' ');
+		}
+	return 1;
 }

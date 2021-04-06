@@ -18,7 +18,7 @@ static	int cd_error(int fd, char *dir)
 			{
 				ft_putstr_fd("cd : ", 2);
 				ft_putstr_fd(dir, 2);
-				ft_putstr_fd(" Not a directory\n", 2);
+				ft_putstr_fd(": Not a directory\n", 2);
 			}
 		return (0);
 	}

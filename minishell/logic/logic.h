@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "../libft/libft.h"
+#include <string.h>
 
 void			error(char *str);
 char			*get_pwd();
@@ -34,6 +35,8 @@ char			*remove_double_quotes(const char *var);
 char			**list_to_arr();
 void			dollar_variable(char *param);
 void			dollar_variable(char *param);
+void			errno_exit();
+int				is_path_command(char **path, char *command);
 
 		typedef struct	list
 {

@@ -164,9 +164,12 @@ int 	exec(char *command, char **argv)
 		{
 			if (check_executable(command)) {
 				exec_command(command, argv, ev);
-			} else {
+			}
+			else
+			{
 				err_exit(126, command, 'p');
 			}
+			free_map(ev);
 			close(fd);
 			return(1);
 		}
@@ -175,15 +178,13 @@ int 	exec(char *command, char **argv)
 		if ((fd < 0 && ft_strchr(command, '/')) ||
 	str2 == NULL)
 	{
-		err_exit(127, command, 'f');
 		free_map(ev);
+		err_exit(127, command, 'f');
 		return(1);
 	}
 	splitted = ft_split(str2, ':');
 	//tmp to free splitted
 	tmp = splitted;
-
-
 
 		while (*splitted)
 		{

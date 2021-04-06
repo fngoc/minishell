@@ -4,12 +4,8 @@
 
 static int is_digit_in_key(const char *key)
 {
-	while (*key)
-	{
-		if (ft_isdigit(*key))
+	if (ft_isdigit(key[0]))
 			return (1);
-		key++;
-	}
 	return (0);
 }
 

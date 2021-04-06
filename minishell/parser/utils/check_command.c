@@ -99,6 +99,8 @@ int	check_echo_flag_n(char **line)
 	{
 		if (ft_istab(**line))
 			++(*line);
+		if (**line == ';')
+			return (2);
 		if (**line == '-')
 		{
 			++(*line);
@@ -121,17 +123,29 @@ int	check_echo_flag_n(char **line)
 void parser_echo(t_parser *p, char **line, int *i)
 {
 	char *name;
+	int flag;
 
+	flag = 0;
 	if (!**line)
 	{
 		p->map_comand[++*i] = NULL;
 		return ;
 	}
 	name = NULL;
-	while (**line != ';' && **line != '\0')
+	// if (**line != '\'' || **line != '\"')
+	// {
+	// 	flag = 1;
+	// 	name = ft_strjoin_char_free(name, **line);
+	// 	++(*line);
+	// }
+	while ((**line != ';' && **line != '\0')) //|| flag == 1) && **line != '\0')
 	{
 		name = ft_strjoin_char_free(name, **line);
 		++(*line);
+		// if ((**line == '\'' || **line == '\"'))
+		// 	flag = 1;
+		// if ((**line == '\'' || **line == '\"') && flag == 0)
+		// 	flag = 0;
 	}
 	p->map_comand[++*i] = ft_strdup(name);
 	free(name);
@@ -172,7 +186,8 @@ void	check_command(char *line, t_parser *p)
 			if (p->map_comand[0] != NULL && !ft_strcmp(p->map_comand[0], "echo"))
 			{
 				p->flag_echo_n = check_echo_flag_n(&line);
-				parser_echo(p, &line, &i);
+				if (p->flag_echo_n == 0 || p->flag_echo_n == 1)
+					parser_echo(p, &line, &i);
 				break ;
 			}
 		}

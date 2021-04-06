@@ -23,7 +23,7 @@ SRC = main.c \
 	parser/utils/delet_last_char.c logic/execve_command.c parser/utils/is_arrow.c parser/utils/ft_istab.c\
 	parser/utils/free_map.c parser/utils/ft_strjoin_char_free.c parser/utils/get_history.c \
 	parser/utils/check_buffer.c parser/utils/send_command_execute.c parser/utils/check_command.c \
-	logic/ft_echo.c
+	logic/ft_echo.c parser/utils/privacy_check.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -148,21 +148,12 @@ int 	exec(char *command, char **argv)
 	char **splitted;
 	char **ev;
 	char **tmp;
-	int check;
-//	pid_t pid;
 	char *tmp_join;
-//	struct stat sb;
 
-	check = 0;
 
-	(void)argv;
+
 	ev = list_to_arr();
-	str2 = get_var_param(params->env, "PATH");
-	if (!str2)
-		return (-1);
-	splitted = ft_split(str2, ':');
-	//tmp to free splitted
-	tmp = splitted;
+
 
 	fd = open(command, O_RDONLY);
 
@@ -177,11 +168,22 @@ int 	exec(char *command, char **argv)
 				err_exit(126, command, 'p');
 			}
 			close(fd);
-			free_map(tmp);
-			free_map(ev);
 			return(1);
 		}
 	}
+	str2 = get_var_param(params->env, "PATH");
+		if ((fd < 0 && ft_strchr(command, '/')) ||
+	str2 == NULL)
+	{
+		err_exit(127, command, 'f');
+		free_map(ev);
+		return(1);
+	}
+	splitted = ft_split(str2, ':');
+	//tmp to free splitted
+	tmp = splitted;
+
+
 
 		while (*splitted)
 		{

@@ -60,7 +60,10 @@ static char *without_quotation_marks(char **line)
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);
 				else
+				{
 					str = ft_strdup(tmp);
+					free(tmp);
+				}
 			}
 		}
 		if (**line == '\"')
@@ -122,7 +125,10 @@ static char *double_quote(char **line)
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);
 				else
+				{
 					str = ft_strdup(tmp);
+					free(tmp);
+				}
 			}
 		}
 	}
@@ -144,7 +150,7 @@ static	char	**pars_line_echo(char *line)
 	char *str_arg;
 	char **map_arg;
 	int i;
-	
+
 	i = -1;
 	map_arg = ft_calloc(500, sizeof(char **));
 	while (*line != '\0')
@@ -161,8 +167,10 @@ static	char	**pars_line_echo(char *line)
 			else
 				str_arg = without_quotation_marks(&line);
 			if (str_arg != NULL)
+			{
 				map_arg[++i] = ft_strdup(str_arg);
-			// free(str_arg);
+				free(str_arg);
+			}
 		}
 	}
 	return (map_arg);
@@ -171,15 +179,19 @@ static	char	**pars_line_echo(char *line)
 void 	ft_echo(char *line, int n_flag)
 {
 	char **map_arg;
-	
-	map_arg = ft_calloc(500, sizeof(char **));
+	char **tmp;
+
 	map_arg = pars_line_echo(line);
+	tmp = map_arg;
 	while (*map_arg != NULL)
 	{
-		ft_putstr_fd(*map_arg++, 1);
+		ft_putstr_fd(*map_arg, 1);
+		free(*map_arg);
+		++map_arg;
 		if (*map_arg != NULL)
 			ft_putchar_fd(' ', 1);
 	}
+	free(tmp);
 	if (n_flag == 0)
 		ft_putchar_fd('\n', 1);
 }

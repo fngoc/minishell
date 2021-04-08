@@ -184,10 +184,7 @@ static char *double_quote(char **line)
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);
 				else
-				{
 					str = ft_strdup(tmp);
-					free(tmp);
-				}
 			}
 		}
 	}

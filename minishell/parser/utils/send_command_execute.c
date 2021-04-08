@@ -7,7 +7,12 @@
 
 void send_command_execute(char **map_comand, t_parser *p)
 {
-	if (!ft_strcmp(map_comand[0], "$?"))
+	if (map_comand[0] == NULL)
+	{
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		ft_putstr_fd(": command not found\n", 2);
+	}
+	else if (!ft_strcmp(map_comand[0], "$?"))
 	{
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		ft_putstr_fd("command not found: ", 2);

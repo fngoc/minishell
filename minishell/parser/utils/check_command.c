@@ -39,8 +39,8 @@ static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, c
 			++(*line);
 		}
 	}
-	if (**line == '\0')
-		error("Incorrect number of quotation marks");
+	// if (**line == '\0')
+	// 	error("Incorrect number of quotation marks");
 	++(*line);
 	if ((ft_istab(**line) || **line == '\0') && ft_strlen(*line) >= 0)
 	{

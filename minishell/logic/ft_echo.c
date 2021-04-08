@@ -2,6 +2,10 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
+/*
+** delet_first: удалить первый символ строки.
+*/
+
 static	char	*delet_first(char *str)
 {
 	char *new_char;
@@ -12,6 +16,10 @@ static	char	*delet_first(char *str)
 	free(tmp);
 	return (new_char);
 }
+
+/*
+** ft_strjoin_fix: чистит первый аргумент.
+*/
 
 static char	*ft_strjoin_fix(char *s1, char *s2)
 {
@@ -38,6 +46,10 @@ static char	*ft_strjoin_fix(char *s1, char *s2)
 	p[i] = '\0';
 	return (p);
 }
+
+/*
+** ft_strjoin_free_free: чистить все аргументы.
+*/
 
 static char	*ft_strjoin_free_free(char *s1, char *s2)
 {
@@ -66,6 +78,10 @@ static char	*ft_strjoin_free_free(char *s1, char *s2)
 	return (p);
 }
 
+/*
+** single_quote: одна кавычка.
+*/
+
 static char *single_quote(char **line)
 {
 	char *str;
@@ -79,6 +95,10 @@ static char *single_quote(char **line)
 	++(*line);
 	return (str);
 }
+
+/*
+** without_quotation_marks: без кавычек.
+*/
 
 static char *without_quotation_marks(char **line)
 {
@@ -98,10 +118,7 @@ static char *without_quotation_marks(char **line)
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);
 				else
-				{
 					str = ft_strdup(tmp);
-					free(tmp);
-				}
 			}
 		}
 		if (**line == '\"')
@@ -141,6 +158,10 @@ static char *without_quotation_marks(char **line)
 	}
 	return (str);
 }
+
+/*
+** double_quote: двайная кавычка.
+*/
 
 static char *double_quote(char **line)
 {
@@ -183,6 +204,10 @@ static char *double_quote(char **line)
 	return (str);
 }
 
+/*
+** pars_line_echo: парсинг строки для echo.
+*/
+
 static	char	**pars_line_echo(char *line)
 {
 	char *str_arg;
@@ -213,6 +238,10 @@ static	char	**pars_line_echo(char *line)
 	}
 	return (map_arg);
 }
+
+/*
+** ft_echo: команда echo.
+*/
 
 void 	ft_echo(char *line, int n_flag)
 {

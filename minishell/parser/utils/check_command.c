@@ -20,6 +20,7 @@ static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, c
 				++(*line);
 				*name = ft_strjoin_char_free(*name, **line);
 				++(*line);
+				continue ;
 			}
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
@@ -34,6 +35,7 @@ static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, c
 				++(*line);
 				*name = ft_strjoin_char_free(*name, **line);
 				++(*line);
+				continue ;
 			}
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
@@ -72,6 +74,7 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 			++(*line);
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
+			continue ;
 		}
 		*name = ft_strjoin_char_free(*name, **line);
 		++(*line);
@@ -123,29 +126,29 @@ int	check_echo_flag_n(char **line)
 void parser_echo(t_parser *p, char **line, int *i)
 {
 	char *name;
-	int flag;
+	int flag_mark;
 
-	flag = 0;
+	flag_mark = 0;
 	if (!**line)
 	{
 		p->map_comand[++*i] = NULL;
 		return ;
 	}
 	name = NULL;
-	// if (**line != '\'' || **line != '\"')
-	// {
-	// 	flag = 1;
-	// 	name = ft_strjoin_char_free(name, **line);
-	// 	++(*line);
-	// }
-	while ((**line != ';' && **line != '\0')) //|| flag == 1) && **line != '\0')
+	if (**line == '\'' || **line == '\"')
 	{
+		flag_mark = 1;
 		name = ft_strjoin_char_free(name, **line);
 		++(*line);
-		// if ((**line == '\'' || **line == '\"'))
-		// 	flag = 1;
-		// if ((**line == '\'' || **line == '\"') && flag == 0)
-		// 	flag = 0;
+	}
+	while ((**line != ';' && **line != '\0') || flag_mark == 1)
+	{
+		if ((**line == '\'' || **line == '\"') && flag_mark == 1)
+			flag_mark = 0;
+		else if ((**line == '\'' || **line == '\"'))
+			flag_mark = 1;
+		name = ft_strjoin_char_free(name, **line);
+		++(*line);
 	}
 	p->map_comand[++*i] = ft_strdup(name);
 	free(name);

@@ -15,6 +15,13 @@ static void checking_single_quotes(char *line)
 	open = 0;
 	while (*line != '\0')
 	{
+		if (*line == '\\')
+		{
+			++line;
+			if (*line == '\'' || *line == '\"')
+				++line;
+			continue ;
+		}
 		if (flag_in == 1 && *line == '\"')
 			flag_in = 0;
 		else if (open == 0 && *line == '\"')
@@ -52,6 +59,13 @@ static void checking_double_quotes(char *line)
 	open = 0;
 	while (*line != '\0')
 	{
+		if (*line == '\\')
+		{
+			++line;
+			if (*line == '\'' || *line == '\"')
+				++line;
+			continue ;
+		}
 		if (flag_in == 1 && *line == '\'')
 			flag_in = 0;
 		else if (open == 0 && *line == '\'')

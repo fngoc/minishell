@@ -34,7 +34,7 @@ static void checking_single_quotes(char *line)
 	if (coll == 0)
 		return ;
 	if (coll % 2 != 0)
-		error("Unclosed quotation mark 2");
+		error("Unclosed quotation single mark");
 }
 
 /*
@@ -71,7 +71,7 @@ static void checking_double_quotes(char *line)
 	if (coll == 0)
 		return ;
 	if (coll % 2 != 0)
-		error("Unclosed quotation mark 2");
+		error("Unclosed quotation double mark");
 }
 
 /*

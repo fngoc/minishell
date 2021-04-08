@@ -2,6 +2,17 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
+static	char	*delet_first(char *str)
+{
+	char *new_char;
+	char *tmp;
+
+	tmp = str;
+	new_char = ++str;
+	free(tmp);
+	return (new_char);
+}
+
 static char	*ft_strjoin_fix(char *s1, char *s2)
 {
 	char	*p;
@@ -24,6 +35,33 @@ static char	*ft_strjoin_fix(char *s1, char *s2)
 		++i;
 		++j;
 	}
+	p[i] = '\0';
+	return (p);
+}
+
+static char	*ft_strjoin_free_free(char *s1, char *s2)
+{
+	char	*p;
+	int		i;
+	int		j;
+
+	if (!(p = malloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+	{
+		p[i] = s1[i];
+		++i;
+	}
+	free(s1);
+	while (s2[j] != '\0')
+	{
+		p[i] = s2[j];
+		++i;
+		++j;
+	}
+	free(s2);
 	p[i] = '\0';
 	return (p);
 }
@@ -55,12 +93,15 @@ static char *without_quotation_marks(char **line)
 			tmp = NULL;
 			while (**line != ' ' && **line != '\"' && **line != '\'' && **line != '\0')
 				tmp = ft_strjoin_char_free(tmp, *(*line)++);
-			if ((tmp = get_var_param(params->env, ++tmp)))
+			if ((tmp = get_var_param(params->env, delet_first(tmp))))
 			{
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);
 				else
+				{
 					str = ft_strdup(tmp);
+					free(tmp);
+				}
 			}
 		}
 		if (**line == '\"')
@@ -75,7 +116,7 @@ static char *without_quotation_marks(char **line)
 					tmp = NULL;
 					while (**line != ' ' && **line != '\"' && **line != '\'')
 						tmp = ft_strjoin_char_free(tmp, *(*line)++);
-					if ((tmp = get_var_param(params->env, ++tmp)))
+					if ((tmp = get_var_param(params->env, delet_first(tmp))))
 					{
 						if (str != NULL)
 							str = ft_strjoin_fix(str, tmp);
@@ -117,12 +158,15 @@ static char *double_quote(char **line)
 			tmp = NULL;
 			while (**line != ' ' && **line != '\"' && **line != '\'')
 				tmp = ft_strjoin_char_free(tmp, *(*line)++);
-			if ((tmp = get_var_param(params->env, ++tmp)))
+			if ((tmp = get_var_param(params->env, delet_first(tmp))))
 			{
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);
 				else
+				{
 					str = ft_strdup(tmp);
+					free(tmp);
+				}
 			}
 		}
 	}
@@ -130,11 +174,11 @@ static char *double_quote(char **line)
 	if (**line != ' ' && **line != '\0')
 	{
 		if (**line == '\'')
-			str = ft_strjoin_fix(str, single_quote(line));
+			str = ft_strjoin_free_free(str, single_quote(line));
 		else if (**line == '\"')
-			str = ft_strjoin_fix(str, double_quote(line));
+			str = ft_strjoin_free_free(str, double_quote(line));
 		else
-			str = ft_strjoin_fix(str, without_quotation_marks(line));
+			str = ft_strjoin_free_free(str, without_quotation_marks(line));
 	}
 	return (str);
 }
@@ -144,7 +188,7 @@ static	char	**pars_line_echo(char *line)
 	char *str_arg;
 	char **map_arg;
 	int i;
-	
+
 	i = -1;
 	map_arg = ft_calloc(500, sizeof(char **));
 	while (*line != '\0')
@@ -161,8 +205,10 @@ static	char	**pars_line_echo(char *line)
 			else
 				str_arg = without_quotation_marks(&line);
 			if (str_arg != NULL)
+			{
 				map_arg[++i] = ft_strdup(str_arg);
-			// free(str_arg);
+				free(str_arg);
+			}
 		}
 	}
 	return (map_arg);
@@ -171,15 +217,19 @@ static	char	**pars_line_echo(char *line)
 void 	ft_echo(char *line, int n_flag)
 {
 	char **map_arg;
-	
-	map_arg = ft_calloc(500, sizeof(char **));
+	char **tmp;
+
 	map_arg = pars_line_echo(line);
+	tmp = map_arg;
 	while (*map_arg != NULL)
 	{
-		ft_putstr_fd(*map_arg++, 1);
+		ft_putstr_fd(*map_arg, 1);
+		free(*map_arg);
+		++map_arg;
 		if (*map_arg != NULL)
 			ft_putchar_fd(' ', 1);
 	}
+	free(tmp);
 	if (n_flag == 0)
 		ft_putchar_fd('\n', 1);
 }

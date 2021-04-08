@@ -212,7 +212,7 @@ static	char	**pars_line_echo(char *line, int memory)
 	int i;
 
 	i = -1;
-	map_arg = ft_calloc(memory, sizeof(char **));
+	map_arg = ft_calloc(memory + 1, sizeof(char **));
 	while (*line != '\0')
 	{
 		if (*line == ' ')
@@ -250,10 +250,18 @@ void 	ft_echo(char *line, int n_flag, int memory)
 	while (*map_arg != NULL)
 	{
 		ft_putstr_fd(*map_arg, 1);
-		free(*map_arg);
-		++map_arg;
-		if (*map_arg != NULL)
-			ft_putchar_fd(' ', 1);
+		if ((*map_arg)[ft_strlen(*map_arg) - 1] == ' ')
+		{
+			free(*map_arg);
+			++map_arg;
+		}
+		else
+		{
+			free(*map_arg);
+			++map_arg;
+			if (*map_arg != NULL)
+				ft_putchar_fd(' ', 1);
+		}
 	}
 	free(tmp);
 	if (n_flag == 0)

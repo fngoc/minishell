@@ -24,6 +24,7 @@ typedef struct s_parser
 	int		flag_step_history_previou;
 	int		flag_echo_n;
 	int		flag_quotation_mark;
+	int		coll_space;
 }               t_parser;
 
 void    parser(void);
@@ -60,6 +61,6 @@ void	send_command_execute(char **map_comand, t_parser *p);
 
 void	check_command(char *line, t_parser *p);
 
-void	privacy_check(char *line);
+void	privacy_check(char *line, t_parser *p);
 
 #endif

@@ -205,14 +205,14 @@ static char *double_quote(char **line)
 ** pars_line_echo: парсинг строки для echo.
 */
 
-static	char	**pars_line_echo(char *line)
+static	char	**pars_line_echo(char *line, int memory)
 {
 	char *str_arg;
 	char **map_arg;
 	int i;
 
 	i = -1;
-	map_arg = ft_calloc(500, sizeof(char **));
+	map_arg = ft_calloc(memory, sizeof(char **));
 	while (*line != '\0')
 	{
 		if (*line == ' ')
@@ -240,12 +240,12 @@ static	char	**pars_line_echo(char *line)
 ** ft_echo: команда echo.
 */
 
-void 	ft_echo(char *line, int n_flag)
+void 	ft_echo(char *line, int n_flag, int memory)
 {
 	char **map_arg;
 	char **tmp;
 
-	map_arg = pars_line_echo(line);
+	map_arg = pars_line_echo(line, memory);
 	tmp = map_arg;
 	while (*map_arg != NULL)
 	{

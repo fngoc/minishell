@@ -20,8 +20,6 @@ typedef struct s_parser
 	int		len_str;
 	int		backspace;
     int		step_history;
-	int		flag_step_history_next;
-	int		flag_step_history_previou;
 	int		flag_echo_n;
 	int		flag_quotation_mark;
 	int		coll_space;

@@ -53,8 +53,6 @@ static	void	init_parser(t_parser *p)
 {
 	p->step_history = -1;
 	p->len_map = -1;
-	p->flag_step_history_next = 0;
-	p->flag_step_history_previou = 0;
 	p->map_history = ft_calloc(500, sizeof(char *));
 	p->str = ft_calloc(2, sizeof(char));
 	p->buf = NULL;

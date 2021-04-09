@@ -16,6 +16,7 @@ CLEAN = clean
 FCLEAN = fclean
 
 SRC = main.c \
+	\
 	parser/parser.c \
 	parser/utils/check_command.c \
 	parser/utils/error.c \

@@ -65,7 +65,7 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 {
 	if (*p_c != NULL && **p_c == ' ')
 		*name = NULL;
-	while (!ft_istab(**line) && **line != '\0')
+	while (!ft_istab(**line) && **line != ';' && **line != '\0')
 	{
 		if (**line == '\"' || **line == '\'')
 			break ;
@@ -143,12 +143,20 @@ void parser_echo(t_parser *p, char **line, int *i)
 	}
 	while ((**line != ';' && **line != '\0') || flag_mark == 1)
 	{
+		if (**line == '\\')
+		{
+			name = ft_strjoin_char_free(name, *(*line)++);
+			name = ft_strjoin_char_free(name, *(*line)++);
+			continue ;
+		}
 		if ((**line == '\'' || **line == '\"') && flag_mark == 1)
 			flag_mark = 0;
 		else if ((**line == '\'' || **line == '\"'))
 			flag_mark = 1;
 		name = ft_strjoin_char_free(name, **line);
 		++(*line);
+		if (**line == '\0')
+			break ;
 	}
 	p->map_comand[++*i] = ft_strdup(name);
 	free(name);

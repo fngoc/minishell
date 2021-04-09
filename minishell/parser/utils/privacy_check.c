@@ -18,7 +18,7 @@ static void checking_single_quotes(char *line)
 		if (*line == '\\')
 		{
 			++line;
-			if (*line == '\'' || *line == '\"')
+			if (*line == '\'' || *line == '\"' || *line == '\\')
 				++line;
 			continue ;
 		}
@@ -62,7 +62,7 @@ static void checking_double_quotes(char *line)
 		if (*line == '\\')
 		{
 			++line;
-			if (*line == '\'' || *line == '\"')
+			if (*line == '\'' || *line == '\"' || *line == '\\')
 				++line;
 			continue ;
 		}

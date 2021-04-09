@@ -261,7 +261,7 @@ static	char	**pars_line_echo(char *line, int memory)
 	int i;
 
 	i = -1;
-	map_arg = ft_calloc(memory + 1, sizeof(char **));
+	map_arg = ft_calloc(memory * 2, sizeof(char **));
 	while (*line != '\0')
 	{
 		if (*line == ' ')

@@ -8,6 +8,7 @@
 # include <term.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <signal.h>
 # include "../libft/libft.h"
 
 typedef struct s_parser

@@ -8,6 +8,8 @@ void set_line(char const *str, int fd, t_parser *p)
 {
 	char	*str_in_history;
 
+	if (p->len_map >= 499)
+		error("Memory overflow occurred, please restart the program");
 	str_in_history = ft_strjoin(str, "\n");
 	if (str_in_history[0] != '\n')
 	{

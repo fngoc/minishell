@@ -8,6 +8,8 @@
 
 static	void	read_line(int fd, t_parser *p)
 {
+	char *tmp_p_str;
+
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
 		if (p->buf != NULL)
@@ -24,7 +26,7 @@ static	void	read_line(int fd, t_parser *p)
 				break ;
 			if (!is_arrow(p->buf))
 			{
-				char * tmp_p_str;
+				tmp_p_str = NULL;
 				tmp_p_str = ft_strjoin(p->str, p->buf);
 				free(p->str);
 				p->str = tmp_p_str;

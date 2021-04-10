@@ -18,7 +18,7 @@ FCLEAN = fclean
 SRC = main.c \
 	\
 	parser/parser.c \
-	parser/utils/check_command.c \
+	parser/utils/parser_commands.c \
 	parser/utils/error.c \
 	parser/utils/ft_putchar.c \
 	parser/utils/init.c \

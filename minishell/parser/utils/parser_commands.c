@@ -161,10 +161,10 @@ void parser_echo(t_parser *p, char **line, int *i)
 }
 
 /*
-** check_command: проверка строки на команды и кавычки.
+** parser_commands: проверка строки на команды и кавычки.
 */
 
-void	check_command(char *line, t_parser *p)
+void	parser_commands(char *line, t_parser *p)
 {
 	char *name;
 	char *previous_char;
@@ -204,7 +204,7 @@ void	check_command(char *line, t_parser *p)
 	send_command_execute(p->map_comand, p);
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
-		check_command(++line, p);
+		parser_commands(++line, p);
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;
 }

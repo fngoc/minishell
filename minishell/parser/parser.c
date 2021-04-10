@@ -59,7 +59,7 @@ static	void	read_line(int fd, t_parser *p)
 		set_line(p->str, fd, p);
 		privacy_check(p->str, p);
 		if (ft_strlen(p->str) > 0)
-			check_command(p->str, p);
+			parser_commands(p->str, p);
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
 	free_read_line(p);

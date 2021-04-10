@@ -22,14 +22,15 @@ static	void	checks(t_parser *p)
 }
 
 /*
-** free_read_line: очистка после парсинга строки.
+** free_read_line_exit: очистка после парсинга строки.
 */
 
-static void		free_read_line(t_parser *p)
+static void		free_read_line_exit(t_parser *p)
 {
 	free(p->buf);
 	free(p->str);
 	free_map(p->map_history);
+	ft_putendl_fd("exit", 1);
 }
 
 /*
@@ -62,7 +63,7 @@ static	void	read_line(int fd, t_parser *p)
 			parser_commands(p->str, p);
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
-	free_read_line(p);
+	free_read_line_exit(p);
 }
 
 /*

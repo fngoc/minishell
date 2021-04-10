@@ -3,13 +3,41 @@
 #include "../logic/logic.h"
 
 /*
+** checks: проверки.
+*/
+
+static	void	checks(t_parser *p)
+{
+	char	*tmp_p_str;
+
+	if (!is_arrow(p->buf))
+	{
+		tmp_p_str = NULL;
+		tmp_p_str = ft_strjoin(p->str, p->buf);
+		free(p->str);
+		p->str = tmp_p_str;
+	}
+	if (p->backspace)
+		p->str = delet_last_char(p->str, 1);
+}
+
+/*
+** free_read_line: очистка после парсинга строки.
+*/
+
+static void		free_read_line(t_parser *p)
+{
+	free(p->buf);
+	free(p->str);
+	free_map(p->map_history);
+}
+
+/*
 ** read_line: чтение линии.
 */
 
 static	void	read_line(int fd, t_parser *p)
 {
-	char *tmp_p_str;
-
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
 		if (p->buf != NULL)
@@ -24,15 +52,7 @@ static	void	read_line(int fd, t_parser *p)
 			p->buf = check_buffer(p);
 			if (p->buf == NULL)
 				break ;
-			if (!is_arrow(p->buf))
-			{
-				tmp_p_str = NULL;
-				tmp_p_str = ft_strjoin(p->str, p->buf);
-				free(p->str);
-				p->str = tmp_p_str;
-			}
-			if (p->backspace)
-				p->str = delet_last_char(p->str, 1);
+			checks(p);
 		}
 		write(1, "\n", 1);
 		p->step_history = p->len_map;
@@ -42,9 +62,7 @@ static	void	read_line(int fd, t_parser *p)
 			check_command(p->str, p);
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
-	free(p->buf);
-	free(p->str);
-	free_map(p->map_history);
+	free_read_line(p);
 }
 
 /*
@@ -66,11 +84,11 @@ static	void	init_parser(t_parser *p)
 ** parser: запуск парсера.
 */
 
-void	parser(void)
+void			parser(void)
 {
 	int				fd;
 	t_parser		p;
-	struct	termios	term;
+	struct termios	term;
 
 	term = init();
 	fd = make_file();

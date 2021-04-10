@@ -6,12 +6,11 @@
 ** main: запуск программы
 */
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	(void) argc;
-	(void) argv;
-	(void) env;
-
+	(void)argc;
+	(void)argv;
+	(void)env;
 	params = malloc(sizeof(g_list));
 	params->env = env_copy(env);
 	parser();

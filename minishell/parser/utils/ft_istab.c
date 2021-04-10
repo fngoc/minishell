@@ -3,7 +3,7 @@
 ** если найден пробел.
 */
 
-int ft_istab(char c)
+int	ft_istab(char c)
 {
 	if (c == ' ')
 		return (1);

@@ -5,7 +5,7 @@
 ** send_command_execute: отправка команд на выполнение.
 */
 
-void send_command_execute(char **map_comand, t_parser *p)
+void	send_command_execute(char **map_comand, t_parser *p)
 {
 	if (map_comand[0] == NULL)
 	{
@@ -28,9 +28,9 @@ void send_command_execute(char **map_comand, t_parser *p)
 	{
 		if (map_comand[1] != NULL && !ft_strcmp(map_comand[1], ".."))
 			cd("..");
-		else if(map_comand[1] == NULL || !ft_strcmp(map_comand[1], "~"))
+		else if (map_comand[1] == NULL || !ft_strcmp(map_comand[1], "~"))
 			cd("");
-		else if(map_comand[1] != NULL)
+		else if (map_comand[1] != NULL)
 			cd(map_comand[1]);
 	}
 	else if (!ft_strcmp(map_comand[0], "export"))

@@ -4,7 +4,7 @@
 ** make_file: создаем фаил с иcторией.
 */
 
-int make_file(void)
+int	make_file(void)
 {
 	int fd;
 

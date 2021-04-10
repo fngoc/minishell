@@ -66,4 +66,8 @@ void			checking_single_quotes(char *line);
 
 void			checking_double_quotes(char *line);
 
+void			ft_sigint(int sig);
+
+void			ft_quit(int sig);
+
 #endif

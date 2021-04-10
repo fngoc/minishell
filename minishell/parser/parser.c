@@ -91,6 +91,8 @@ void			parser(void)
 	t_parser		p;
 	struct termios	term;
 
+	signal(SIGQUIT, ft_quit);
+	signal(SIGINT, ft_sigint);
 	term = init();
 	fd = make_file();
 	init_parser(&p);

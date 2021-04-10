@@ -17,7 +17,7 @@ static	void	counting_spaces(char *line, t_parser *p)
 }
 
 /*
-** privacy_check: проверка кавычек в строке.
+** privacy_check: проверка на все.
 */
 
 void			privacy_check(char *line, t_parser *p)

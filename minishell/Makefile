@@ -35,6 +35,7 @@ SRC = main.c \
 	parser/utils/send_command_execute.c \
 	parser/utils/privacy_check.c \
 	parser/utils/checking_quotes.c \
+	parser/utils/signals.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \

@@ -179,6 +179,11 @@ void	parser_commands(char *line, t_parser *p)
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		error("You can not write at the beginning of the command ;");
 	}
+	if (*line == '|')
+	{
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		error("You can not write at the beginning of the command |");
+	}
 	while (*line != ';' && *line != '\0')
 	{
 		if (ft_istab(*line))

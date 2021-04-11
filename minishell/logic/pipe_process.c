@@ -17,6 +17,7 @@ void	pipe_process(char **argv, t_parser *p)
 	if (pid == 0)
 	{
 		dup2(fd[1], STDOUT_FILENO);
+
 		send_command_execute(argv, p);
 //		exec(command, argv);
 		close(fd[0]);

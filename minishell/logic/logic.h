@@ -37,7 +37,7 @@ char			**list_to_arr();
 void			dollar_variable(char *param);
 void			errno_exit();
 int				is_path_command(char **path, char *command);
-void			pipe_process(char **argv, t_parser *p);
+void	pipe_process(char **argv, t_parser *p);
 
 		typedef struct	list
 {

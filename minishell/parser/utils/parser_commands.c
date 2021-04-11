@@ -20,6 +20,7 @@ static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, c
 				++(*line);
 				*name = ft_strjoin_char_free(*name, **line);
 				++(*line);
+				continue ;
 			}
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
@@ -34,13 +35,12 @@ static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, c
 				++(*line);
 				*name = ft_strjoin_char_free(*name, **line);
 				++(*line);
+				continue ;
 			}
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
 		}
 	}
-	if (**line == '\0')
-		error("Incorrect number of quotation marks");
 	++(*line);
 	if ((ft_istab(**line) || **line == '\0') && ft_strlen(*line) >= 0)
 	{
@@ -63,7 +63,7 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 {
 	if (*p_c != NULL && **p_c == ' ')
 		*name = NULL;
-	while (!ft_istab(**line) && **line != '\0')
+	while (!ft_istab(**line) && **line != ';' && **line != '\0')
 	{
 		if (**line == '\"' || **line == '\'')
 			break ;
@@ -72,6 +72,7 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 			++(*line);
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
+			continue ;
 		}
 		*name = ft_strjoin_char_free(*name, **line);
 		++(*line);
@@ -123,39 +124,47 @@ int	check_echo_flag_n(char **line)
 void parser_echo(t_parser *p, char **line, int *i)
 {
 	char *name;
-	int flag;
+	int flag_mark;
 
-	flag = 0;
+	flag_mark = 0;
 	if (!**line)
 	{
 		p->map_comand[++*i] = NULL;
 		return ;
 	}
 	name = NULL;
-	// if (**line != '\'' || **line != '\"')
-	// {
-	// 	flag = 1;
-	// 	name = ft_strjoin_char_free(name, **line);
-	// 	++(*line);
-	// }
-	while ((**line != ';' && **line != '\0')) //|| flag == 1) && **line != '\0')
+	if (**line == '\'' || **line == '\"')
 	{
+		flag_mark = 1;
 		name = ft_strjoin_char_free(name, **line);
 		++(*line);
-		// if ((**line == '\'' || **line == '\"'))
-		// 	flag = 1;
-		// if ((**line == '\'' || **line == '\"') && flag == 0)
-		// 	flag = 0;
+	}
+	while ((**line != ';' && **line != '\0') || flag_mark == 1)
+	{
+		if (**line == '\\')
+		{
+			name = ft_strjoin_char_free(name, *(*line)++);
+			name = ft_strjoin_char_free(name, *(*line)++);
+			continue ;
+		}
+		if ((**line == '\'' || **line == '\"') && flag_mark == 1)
+			flag_mark = 0;
+		else if ((**line == '\'' || **line == '\"'))
+			flag_mark = 1;
+		name = ft_strjoin_char_free(name, **line);
+		++(*line);
+		if (**line == '\0')
+			break ;
 	}
 	p->map_comand[++*i] = ft_strdup(name);
 	free(name);
 }
 
 /*
-** check_command: проверка строки на команды и кавычки.
+** parser_commands: проверка строки на команды и кавычки.
 */
 
-void	check_command(char *line, t_parser *p)
+void	parser_commands(char *line, t_parser *p)
 {
 	char *name;
 	char *previous_char;
@@ -169,6 +178,11 @@ void	check_command(char *line, t_parser *p)
 	{
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		error("You can not write at the beginning of the command ;");
+	}
+	if (*line == '|')
+	{
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		error("You can not write at the beginning of the command |");
 	}
 	while (*line != ';' && *line != '\0')
 	{
@@ -195,7 +209,7 @@ void	check_command(char *line, t_parser *p)
 	send_command_execute(p->map_comand, p);
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
-		check_command(++line, p);
+		parser_commands(++line, p);
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;
 }

@@ -1,26 +1,28 @@
 #include "../parser.h"
 
 /*
-** privacy_check: проверка кавычек в строке.
+** counting_spaces: подсчет пробелов для
+** будущего выделения памяти.
 */
 
-void	privacy_check(char *line)
+static	void	counting_spaces(char *line, t_parser *p)
 {
-	int coll_quote;
-
-	coll_quote = 0;
+	p->coll_space = 0;
 	while (*line != '\0')
 	{
-		if (*line == '\\')
-		{
-			++line;
-			if (*line == '\'' || *line == '\"')
-				++line;
-		}
-		if (*line == '\'' || *line == '\"')
-			++coll_quote;
-		++line;	
+		if (*line == ' ')
+			++p->coll_space;
+		++line;
 	}
-	if (coll_quote % 2 != 0)
-		error("Incorrect number of quotation marks");
+}
+
+/*
+** privacy_check: проверка на все.
+*/
+
+void			privacy_check(char *line, t_parser *p)
+{
+	checking_single_quotes(line);
+	checking_double_quotes(line);
+	counting_spaces(line, p);
 }

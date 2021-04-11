@@ -2,6 +2,10 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
+/*
+** delet_first: удалить первый символ строки.
+*/
+
 static	char	*delet_first(char *str)
 {
 	char *new_char;
@@ -12,6 +16,10 @@ static	char	*delet_first(char *str)
 	free(tmp);
 	return (new_char);
 }
+
+/*
+** ft_strjoin_fix: чистит первый аргумент.
+*/
 
 static char	*ft_strjoin_fix(char *s1, char *s2)
 {
@@ -38,6 +46,10 @@ static char	*ft_strjoin_fix(char *s1, char *s2)
 	p[i] = '\0';
 	return (p);
 }
+
+/*
+** ft_strjoin_free_free: чистить все аргументы.
+*/
 
 static char	*ft_strjoin_free_free(char *s1, char *s2)
 {
@@ -66,6 +78,10 @@ static char	*ft_strjoin_free_free(char *s1, char *s2)
 	return (p);
 }
 
+/*
+** single_quote: одна кавычка.
+*/
+
 static char *single_quote(char **line)
 {
 	char *str;
@@ -73,36 +89,56 @@ static char *single_quote(char **line)
 	str = NULL;
 	++(*line);
 	while (**line != '\'' && **line != '\0')
+	{
+		if (**line == '\\')
+			++(*line);
 		str = ft_strjoin_char_free(str, *(*line)++);
+	}
 	if (**line == '\0')
 		error("Not a closed quote");
 	++(*line);
 	return (str);
 }
 
+/*
+** without_quotation_marks: без кавычек.
+*/
+
 static char *without_quotation_marks(char **line)
 {
 	char *str;
 	char *tmp;
+	char *buf;
+	int flag;
 
+	flag = 0;
 	str = NULL;
+	buf = NULL;
 	while (**line != ' ' && **line != '\0')
 	{
 		if (**line == '$')
 		{
 			tmp = NULL;
 			while (**line != ' ' && **line != '\"' && **line != '\'' && **line != '\0')
+			{
+				if (**line == '\\')
+				{
+					++(*line);
+					flag = 1;
+					buf = ft_strjoin_char_free(buf, **line);
+					continue ;
+				}
 				tmp = ft_strjoin_char_free(tmp, *(*line)++);
+			}
 			if ((tmp = get_var_param(params->env, delet_first(tmp))))
 			{
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);
 				else
-				{
 					str = ft_strdup(tmp);
-					free(tmp);
-				}
 			}
+			if (flag)
+				str = ft_strjoin_fix(str, buf);
 		}
 		if (**line == '\"')
 		{
@@ -110,12 +146,23 @@ static char *without_quotation_marks(char **line)
 			while (**line != '\"' && **line != '\0')
 			{
 				if (**line != '$')
+				{
+					if (**line == '\\')
+						++(*line);
 					str = ft_strjoin_char_free(str, *(*line)++);
+				}
 				if (**line == '$')
 				{
 					tmp = NULL;
 					while (**line != ' ' && **line != '\"' && **line != '\'')
+					{
+						if (**line == '\\')
+						{
+							++(*line);
+							continue ;
+						}
 						tmp = ft_strjoin_char_free(tmp, *(*line)++);
+					}
 					if ((tmp = get_var_param(params->env, delet_first(tmp))))
 					{
 						if (str != NULL)
@@ -132,15 +179,27 @@ static char *without_quotation_marks(char **line)
 		{
 			++(*line);
 			while (**line != '\'' && **line != '\0')
+			{
+				if (**line == '\\')
+					++(*line);
 				str = ft_strjoin_char_free(str, *(*line)++);
+			}
 			if (**line == '\'')
 				++(*line);
 		}
 		if (ft_strlen(*line) > 0)
+		{
+			if (**line == '\\')
+				++(*line);
 			str = ft_strjoin_char_free(str, *(*line)++);
+		}
 	}
 	return (str);
 }
+
+/*
+** double_quote: двайная кавычка.
+*/
 
 static char *double_quote(char **line)
 {
@@ -152,21 +211,29 @@ static char *double_quote(char **line)
 	while (**line != '\"' && **line != '\0')
 	{
 		if (**line != '$')
+		{
+			if (**line == '\\')
+				++(*line);
 			str = ft_strjoin_char_free(str, *(*line)++);
+		}
 		if (**line == '$')
 		{
 			tmp = NULL;
 			while (**line != ' ' && **line != '\"' && **line != '\'')
+			{
+				if (**line == '\\')
+				{
+					++(*line);
+					continue ;
+				}
 				tmp = ft_strjoin_char_free(tmp, *(*line)++);
+			}
 			if ((tmp = get_var_param(params->env, delet_first(tmp))))
 			{
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);
 				else
-				{
 					str = ft_strdup(tmp);
-					free(tmp);
-				}
 			}
 		}
 	}
@@ -183,14 +250,18 @@ static char *double_quote(char **line)
 	return (str);
 }
 
-static	char	**pars_line_echo(char *line)
+/*
+** pars_line_echo: парсинг строки для echo.
+*/
+
+static	char	**pars_line_echo(char *line, int memory)
 {
 	char *str_arg;
 	char **map_arg;
 	int i;
 
 	i = -1;
-	map_arg = ft_calloc(500, sizeof(char **));
+	map_arg = ft_calloc(memory * 2, sizeof(char **));
 	while (*line != '\0')
 	{
 		if (*line == ' ')
@@ -214,20 +285,32 @@ static	char	**pars_line_echo(char *line)
 	return (map_arg);
 }
 
-void 	ft_echo(char *line, int n_flag)
+/*
+** ft_echo: команда echo.
+*/
+
+void 	ft_echo(char *line, int n_flag, int memory)
 {
 	char **map_arg;
 	char **tmp;
 
-	map_arg = pars_line_echo(line);
+	map_arg = pars_line_echo(line, memory);
 	tmp = map_arg;
 	while (*map_arg != NULL)
 	{
 		ft_putstr_fd(*map_arg, 1);
-		free(*map_arg);
-		++map_arg;
-		if (*map_arg != NULL)
-			ft_putchar_fd(' ', 1);
+		if ((*map_arg)[ft_strlen(*map_arg) - 1] == ' ')
+		{
+			free(*map_arg);
+			++map_arg;
+		}
+		else
+		{
+			free(*map_arg);
+			++map_arg;
+			if (*map_arg != NULL)
+				ft_putchar_fd(' ', 1);
+		}
 	}
 	free(tmp);
 	if (n_flag == 0)

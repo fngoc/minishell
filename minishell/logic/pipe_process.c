@@ -2,7 +2,7 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-void	pipe_process(char *command, char **argv, t_parser *parser)
+void	pipe_process(char **argv, t_parser *p)
 {
 	int fd[2];
 	pid_t pid;
@@ -17,7 +17,7 @@ void	pipe_process(char *command, char **argv, t_parser *parser)
 	if (pid == 0)
 	{
 		dup2(fd[1], STDOUT_FILENO);
-		send_command_execute(map, parser);
+		send_command_execute(argv, p);
 //		exec(command, argv);
 		close(fd[0]);
 		close(fd[1]);

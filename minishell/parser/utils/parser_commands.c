@@ -1,4 +1,5 @@
 #include "../../parser/parser.h"
+#include "../../logic/logic.h"
 
 /*
 ** quotation_mark_found: найдена кавычка.
@@ -184,7 +185,7 @@ void	parser_commands(char *line, t_parser *p)
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		error("You can not write at the beginning of the command |");
 	}
-	while (*line != ';' && *line != '\0')
+	while (*line != ';' && *line != '|' && *line != '\0')
 	{
 		if (ft_istab(*line))
 		{
@@ -193,6 +194,8 @@ void	parser_commands(char *line, t_parser *p)
 		}
 		else
 		{
+			if (i >= 499)
+				error("Exceeded the limit on the number of commands per line");
 			if (*line == '\"' || *line == '\'')
 				quotation_mark_found(p, &i, &previous_char, &name, &line);
 			else
@@ -206,7 +209,10 @@ void	parser_commands(char *line, t_parser *p)
 			}
 		}
 	}
-	send_command_execute(p->map_comand, p);
+	if (*line == '|')
+		pipe_process(p->map_comand, p);
+	else
+		send_command_execute(p->map_comand, p);
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
 		parser_commands(++line, p);

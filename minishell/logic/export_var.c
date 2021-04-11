@@ -85,7 +85,6 @@ void 	export_var(char *var)
 	tmp_var = ft_strdup(var);
 	tmp = params->env;
 	key = get_key_by_full_param(tmp_var);
-	printf("%s\n", key);
 
 	if (is_valid_identifier(key) == 0)
 	{

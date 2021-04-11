@@ -34,9 +34,9 @@ int				exec(char *command, char **argv);
 char			*remove_double_quotes(const char *var);
 char			**list_to_arr();
 void			dollar_variable(char *param);
-void			dollar_variable(char *param);
 void			errno_exit();
 int				is_path_command(char **path, char *command);
+void			pipe_process(char *command, char **argv);
 
 		typedef struct	list
 {

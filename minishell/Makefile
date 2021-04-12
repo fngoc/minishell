@@ -36,6 +36,8 @@ SRC = main.c \
 	parser/utils/privacy_check.c \
 	parser/utils/checking_quotes.c \
 	parser/utils/signals.c \
+	parser/utils/ft_echo.c \
+	parser/utils/exit_comand.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \
@@ -48,7 +50,6 @@ SRC = main.c \
 	logic/pwd.c \
 	logic/init_env_copy.c \
 	logic/find_env_var.c \
-	logic/ft_echo.c \
 	logic/utils/arr_size.c \
 	logic/pipe_process.c \
 	logic/utils/print_promt.c \

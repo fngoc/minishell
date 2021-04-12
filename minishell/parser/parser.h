@@ -70,4 +70,8 @@ void			ft_sigint(int sig);
 
 void			ft_quit(int sig);
 
+void 			ft_echo(char *str, int n_flag, int memory);
+
+void			exit_comand(char **map);
+
 #endif

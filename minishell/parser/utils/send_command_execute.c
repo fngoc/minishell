@@ -58,18 +58,7 @@ void	send_command_execute(char **map_comand, t_parser *p)
 		}
 	}
 	else if (!ft_strcmp(map_comand[0], "exit"))
-	{
-		if (map_comand[1] == NULL)
-		{
-			ft_putstr_fd("exit\n", 2);
-			exit(0);
-		}
-		else
-		{
-			ft_putstr_fd("exit\n", 2);
-			exit(ft_atoi(map_comand[1]));
-		}
-	}
+		exit_comand(map_comand);
 	else if (!ft_strcmp(map_comand[0], "echo"))
 	{
 		if (map_comand[1] != NULL)

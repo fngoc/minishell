@@ -1,6 +1,6 @@
-#include "logic.h"
-#include "../parser/parser.h"
-#include "../libft/libft.h"
+#include "../../logic/logic.h"
+#include "../parser.h"
+#include "../../libft/libft.h"
 
 /*
 ** delet_first: удалить первый символ строки.

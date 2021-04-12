@@ -2,7 +2,11 @@
 #include "../parser.h"
 #include "../../libft/libft.h"
 
-static	void	exit_comand_norm(int flag, char *str)
+/*
+** send_exit_norm: функция для нормы.
+*/
+
+static	void	send_exit_norm(int flag, char *str)
 {
 	if (flag == 0)
 		error("exit", ft_atoi(str));
@@ -15,7 +19,11 @@ static	void	exit_comand_norm(int flag, char *str)
 	}
 }
 
-void			exit_comand(char **map)
+/*
+** send_exit: выполнение команды exit.
+*/
+
+void			send_exit(char **map)
 {
 	int flag;
 	int i;
@@ -38,7 +46,7 @@ void			exit_comand(char **map)
 				break ;
 			}
 		}
-		exit_comand_norm(flag, map[1]);
+		send_exit_norm(flag, map[1]);
 	}
 	else
 		error("exit", 0);

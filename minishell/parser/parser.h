@@ -24,6 +24,7 @@ typedef	struct	s_parser
 	int			flag_echo_n;
 	int			flag_quotation_mark;
 	int			coll_space;
+	int			flag_red;
 }				t_parser;
 
 void			parser(void);
@@ -72,6 +73,14 @@ void			ft_quit(int sig);
 
 void 			ft_echo(char *str, int n_flag, int memory);
 
-void			exit_comand(char **map);
+void			send_exit(char **map);
+
+void			send_exec(char **map);
+
+void			send_echo(char **map, t_parser *p);
+
+void			send_env(char **map);
+
+void			send_question_mark(void);
 
 #endif

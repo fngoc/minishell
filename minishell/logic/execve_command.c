@@ -85,7 +85,6 @@ void 	exec_command(char *command, char **argv, char **env)
 
 	if (pid == 0)
 	{
-		printf("%d\n", errno);
 		if(execve(command,argv, env) == -1)
 		{
 			err = errno;

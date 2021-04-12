@@ -211,8 +211,12 @@ void	parser_commands(char *line, t_parser *p)
 	}
 	if (*line == '|')
 		pipe_process(p->map_comand, p);
-	else
+	else {
 		send_command_execute(p->map_comand, p);
+		dup2(1, STDIN_FILENO);
+		dup2(0, STDOUT_FILENO);
+	}
+
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
 		parser_commands(++line, p);

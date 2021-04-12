@@ -38,4 +38,5 @@ void	pipe_process(char **argv, t_parser *p)
 		close(fd[0]);
 		set_errno(0);
 	}
+	wait(NULL);
 }

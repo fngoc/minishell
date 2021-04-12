@@ -39,6 +39,7 @@ int				is_path_command(char **path, char *command);
 void			pipe_process(char **argv, t_parser *p);
 void			print_promt(char *str_print);
 void			set_errno(int err);
+void			redirect(char *file_name);
 
 		typedef struct	list
 {

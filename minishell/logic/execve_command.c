@@ -3,7 +3,7 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-static	char	*delet_first(char *str)
+static	char	*delet_first_exe(char *str)
 {
 	char *new_char;
 
@@ -16,14 +16,14 @@ static int err_exit(int err, char *command, char err_name)
 	char *str_print;
 	if (*command == '$')
 	{
-		if ((str_print = get_var_param(params->env, delet_first(command))))
+		if ((str_print = get_var_param(params->env, delet_first_exe(command))))
 		{
 			print_promt(str_print);
 			ft_putstr_fd(": command not found\n", 2);
 			set_errno(127);
 		}
 	}
-	else if ((str_print = get_var_param(params->env, delet_first(command))))
+	else if ((str_print = get_var_param(params->env, delet_first_exe(command))))
 	{
 		print_promt(str_print);
 		ft_putstr_fd(": command not found\n", 2);

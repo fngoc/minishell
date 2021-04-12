@@ -83,4 +83,16 @@ void			send_env(char **map);
 
 void			send_question_mark(void);
 
+char			*ft_strjoin_free_free(char *s1, char *s2);
+
+char			*delet_first(char *str);
+
+char			*ft_strjoin_fix(char *s1, char *s2);
+
+char			*double_quote(char **line);
+
+char			*single_quote(char **line);
+
+char			*without_quotation_marks(char **line);
+
 #endif

@@ -3,12 +3,6 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-//static void free_tmp(char **first, char **second)
-//{
-//	free_map(first);
-//	free_map(second);
-//}
-
 static	char	*delet_first(char *str)
 {
 	char *new_char;
@@ -209,7 +203,6 @@ int 	exec(char *command, char **argv)
 		{
 			err_exit(127, command, 'f');
 		}
-
 		else if (fd == -1)
 		{
 			err_exit(127, command, ' ');

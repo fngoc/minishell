@@ -4,7 +4,6 @@
 
 static int check_alnum(char *key)
 {
-	printf("%s\n", key);
 	while (*key)
 	{
 		if (*key == '_')
@@ -127,8 +126,6 @@ void 	export_var(char *var)
 		}
 		free(tmp_value);
 	}
-
-
 	// если есть символ равно в новой переменной, проvеряем что внутри
 	else if (*(tmp_var + ft_strlen(key)) == '=')
 	{

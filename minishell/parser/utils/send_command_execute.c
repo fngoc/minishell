@@ -81,6 +81,12 @@ void	send_command_execute(char **map_comand, t_parser *p)
 	{
 		if (map_comand[0] != NULL)
 		{
+			if (!ft_strcmp(map_comand[0], "./minishell"))
+			{
+				int lvl = ft_atoi(get_var_param(params->env, "SHLVL"));
+				++lvl;
+				export_var(ft_strjoin("SHLVL=", ft_itoa(lvl)));
+			}
 			if (!exec(map_comand[0], map_comand))
 			{
 				write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);

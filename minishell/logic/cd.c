@@ -13,12 +13,14 @@ static	int cd_error(int fd, char *dir)
 			ft_putstr_fd("cd: ", 2);
 			ft_putstr_fd(dir, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
+			set_errno(1);
 		}
 		else
 			{
 				ft_putstr_fd("cd : ", 2);
 				ft_putstr_fd(dir, 2);
 				ft_putstr_fd(": Not a directory\n", 2);
+				set_errno(1);
 			}
 		return (0);
 	}

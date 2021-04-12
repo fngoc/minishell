@@ -18,36 +18,36 @@ static int err_exit(int err, char *command, char err_name)
 	{
 		if ((str_print = get_var_param(params->env, delet_first(command))))
 		{
-			write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-			ft_putstr_fd(str_print, 2);
+			print_promt(str_print);
 			ft_putstr_fd(": command not found\n", 2);
+			set_errno(127);
 		}
 	}
 	else if ((str_print = get_var_param(params->env, delet_first(command))))
 	{
-		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		ft_putstr_fd(str_print, 2);
+		print_promt(str_print);
 		ft_putstr_fd(": command not found\n", 2);
+		set_errno(127);
 	}
 
 	else if (err_name == 'p')
 	{
-		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		ft_putstr_fd(command, 2);
+		print_promt(command);
 		ft_putstr_fd(": Permission denied\n", 2);
+		set_errno(126);
 	}
 
 	else if (err_name == 'f')
 	{
-		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		ft_putstr_fd(command, 2);
+		print_promt(command);
 		ft_putstr_fd(": No such file or directory\n", 2);
+		set_errno(1);
 	}
 	else
 	{
-		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		ft_putstr_fd(command, 2);
+		print_promt(command);
 		ft_putstr_fd(": command not found\n", 2);
+		set_errno(127);
 	}
 	return (err);
 }
@@ -74,19 +74,28 @@ char	**list_to_arr() {
 void 	exec_command(char *command, char **argv, char **env)
 {
 	pid_t pid;
+	int err;
 
 	pid = fork();
 	if (pid == -1)
 	{
-		errno_exit();
+		err = errno;
+		set_errno(err);
 	}
 
 	if (pid == 0)
 	{
+		printf("%d\n", errno);
 		if(execve(command,argv, env) == -1)
-			errno_exit();
+		{
+			err = errno;
+			set_errno(err);
+		}
+		else
+			set_errno(0);
 		exit(0);
 	}
+
 	if (pid > 0)
 		wait(&pid);
 }
@@ -144,11 +153,7 @@ int 	exec(char *command, char **argv)
 	char **tmp;
 	char *tmp_join;
 
-
-
 	ev = list_to_arr();
-
-
 	fd = open(command, O_RDONLY);
 
 	//check for permission denied or executable

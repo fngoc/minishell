@@ -24,5 +24,6 @@ int unset(char *param)
 		}
 		prev = &((*prev)->next);
 	}
+	set_errno(0);
 	return (0);
 }

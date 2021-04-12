@@ -9,6 +9,9 @@ char *get_var_param(t_list *env, char *param)
 {
 	int flag;
 
+	if (ft_strlen(param) == 1 && !ft_strcmp(param, "?")) {
+		return get_var_param(params->env, "err");
+	}
 	flag = 0;
 	while (env)
 	{

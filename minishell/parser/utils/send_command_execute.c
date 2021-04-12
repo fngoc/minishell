@@ -16,7 +16,7 @@ void	send_command_execute(char **map_comand, t_parser *p)
 	{
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		ft_putstr_fd("command not found: ", 2);
-		ft_putstr_fd(ft_itoa(errno), 2);
+		ft_putstr_fd(get_var_param(params->env, "?"), 2);
 		ft_putstr_fd("\n", 2);
 	}
 	else if (!ft_strcmp(map_comand[0], "pwd"))

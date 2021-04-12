@@ -49,9 +49,10 @@ SRC = main.c \
 	logic/init_env_copy.c \
 	logic/find_env_var.c \
 	logic/ft_echo.c \
-	logic/errors/error.c \
 	logic/utils/arr_size.c \
-	logic/pipe_process.c
+	logic/pipe_process.c \
+	logic/utils/print_promt.c \
+	logic/utils/set_error.c \
 
 OBJ = $(SRC:.c=.o)
 

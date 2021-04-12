@@ -9,7 +9,11 @@ static void 	print_chars(t_list *copy)
 
 	i = 0;
 	check = 0;
+	if (ft_strncmp("err", copy->content, 3) == 0) {
+		return;
+	}
 	ft_putstr_fd("declare -x ", 1);
+
 	while (copy->content[i])
 	{
 		ft_putchar(copy->content[i]);

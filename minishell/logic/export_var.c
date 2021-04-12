@@ -4,7 +4,6 @@
 
 static int check_alnum(char *key)
 {
-	printf("%s\n", key);
 	while (*key)
 	{
 		if (*key == '_')
@@ -101,10 +100,8 @@ void 	export_var(char *var)
 
 		if (*(tmp_var + ft_strlen(key) - 1) == '+')
 		{
-			ft_putstr_fd("true\n", 1);
 			var[ft_strlen(key) - 1] = '\0';
 		}
-
 		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(var)));
 		tmp = params->env;
 	}

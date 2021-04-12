@@ -15,6 +15,7 @@ t_list *env_copy(char **env_original)
 	{
 		ft_lstadd_back(&head, ft_lstnew(ft_strdup(env_original[i])));
 	}
+	ft_lstadd_front(&head, ft_lstnew(ft_strdup("err=0")));
 
 	return (head);
 }

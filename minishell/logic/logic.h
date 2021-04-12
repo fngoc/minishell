@@ -12,7 +12,6 @@
 #include <string.h>
 #include "../parser/parser.h"
 
-void			error(char *str);
 char			*get_pwd();
 void 			print_pwd();
 t_list			*env_copy(char **env_original);

@@ -64,7 +64,8 @@ char 	*get_key_by_full_param(char *full_param)
 		full_param++;
 	}
 	full_param = ptr;
-	key = (char*)malloc((sizeof(char) * length) + 1);
+	if (!(key = (char*)malloc((sizeof(char) * length) + 1)))
+		error("Allocated error", 11);
 	while (++i < length)
 	{
 		if (*full_param == '=')

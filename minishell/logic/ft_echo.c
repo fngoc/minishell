@@ -95,7 +95,7 @@ static char *single_quote(char **line)
 		str = ft_strjoin_char_free(str, *(*line)++);
 	}
 	if (**line == '\0')
-		error("Not a closed quote");
+		error("Not a closed quote", 258);
 	++(*line);
 	return (str);
 }
@@ -261,7 +261,8 @@ static	char	**pars_line_echo(char *line, int memory)
 	int i;
 
 	i = -1;
-	map_arg = ft_calloc(memory * 2, sizeof(char **));
+	if (!(map_arg = ft_calloc(memory * 2, sizeof(char **))))
+		error("Allocated error", 11);
 	while (*line != '\0')
 	{
 		if (*line == ' ')

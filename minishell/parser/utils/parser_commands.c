@@ -173,17 +173,18 @@ void	parser_commands(char *line, t_parser *p)
 
 	name = NULL;
 	previous_char = NULL;
-	p->map_comand = ft_calloc(500, sizeof(char *));
+	if (!(p->map_comand = ft_calloc(500, sizeof(char *))))
+		error("Allocated error", 11);
 	i = -1;
 	if (*line == ';')
 	{
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		error("You can not write at the beginning of the command ;");
+		error("You can not write at the beginning of the command ;", 258);
 	}
 	if (*line == '|')
 	{
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		error("You can not write at the beginning of the command |");
+		error("You can not write at the beginning of the command |", 258);
 	}
 	while (*line != ';' && *line != '|' && *line != '\0')
 	{
@@ -195,7 +196,7 @@ void	parser_commands(char *line, t_parser *p)
 		else
 		{
 			if (i >= 499)
-				error("Exceeded the limit on the number of commands per line");
+				error("Exceeded the limit on the number of commands per line", 11);
 			if (*line == '\"' || *line == '\'')
 				quotation_mark_found(p, &i, &previous_char, &name, &line);
 			else

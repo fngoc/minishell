@@ -28,7 +28,7 @@ typedef	struct	s_parser
 
 void			parser(void);
 
-void			error(char *str);
+void			error(char *str, int err);
 
 int				ft_putchar(int c);
 

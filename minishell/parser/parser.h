@@ -10,8 +10,8 @@
 # include <errno.h>
 # include <signal.h>
 # include "../libft/libft.h"
-#include <sys/types.h>
-#include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 typedef struct	s_file
 {
@@ -129,18 +129,14 @@ void			print_env();
 char			*get_key_by_full_param(char *full_param);
 int				unset(char *param);
 int				exec(char *command, char **argv);
-char			*remove_double_quotes(const char *var);
 char			**list_to_arr();
-void			dollar_variable(char *param);
-int				is_path_command(char **path, char *command);
 void			pipe_process(char **argv, t_parser *p, t_file *file);
 void			print_promt(char *str_print);
 void			set_errno(int err);
-void			redirect(char *file_name);
-void 	get_pipe_id(t_file *file);
-void 	forward_redirect(t_file *file, char *file_name);
-void 	double_redirect(t_file *file, char *file_name);
-void 	back_redirect(t_file *file, char *file_name);
+void			get_pipe_id(t_file *file);
+void			forward_redirect(t_file *file, char *file_name);
+void			double_redirect(t_file *file, char *file_name);
+void			back_redirect(t_file *file, char *file_name);
 
 g_list			*params;
 

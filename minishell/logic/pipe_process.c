@@ -18,10 +18,38 @@ void 	get_pipe_id(t_file *file)
 void 	forward_redirect(t_file *file, char *file_name)
 {
 	int fd;
+	printf("%s\n", file_name);
 	if ((fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 	{
 		set_errno(2);
-		return;
+		return ;
+	}
+	file->fd_stdout = fd;
+}
+
+void 	back_redirect(t_file *file, char *file_name)
+{
+	int fd;
+
+	if ((fd = open(file_name, O_RDONLY, 0644)) == -1)
+	{
+		set_errno(errno);
+		return ;
+	}
+	if (file->fd_stdin >= 0)
+		file->fd_stdin = fd;
+
+	dup2(file->fd_stdin, STDIN_FILENO);
+}
+
+void 	double_redirect(t_file *file, char *file_name)
+{
+	int fd;
+
+	if ((fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
+	{
+		set_errno(errno);
+		return ;
 	}
 	file->fd_stdout = fd;
 }

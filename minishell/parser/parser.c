@@ -1,6 +1,4 @@
 #include "parser.h"
-#include "../libft/libft.h"
-#include "../logic/logic.h"
 
 /*
 ** checks: проверки.
@@ -42,6 +40,7 @@ static	void	read_line(int fd, t_parser *p)
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
 		t_file file;
+		t_redir r;
 		dup2(1, STDIN_FILENO);
 		dup2(0, STDOUT_FILENO);
 		if (p->buf != NULL)
@@ -64,7 +63,7 @@ static	void	read_line(int fd, t_parser *p)
 		set_line(p->str, fd, p);
 		privacy_check(p->str, p);
 		if (ft_strlen(p->str) > 0)
-			parser_commands(p->str, p, &file);
+			parser_commands(p->str, p, &file, &r);
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
 	free_read_line_exit(p);

@@ -10,8 +10,10 @@
 # include <errno.h>
 # include <signal.h>
 # include "../libft/libft.h"
-#include <sys/types.h>
-#include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+
+g_list			*params;
 
 typedef struct	s_file
 {
@@ -41,6 +43,11 @@ typedef	struct	s_parser
 	char		*first_arg_redir;
 	char		*second_arg_redir;
 }				t_parser;
+
+typedef	struct	s_redir
+{
+	char		**map_command;
+}				t_redir;
 
 void			parser(void);
 
@@ -74,7 +81,7 @@ char			*check_buffer(t_parser *p);
 
 void			send_command_execute(char **map_comand, t_parser *p);
 
-void			parser_commands(char *line, t_parser *p, t_file *file);
+void			parser_commands(char *line, t_parser *p, t_file *file, t_redir *r);
 
 void			privacy_check(char *line, t_parser *p);
 
@@ -110,38 +117,70 @@ char			*single_quote(char **line);
 
 char			*without_quotation_marks(char **line);
 
-void			parser_redir(char **map_comand, t_parser *p, char **line, t_file *file);
-char			*get_pwd();
-void 			print_pwd();
-t_list			*env_copy(char **env_original);
-int				arr_size(char **arr);
-char			*get_var_param(t_list *env, char *param);
-char			*get_var_full_param(t_list *env, char *param);
-char			*change_value_by_key(char *key, char *value);
-t_list			*get_env_list_pos(t_list *env, char *param);
-void			cd(char *dir);
-void			export();
-void			sort_export(t_list *new);
-void			free_lst_map(t_list **lst);
-t_list			*list_copy();
-void			export_var(char *var);
-void			print_env();
-char			*get_key_by_full_param(char *full_param);
-int				unset(char *param);
-int				exec(char *command, char **argv);
-char			*remove_double_quotes(const char *var);
-char			**list_to_arr();
-void			dollar_variable(char *param);
-int				is_path_command(char **path, char *command);
-void			pipe_process(char **argv, t_parser *p, t_file *file);
-void			print_promt(char *str_print);
-void			set_errno(int err);
-void			redirect(char *file_name);
-void 	get_pipe_id(t_file *file);
-void 	forward_redirect(t_file *file, char *file_name);
-void 	double_redirect(t_file *file, char *file_name);
-void 	back_redirect(t_file *file, char *file_name);
+char			*what_is_redir(char *line, t_parser *p, char **map);
 
-g_list			*params;
+void			parser_redir(char **map_comand, t_parser *p, t_file *file, t_redir *r);
+
+void			set_redir_map(t_parser *p, t_redir *r);
+
+char			*get_pwd();
+
+void 			print_pwd();
+
+t_list			*env_copy(char **env_original);
+
+int				arr_size(char **arr);
+
+char			*get_var_param(t_list *env, char *param);
+
+char			*get_var_full_param(t_list *env, char *param);
+
+char			*change_value_by_key(char *key, char *value);
+
+t_list			*get_env_list_pos(t_list *env, char *param);
+
+void			cd(char *dir);
+
+void			export();
+
+void			sort_export(t_list *new);
+
+void			free_lst_map(t_list **lst);
+
+t_list			*list_copy();
+
+void			export_var(char *var);
+
+void			print_env();
+
+char			*get_key_by_full_param(char *full_param);
+
+int				unset(char *param);
+
+int				exec(char *command, char **argv);
+
+char			*remove_double_quotes(const char *var);
+
+char			**list_to_arr();
+
+void			dollar_variable(char *param);
+
+int				is_path_command(char **path, char *command);
+
+void			pipe_process(char **argv, t_parser *p, t_file *file);
+
+void			print_promt(char *str_print);
+
+void			set_errno(int err);
+
+void			redirect(char *file_name);
+
+void			get_pipe_id(t_file *file);
+
+void			forward_redirect(t_file *file, char *file_name);
+
+void 			double_redirect(t_file *file, char *file_name);
+
+void 			back_redirect(t_file *file, char *file_name);
 
 #endif

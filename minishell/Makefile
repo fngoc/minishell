@@ -48,7 +48,9 @@ SRC = main.c \
 	parser/utils/echo/double_quote.c \
 	parser/utils/echo/single_quote.c \
 	parser/utils/echo/without_quotation_marks.c \
-	parser/utils/parser_redir.c \
+	parser/utils/redirect/parser_redir.c \
+	parser/utils/redirect/what_is_redir.c \
+	parser/utils/set_redir_map.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \

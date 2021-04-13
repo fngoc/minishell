@@ -50,7 +50,7 @@ void			checking_single_quotes(char *line)
 	if (coll == 0)
 		return ;
 	if (coll % 2 != 0)
-		error("Unclosed quotation single mark");
+		error("Unclosed quotation single mark", 258);
 }
 
 /*
@@ -103,5 +103,5 @@ void			checking_double_quotes(char *line)
 	if (coll == 0)
 		return ;
 	if (coll % 2 != 0)
-		error("Unclosed quotation double mark");
+		error("Unclosed quotation double mark", 258);
 }

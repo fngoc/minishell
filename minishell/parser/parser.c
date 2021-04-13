@@ -41,11 +41,13 @@ static	void	read_line(int fd, t_parser *p)
 {
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
+		t_file file;
 		dup2(1, STDIN_FILENO);
 		dup2(0, STDOUT_FILENO);
 		if (p->buf != NULL)
 			free(p->buf);
-		p->buf = ft_calloc(2, sizeof(char));
+		if (!(p->buf = ft_calloc(2, sizeof(char))))
+			error("Allocated error", 11);
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		while (((p->len_str = read(0, p->buf, 100)) != -1) &&
@@ -62,7 +64,7 @@ static	void	read_line(int fd, t_parser *p)
 		set_line(p->str, fd, p);
 		privacy_check(p->str, p);
 		if (ft_strlen(p->str) > 0)
-			parser_commands(p->str, p);
+			parser_commands(p->str, p, &file);
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
 	free_read_line_exit(p);
@@ -76,8 +78,10 @@ static	void	init_parser(t_parser *p)
 {
 	p->step_history = -1;
 	p->len_map = -1;
-	p->map_history = ft_calloc(500, sizeof(char *));
-	p->str = ft_calloc(2, sizeof(char));
+	if (!(p->map_history = ft_calloc(500, sizeof(char *))))
+		error("Allocated error", 11);
+	if (!(p->str = ft_calloc(2, sizeof(char))))
+		error("Allocated error", 11);
 	p->buf = NULL;
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;

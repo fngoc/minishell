@@ -4,7 +4,6 @@
 
 void 	set_errno(int err)
 {
-	(void)err;
 	char *tmp;
 	char *res;
 
@@ -14,4 +13,3 @@ void 	set_errno(int err)
 	free(tmp);
 	free(res);
 }
-

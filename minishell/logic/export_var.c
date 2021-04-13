@@ -2,48 +2,48 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-static int check_alnum(char *key)
-{
-	while (*key)
-	{
-		if (*key == '_')
-		{
-			key++;
-			continue;
-		}
-		if (*key == '+' && (*(key + 1) == '\0'))
-		{
-			return(1);
-		}
+//static int check_alnum(char *key)
+//{
+//	while (*key)
+//	{
+//		if (*key == '_')
+//		{
+//			key++;
+//			continue;
+//		}
+//		if (*key == '+' && (*(key + 1) == '\0'))
+//		{
+//			return(1);
+//		}
+//
+//		if (!ft_isalnum(*key))
+//		{
+//			return (0);
+//		}
+//		key++;
+//	}
+//	return (1);
+//}
 
-		if (!ft_isalnum(*key))
-		{
-			return (0);
-		}
-		key++;
-	}
-	return (1);
-}
-
-static int is_valid_identifier(char *key)
-{
-	if (key[0] == '_')
-	{
-		if (check_alnum(key + 1) == 1)
-		{
-			return(1);
-		}
-	}
-	if(!ft_isalpha(key[0]))
-	{
-		return (0);
-	}
-	if (!check_alnum(key + 1))
-	{
-		return(0);
-	}
-	return 1;
-}
+//static int is_valid_identifier(char *key)
+//{
+//	if (key[0] == '_')
+//	{
+//		if (check_alnum(key + 1) == 1)
+//		{
+//			return(1);
+//		}
+//	}
+//	if(!ft_isalpha(key[0]))
+//	{
+//		return (0);
+//	}
+//	if (!check_alnum(key + 1))
+//	{
+//		return(0);
+//	}
+//	return 1;
+//}
 
 
 char 	*get_key_by_full_param(char *full_param)
@@ -64,7 +64,8 @@ char 	*get_key_by_full_param(char *full_param)
 		full_param++;
 	}
 	full_param = ptr;
-	key = (char*)malloc((sizeof(char) * length) + 1);
+	if (!(key = (char*)malloc((sizeof(char) * length) + 1)))
+		error("Allocated error", 11);
 	while (++i < length)
 	{
 		if (*full_param == '=')
@@ -85,15 +86,15 @@ void 	export_var(char *var)
 	tmp = params->env;
 	key = get_key_by_full_param(tmp_var);
 
-	if (is_valid_identifier(key) == 0)
-	{
-		ft_putstr_fd("export: '", 1);
-		ft_putstr_fd(var, 1);
-		ft_putstr_fd("': not a valid identifier\n", 1);
-		free(tmp_var);
-		free(key);
-		return ;
-	}
+//	if (is_valid_identifier(key) == 0)
+//	{
+//		ft_putstr_fd("export: \'", 1);
+//		ft_putstr_fd(var, 1);
+//		ft_putstr_fd("\': not a valid identifier\n", 1);
+//		free(tmp_var);
+//		free(key);
+//		return ;
+//	}
 	// если не нашли переменную в енв, добавляем новую
 	if (get_env_list_pos(params->env, key) == NULL)
 	{
@@ -124,8 +125,6 @@ void 	export_var(char *var)
 		}
 		free(tmp_value);
 	}
-
-
 	// если есть символ равно в новой переменной, проvеряем что внутри
 	else if (*(tmp_var + ft_strlen(key)) == '=')
 	{

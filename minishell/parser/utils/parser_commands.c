@@ -165,7 +165,7 @@ void parser_echo(t_parser *p, char **line, int *i)
 ** parser_commands: проверка строки на команды и кавычки.
 */
 
-void	parser_commands(char *line, t_parser *p)
+void	parser_commands(char *line, t_parser *p, t_file *file)
 {
 	char *name;
 	char *previous_char;
@@ -173,17 +173,18 @@ void	parser_commands(char *line, t_parser *p)
 
 	name = NULL;
 	previous_char = NULL;
-	p->map_comand = ft_calloc(500, sizeof(char *));
+	if (!(p->map_comand = ft_calloc(500, sizeof(char *))))
+		error("Allocated error", 11);
 	i = -1;
 	if (*line == ';')
 	{
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		error("You can not write at the beginning of the command ;");
+		error("You can not write at the beginning of the command ;", 258);
 	}
 	if (*line == '|')
 	{
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		error("You can not write at the beginning of the command |");
+		error("You can not write at the beginning of the command |", 258);
 	}
 	while (*line != ';' && *line != '|' && *line != '\0')
 	{
@@ -195,7 +196,7 @@ void	parser_commands(char *line, t_parser *p)
 		else
 		{
 			if (i >= 499)
-				error("Exceeded the limit on the number of commands per line");
+				error("Exceeded the limit on the number of commands per line", 11);
 			if (*line == '\"' || *line == '\'')
 				quotation_mark_found(p, &i, &previous_char, &name, &line);
 			else
@@ -209,17 +210,19 @@ void	parser_commands(char *line, t_parser *p)
 			}
 		}
 	}
-	if (*line == '|')
-		pipe_process(p->map_comand, p);
-	else {
+	if (*line == '|') {
+		get_pipe_id(file);
+		pipe_process(p->map_comand, p, file);
+	}
+	else
+	{
 		send_command_execute(p->map_comand, p);
 		dup2(1, STDIN_FILENO);
 		dup2(0, STDOUT_FILENO);
 	}
-
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
-		parser_commands(++line, p);
+		parser_commands(++line, p, file);
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;
 }

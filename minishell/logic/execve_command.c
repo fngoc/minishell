@@ -59,7 +59,7 @@ char	**list_to_arr() {
 	tmp = params->env;
 	char **arr;
 	if (!(arr = ft_calloc(ft_lstsize(tmp) + 1, sizeof(char *))))
-		error("allocated error");
+		error("Allocated error", 11);
 
 	i = -1;
 	while (tmp)
@@ -207,7 +207,6 @@ int 	exec(char *command, char **argv)
 		{
 			err_exit(127, command, 'f');
 		}
-
 		else if (fd == -1)
 		{
 			err_exit(127, command, ' ');

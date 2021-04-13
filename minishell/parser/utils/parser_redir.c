@@ -12,6 +12,7 @@ void	parser_redir(char **map_comand, t_parser *p, char **line, t_file *file)
 	// int fd;
 
 	p->second_arg_redir = ft_strdup(map_comand[0]);
+	map_comand[0] = ft_strdup(p->first_arg_redir);
 	if (p->flag_redir == 2)
 	{
 		get_pipe_id(file);

@@ -233,10 +233,9 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 		pipe_process(p->map_comand, p, file);
 	}
 	else if ((*line == '>' || *line == '<') && p->flag_redir == 0)
-	{
 		p->flag_redir = what_is_redir(line, p, p->map_comand);
+	else if (p->flag_redir != 0)
 		parser_redir(p->map_comand, p, &line, file);
-	}
 	else
 	{
 		send_command_execute(p->map_comand, p);

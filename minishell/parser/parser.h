@@ -135,6 +135,7 @@ void			print_promt(char *str_print);
 void			set_errno(int err);
 void			redirect(char *file_name);
 void 	get_pipe_id(t_file *file);
+void 	forward_redirect(t_file *file, char *file_name);
 
 g_list			*params;
 

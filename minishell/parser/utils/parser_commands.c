@@ -215,9 +215,11 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 		get_pipe_id(file);
 		pipe_process(p->map_comand, p, file);
 	}
-	else if (*line == '>' || *line == '<')
+	else if (*line == '>')
 	{
-
+		get_pipe_id(file);
+		forward_redirect(file, "file");
+		pipe_process(p->map_comand, p, file);
 	}
 	else
 	{

@@ -79,4 +79,5 @@ void			sort_export(t_list *new)
 		}
 	}
 	print_export(tmp_src, new);
+	set_errno(0);
 }

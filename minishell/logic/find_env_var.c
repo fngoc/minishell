@@ -30,7 +30,6 @@ char *get_var_param(t_list *env, char *param)
 	return (NULL);
 }
 
-//возвращаем всю строку с переменной
 char *get_var_full_param(t_list *env, char *param)
 {
 	int flag;

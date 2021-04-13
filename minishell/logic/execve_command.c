@@ -29,7 +29,12 @@ static int err_exit(int err, char *command, char err_name)
 		ft_putstr_fd(": command not found\n", 2);
 		set_errno(127);
 	}
-
+	else if (err_name == 'd')
+	{
+		print_promt(command);
+		ft_putstr_fd(": is a directory\n", 2);
+		set_errno(126);
+	}
 	else if (err_name == 'p')
 	{
 		print_promt(command);
@@ -99,32 +104,6 @@ void 	exec_command(char *command, char **argv, char **env)
 		wait(&pid);
 }
 
-
-int 	is_path_command(char **path, char *command)
-{
-	struct stat sb;
-	char *str;
-	char *tmp_join;
-
-	while (*path)
-	{
-		tmp_join = ft_strjoin("/", command);
-		str = ft_strjoin(*path, tmp_join);
-		if (lstat(str, &sb) != -1) {
-			if (sb.st_mode & S_IFREG) {
-				if (sb.st_mode & S_IXUSR)
-				{
-					return 1;
-				}
-			}
-		}
-		path++;
-		free(tmp_join);
-		free(str);
-	}
-	return 0;
-}
-
 int check_executable(char *command)
 {
 	struct stat f;
@@ -165,7 +144,10 @@ int 	exec(char *command, char **argv)
 			}
 			else
 			{
-				err_exit(126, command, 'p');
+				if (open(command, O_DIRECTORY) > 0)
+					err_exit(126, command, 'd');
+				else
+					err_exit(126, command, 'p');
 			}
 			free_map(ev);
 			close(fd);
@@ -173,15 +155,13 @@ int 	exec(char *command, char **argv)
 		}
 	}
 	str2 = get_var_param(params->env, "PATH");
-		if ((fd < 0 && ft_strchr(command, '/')) ||
-	str2 == NULL)
+	if ((fd < 0 && ft_strchr(command, '/')) || str2 == NULL)
 	{
 		free_map(ev);
 		err_exit(127, command, 'f');
 		return(1);
 	}
 	splitted = ft_split(str2, ':');
-	//tmp to free splitted
 	tmp = splitted;
 
 		while (*splitted)

@@ -2,49 +2,44 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-//static int check_alnum(char *key)
-//{
-//	while (*key)
-//	{
-//		if (*key == '_')
-//		{
-//			key++;
-//			continue;
-//		}
-//		if (*key == '+' && (*(key + 1) == '\0'))
-//		{
-//			return(1);
-//		}
-//
-//		if (!ft_isalnum(*key))
-//		{
-//			return (0);
-//		}
-//		key++;
-//	}
-//	return (1);
-//}
+static void 	set_error(char *var)
+{
+	t_list *tmp;
 
-//static int is_valid_identifier(char *key)
-//{
-//	if (key[0] == '_')
-//	{
-//		if (check_alnum(key + 1) == 1)
-//		{
-//			return(1);
-//		}
-//	}
-//	if(!ft_isalpha(key[0]))
-//	{
-//		return (0);
-//	}
-//	if (!check_alnum(key + 1))
-//	{
-//		return(0);
-//	}
-//	return 1;
-//}
+	tmp = params->env;
+	tmp = get_env_list_pos(tmp, "err");
+	free(tmp->content);
+	tmp->content = ft_strdup(var);
+}
 
+int		validate_key(char *key)
+{
+	int i;
+
+	i = -1;
+
+	if (ft_isdigit(key[0]))
+		return (1);
+	if (!ft_isalpha(key[0]))
+	{
+		if (key[0] != '_')
+		{
+			return (1);
+		}
+	}
+	while (key[++i])
+	{
+		if (!ft_isalpha(key[i]))
+		{
+			if (!ft_isdigit(key[i]))
+			{
+				if (key[i] != '_')
+					return (1);
+			}
+		}
+	}
+	return (0);
+}
 
 char 	*get_key_by_full_param(char *full_param)
 {
@@ -85,16 +80,26 @@ void 	export_var(char *var)
 	tmp_var = ft_strdup(var);
 	tmp = params->env;
 	key = get_key_by_full_param(tmp_var);
+	if (ft_strcmp(key, "err") == 0)
+	{
+		set_error(var);
+		free(key);
+		free(tmp_var);
+		return ;
+	}
+	if (validate_key(key) == 1)
+	{
+		print_promt("export: ");
+		ft_putstr_fd("\'", 2);
+		ft_putstr_fd(var, 2);
+		ft_putstr_fd("\'", 2);
+		ft_putendl_fd(" not a valid identifier", 2);
+		set_errno(1);
+		free(key);
+		free(tmp_var);
+		return ;
+	}
 
-//	if (is_valid_identifier(key) == 0)
-//	{
-//		ft_putstr_fd("export: \'", 1);
-//		ft_putstr_fd(var, 1);
-//		ft_putstr_fd("\': not a valid identifier\n", 1);
-//		free(tmp_var);
-//		free(key);
-//		return ;
-//	}
 	// если не нашли переменную в енв, добавляем новую
 	if (get_env_list_pos(params->env, key) == NULL)
 	{

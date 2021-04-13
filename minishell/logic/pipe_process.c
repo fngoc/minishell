@@ -18,6 +18,7 @@ void 	get_pipe_id(t_file *file)
 void 	forward_redirect(t_file *file, char *file_name)
 {
 	int fd;
+
 	if ((fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 	{
 		set_errno(2);

@@ -1,6 +1,23 @@
 #include "../../parser/parser.h"
 #include "../../logic/logic.h"
 
+static int what_is_redir(char *line, t_parser *p, char **map)
+{
+	p->first_arg_redir = ft_strdup(map[0]);
+	if (*line == '<')
+		return (1);
+	else if (*line == '>')
+	{
+		++line;
+		if (*line == '>')
+		{
+			++line;
+			return (3);
+		}
+	}
+	return (2);
+}
+
 /*
 ** quotation_mark_found: найдена кавычка.
 */
@@ -212,10 +229,10 @@ void	parser_commands(char *line, t_parser *p)
 	}
 	if (*line == '|')
 		pipe_process(p->map_comand, p);
-	else if (*line == '>' || *line == '<')
-	{
-		
-	}
+	else if ((*line == '>' || *line == '<') && p->flag_redir == 0)
+		p->flag_redir = what_is_redir(line, p, p->map_comand);
+	else if (p->flag_redir != 0)
+		parser_redir(p->map_comand, p, &line);
 	else
 	{
 		send_command_execute(p->map_comand, p);

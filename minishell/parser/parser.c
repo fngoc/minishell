@@ -84,6 +84,7 @@ static	void	init_parser(t_parser *p)
 	p->buf = NULL;
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;
+	p->flag_redir = 0;
 }
 
 /*

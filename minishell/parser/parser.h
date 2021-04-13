@@ -24,7 +24,9 @@ typedef	struct	s_parser
 	int			flag_echo_n;
 	int			flag_quotation_mark;
 	int			coll_space;
-	int			flag_red;
+	int			flag_redir;
+	char		*first_arg_redir;
+	char		*second_arg_redir;
 }				t_parser;
 
 void			parser(void);
@@ -94,5 +96,7 @@ char			*double_quote(char **line);
 char			*single_quote(char **line);
 
 char			*without_quotation_marks(char **line);
+
+void			parser_redir(char **map_comand, t_parser *p, char **line);
 
 #endif

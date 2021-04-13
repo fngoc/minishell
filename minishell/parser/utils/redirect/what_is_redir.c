@@ -8,6 +8,7 @@ char	*what_is_redir(char *line, t_parser *p, char **map)
 {
     char *tmp;
 
+	tmp = NULL;
 	p->first_arg_redir = ft_strdup(map[0]);
 	if (*line == '<')
 	{

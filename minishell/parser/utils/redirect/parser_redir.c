@@ -25,6 +25,8 @@ void	parser_redir(char **map_comand, t_parser *p, t_file *file, t_redir *r)
 		double_redirect(file, p->second_arg_redir);
 		pipe_process(r->map_command, p, file);
 	}
-	// free_map(r->map_command);
+	free(p->first_arg_redir);
+	free(p->second_arg_redir);
+	free_map(r->map_command);
 	p->flag_redir = 0;
 }

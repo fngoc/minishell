@@ -1,5 +1,4 @@
 #include "../../parser/parser.h"
-#include "../../logic/logic.h"
 
 /*
 ** send_pwd: отправка команды pwd на выполнение.

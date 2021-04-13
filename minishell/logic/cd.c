@@ -51,10 +51,28 @@ void	cd(char *dir)
 	char *old_content;
 	int fd;
 	t_list *start;
+	char *tmp;
 
+	if (get_var_param(params->env, "PWD") == NULL)
+	{
+		tmp = ft_strjoin("PWD=", get_pwd());
+		export_var(tmp);
+		free(tmp);
+	}
 	old_content = ft_strdup(get_var_param(params->env, "PWD"));
 	if (*dir == '\0')
 		dir = get_var_param(params->env, "HOME");
+	if (*dir == '-')
+	{
+		dir = get_var_param(params->env, "OLDPWD");
+		if (dir == NULL)
+		{
+			print_promt("cd: OLDPWD not set\n");
+			free(old_content);
+			set_errno(1);
+			return ;
+		}
+	}
 	fd = open(dir, O_DIRECTORY);
 	if (!cd_error(fd, dir))
 	{

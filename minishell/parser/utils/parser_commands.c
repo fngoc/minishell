@@ -64,7 +64,7 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 {
 	if (*p_c != NULL && **p_c == ' ')
 		*name = NULL;
-	while (!ft_istab(**line) && **line != ';' && **line != '\0')
+	while (!ft_istab(**line) && **line != ';' && **line != '|' && **line != '\0')
 	{
 		if (**line == '\"' || **line == '\'')
 			break ;
@@ -140,7 +140,7 @@ void parser_echo(t_parser *p, char **line, int *i)
 		name = ft_strjoin_char_free(name, **line);
 		++(*line);
 	}
-	while ((**line != ';' && **line != '\0') || flag_mark == 1)
+	while ((**line != ';' && **line != '|' && **line != '\0') || flag_mark == 1)
 	{
 		if (**line == '\\')
 		{
@@ -186,7 +186,7 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 		error("You can not write at the beginning of the command |", 258);
 	}
-	while (*line != ';' && *line != '|' && *line != '\0')
+	while (*line != ';' && *line != '|' && *line != '<' && *line != '>' && *line != '\0')
 	{
 		if (ft_istab(*line))
 		{
@@ -210,9 +210,14 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 			}
 		}
 	}
-	if (*line == '|') {
+	if (*line == '|')
+	{
 		get_pipe_id(file);
 		pipe_process(p->map_comand, p, file);
+	}
+	else if (*line == '>' || *line == '<')
+	{
+
 	}
 	else
 	{

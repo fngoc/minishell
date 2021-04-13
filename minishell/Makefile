@@ -36,8 +36,18 @@ SRC = main.c \
 	parser/utils/privacy_check.c \
 	parser/utils/checking_quotes.c \
 	parser/utils/signals.c \
-	parser/utils/ft_echo.c \
-	parser/utils/exit_comand.c \
+	parser/utils/echo/ft_echo.c \
+	parser/utils/send_exit.c \
+	parser/utils/send_exec.c \
+	parser/utils/send_echo.c \
+	parser/utils/send_env.c \
+	parser/utils/send_question_mark.c \
+	parser/utils/ft_strjoin_free_free.c \
+	parser/utils/delet_first.c \
+	parser/utils/ft_strjoin_fix.c \
+	parser/utils/echo/double_quote.c \
+	parser/utils/echo/single_quote.c \
+	parser/utils/echo/without_quotation_marks.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \

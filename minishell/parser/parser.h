@@ -37,6 +37,7 @@ typedef	struct	s_parser
 	int			flag_echo_n;
 	int			flag_quotation_mark;
 	int			coll_space;
+	int			flag_red;
 }				t_parser;
 
 void			parser(void);
@@ -85,7 +86,27 @@ void			ft_quit(int sig);
 
 void 			ft_echo(char *str, int n_flag, int memory);
 
-void			exit_comand(char **map);
+void			send_exit(char **map);
+
+void			send_exec(char **map);
+
+void			send_echo(char **map, t_parser *p);
+
+void			send_env(char **map);
+
+void			send_question_mark(void);
+
+char			*ft_strjoin_free_free(char *s1, char *s2);
+
+char			*delet_first(char *str);
+
+char			*ft_strjoin_fix(char *s1, char *s2);
+
+char			*double_quote(char **line);
+
+char			*single_quote(char **line);
+
+char			*without_quotation_marks(char **line);
 
 char			*get_pwd();
 void 			print_pwd();

@@ -40,9 +40,7 @@ void	pipe_process(char **argv, t_parser *p, t_file *file)
 	if (pid == 0)
 	{
 		dup2(file->fd_stdout, STDOUT_FILENO);
-		if (p->flag_red == 0) {
-			send_command_execute(argv, p);
-		}
+		send_command_execute(argv, p);
 		close(file->fd_stdin);
 		close(file->fd_stdout);
 		close(STDOUT_FILENO);

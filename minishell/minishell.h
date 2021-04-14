@@ -113,7 +113,7 @@ char			*without_quotation_marks(char **line);
 
 char			*what_is_redir(char *line, t_parser *p, char **map);
 
-void			parser_redir(char **map_comand, t_parser *p, t_file *file);
+void			parser_redir(char **map_comand, t_parser *p, t_file *file, char c);
 
 void			set_redir_map(t_parser *p);
 

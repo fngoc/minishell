@@ -34,9 +34,11 @@ void 	back_redirect(t_file *file, char *file_name)
 		return ;
 	}
 	if (file->fd_stdin >= 0)
+	{
 		file->fd_stdin = fd;
-
+	}
 	dup2(file->fd_stdin, STDIN_FILENO);
+	close(fd);
 }
 
 void 	double_redirect(t_file *file, char *file_name)

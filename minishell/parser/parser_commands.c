@@ -219,8 +219,12 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 		line = what_is_redir(line, p, p->map_comand);
 		set_redir_map(p);
 	}
-	else if (p->flag_redir != 0)
+	else if (p->flag_redir != 0) {
 		parser_redir(p->map_comand, p, file);
+		dup2(1, STDIN_FILENO);
+		dup2(0, STDOUT_FILENO);
+	}
+
 	else
 	{
 		send_command_execute(p->map_comand, p);

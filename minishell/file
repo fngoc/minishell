@@ -1,0 +1,11 @@
+Makefile
+a.out
+file
+libft
+libft.a
+logic
+main.c
+minishell
+minishell.dSYM
+minishell_history
+parser

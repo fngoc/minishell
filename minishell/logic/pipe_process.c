@@ -2,7 +2,6 @@
 #include "../parser/parser.h"
 #include "../libft/libft.h"
 
-//TODO errors
 void 	get_pipe_id(t_file *file)
 {
 	int fd[2];

@@ -1,6 +1,4 @@
-#include "../../logic/logic.h"
-#include "../parser.h"
-#include "../../libft/libft.h"
+#include "../../minishell.h"
 
 void	send_question_mark(void)
 {

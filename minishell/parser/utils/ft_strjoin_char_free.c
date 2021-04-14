@@ -1,4 +1,4 @@
-#include "../../parser/parser.h"
+#include "../../minishell.h"
 
 /*
 ** ft_strjoin_char_free: добавляет символ в конец строки

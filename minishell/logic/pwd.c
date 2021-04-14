@@ -1,4 +1,4 @@
-#include "logic.h"
+#include "../minishell.h"
 
 char	*get_pwd()
 {

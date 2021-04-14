@@ -1,6 +1,6 @@
-#ifndef PARSER_H
+#ifndef MINISHELL_H
 
-# define PARSER_H
+# define MINISHELL_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -9,9 +9,9 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <signal.h>
-# include "../libft/libft.h"
 # include <sys/types.h>
 # include <sys/stat.h>
+# include "libft/libft.h"
 
 typedef struct	s_file
 {

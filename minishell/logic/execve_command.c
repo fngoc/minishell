@@ -1,7 +1,4 @@
-#include <signal.h>
-#include "logic.h"
-#include "../parser/parser.h"
-#include "../libft/libft.h"
+#include "../minishell.h"
 
 static	char	*delet_first_exe(char *str)
 {

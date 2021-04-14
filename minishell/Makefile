@@ -2,8 +2,7 @@
 
 NAME = minishell
 
-HEADERS = logic/logic.h \
-		parser/parser.h
+HEADERS = minishell.h
 
 LIBFT_DIR = libft/
 
@@ -18,39 +17,39 @@ FCLEAN = fclean
 SRC = main.c \
 	\
 	parser/parser.c \
-	parser/utils/parser_commands.c \
-	parser/utils/error.c \
-	parser/utils/ft_putchar.c \
-	parser/utils/init.c \
-	parser/utils/make_file.c \
-	parser/utils/ft_strcmp.c \
-	parser/utils/set_line.c \
-	parser/utils/delet_last_char.c \
+	parser/signals.c \
+	parser/set_redir_map.c \
+	parser/set_line.c \
+	parser/privacy_check.c \
+	parser/parser_commands.c \
+	parser/make_file.c \
+	parser/init.c \
+	parser/get_history.c \
+	parser/checking_quotes.c \
+	parser/check_buffer.c \
 	parser/utils/is_arrow.c \
 	parser/utils/ft_istab.c \
-	parser/utils/free_map.c \
-	parser/utils/ft_strjoin_char_free.c \
-	parser/utils/get_history.c \
-	parser/utils/check_buffer.c \
-	parser/utils/send_command_execute.c \
-	parser/utils/privacy_check.c \
-	parser/utils/checking_quotes.c \
-	parser/utils/signals.c \
-	parser/utils/echo/ft_echo.c \
-	parser/utils/send_exit.c \
-	parser/utils/send_exec.c \
-	parser/utils/send_echo.c \
-	parser/utils/send_env.c \
-	parser/utils/send_question_mark.c \
 	parser/utils/ft_strjoin_free_free.c \
-	parser/utils/delet_first.c \
 	parser/utils/ft_strjoin_fix.c \
-	parser/utils/echo/double_quote.c \
-	parser/utils/echo/single_quote.c \
-	parser/utils/echo/without_quotation_marks.c \
-	parser/utils/redirect/parser_redir.c \
-	parser/utils/redirect/what_is_redir.c \
-	parser/utils/set_redir_map.c \
+	parser/utils/ft_strjoin_char_free.c \
+	parser/utils/ft_strcmp.c \
+	parser/utils/ft_putchar.c \
+	parser/utils/free_map.c \
+	parser/utils/error.c \
+	parser/utils/delet_last_char.c \
+	parser/utils/delet_first.c \
+	parser/sends/send_question_mark.c \
+	parser/sends/send_exit.c \
+	parser/sends/send_exec.c \
+	parser/sends/send_env.c \
+	parser/sends/send_echo.c \
+	parser/sends/send_command_execute.c \
+	parser/redirect/what_is_redir.c \
+	parser/redirect/parser_redir.c \
+	parser/echo/without_quotation_marks.c \
+	parser/echo/single_quote.c \
+	parser/echo/ft_echo.c \
+	parser/echo/double_quote.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \

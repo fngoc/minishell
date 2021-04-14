@@ -1,4 +1,4 @@
-#include "../../parser/parser.h"
+#include "../minishell.h"
 
 /*
 ** ft_quit: обработка сигнала ctr+\.

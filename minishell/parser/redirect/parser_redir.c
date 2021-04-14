@@ -1,4 +1,4 @@
-#include "../../parser.h"
+#include "../../minishell.h"
 
 /*
 ** parser_redir: парсим рудиректы.

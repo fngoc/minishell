@@ -1,5 +1,4 @@
-#include "../../parser/parser.h"
-#include "../../libft/libft.h"
+#include "../../minishell.h"
 
 /*
 ** delet_last_char: удаление из строки к-во char.

@@ -1,6 +1,4 @@
-#include "../../../logic/logic.h"
-#include "../../parser.h"
-#include "../../../libft/libft.h"
+#include "../../minishell.h"
 
 /*
 ** single_quote: одна кавычка.

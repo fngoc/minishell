@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 /*
 ** counting_spaces: подсчет пробелов для

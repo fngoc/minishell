@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../../minishell.h"
 
 /*
 ** ft_putchar: печать символа для функции tputs.

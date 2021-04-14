@@ -1,6 +1,4 @@
-#include "logic.h"
-#include "../parser/parser.h"
-#include "../libft/libft.h"
+#include "../minishell.h"
 
 void 	get_pipe_id(t_file *file)
 {

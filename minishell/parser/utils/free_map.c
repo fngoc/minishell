@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../../minishell.h"
 
 /*
 ** get_history_previous: взять предыдущую историю.

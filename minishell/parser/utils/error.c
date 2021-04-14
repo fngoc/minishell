@@ -1,6 +1,4 @@
-#include "../../logic/logic.h"
-#include "../../parser/parser.h"
-#include "../../libft/libft.h"
+#include "../../minishell.h"
 
 /*
 ** error: печатает текст ошибки и выходит из программы.

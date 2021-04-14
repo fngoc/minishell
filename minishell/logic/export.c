@@ -1,6 +1,4 @@
-#include "logic.h"
-#include "../parser/parser.h"
-#include "../libft/libft.h"
+#include "../minishell.h"
 
 static void 	print_chars(t_list *copy)
 {

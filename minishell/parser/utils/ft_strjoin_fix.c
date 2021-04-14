@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../../minishell.h"
 
 /*
 ** ft_strjoin_fix: чистит первый аргумент.

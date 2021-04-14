@@ -1,4 +1,4 @@
-#include "../../parser/parser.h"
+#include "../minishell.h"
 
 /*
 ** quotation_mark_found: найдена кавычка.

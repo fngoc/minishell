@@ -1,4 +1,4 @@
-#include "../../parser/parser.h"
+#include "../minishell.h"
 
 /*
 ** set_redir_map: устанавливаем мапу команд для редиректа.

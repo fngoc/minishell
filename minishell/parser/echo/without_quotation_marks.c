@@ -1,6 +1,4 @@
-#include "../../../logic/logic.h"
-#include "../../parser.h"
-#include "../../../libft/libft.h"
+#include "../../minishell.h"
 
 /*
 ** without_quotation_marks: без кавычек.
@@ -81,7 +79,10 @@ char    *without_quotation_marks(char **line)
 		{
 			++(*line);
 			if (**line == '\'')
+			{
 				++(*line);
+				continue ;
+			}
 			else
 			{
 				while (**line != '\'' && **line != '\0')
@@ -93,6 +94,8 @@ char    *without_quotation_marks(char **line)
 			}
 			if (**line == '\'')
 				++(*line);
+			if (**line == '\"')
+				continue ;
 		}
 		if (ft_strlen(*line) > 0)
 		{
@@ -101,5 +104,6 @@ char    *without_quotation_marks(char **line)
 			str = ft_strjoin_char_free(str, *(*line)++);
 		}
 	}
+	printf("|%s|\n", str);
 	return (str);
 }

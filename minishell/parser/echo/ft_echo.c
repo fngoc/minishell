@@ -1,6 +1,4 @@
-#include "../../../logic/logic.h"
-#include "../../parser.h"
-#include "../../../libft/libft.h"
+#include "../../minishell.h"
 
 /*
 ** pars_line_echo: парсинг строки для echo.

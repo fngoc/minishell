@@ -1,4 +1,4 @@
-#include "../../parser/parser.h"
+#include "../../minishell.h"
 
 /*
 ** send_pwd: отправка команды pwd на выполнение.

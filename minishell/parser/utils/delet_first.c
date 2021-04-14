@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../../minishell.h"
 
 /*
 ** delet_first: удалить первый символ строки.

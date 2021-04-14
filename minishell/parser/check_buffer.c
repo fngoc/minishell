@@ -1,4 +1,4 @@
-#include "../../parser/parser.h"
+#include "../minishell.h"
 
 /*
 ** tabs: кнопка tab.

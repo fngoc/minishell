@@ -1,6 +1,4 @@
-#include "logic.h"
-#include "../parser/parser.h"
-#include "../libft/libft.h"
+#include "../minishell.h"
 
 //возвращаем только содержимое переменной
 //env - наша копия листа, param - параметр, который мы ищем

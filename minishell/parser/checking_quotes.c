@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 /*
 ** single_norm: функция для нормы.

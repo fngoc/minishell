@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../../minishell.h"
 
 /*
 ** ft_strjoin_free_free: чистить все аргументы.
@@ -14,12 +14,15 @@ char	*ft_strjoin_free_free(char *s1, char *s2)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (s1[i] != '\0')
+	if (s1 != NULL)
 	{
-		p[i] = s1[i];
-		++i;
+		while (s1[i] != '\0')
+		{
+			p[i] = s1[i];
+			++i;
+		}
+		free(s1);
 	}
-	free(s1);
 	while (s2[j] != '\0')
 	{
 		p[i] = s2[j];

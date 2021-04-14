@@ -220,7 +220,12 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 		set_redir_map(p);
 	}
 	else if (p->flag_redir != 0)
-		parser_redir(p->map_comand, p, file);
+	{
+		// if (*line == '>' || *line == '<')
+		// 	p->flag_redir = 0;
+		// else
+			parser_redir(p->map_comand, p, file, *line);
+	}
 	else
 	{
 		send_command_execute(p->map_comand, p);

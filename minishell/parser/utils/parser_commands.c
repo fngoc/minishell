@@ -164,7 +164,7 @@ void parser_echo(t_parser *p, char **line, int *i)
 ** parser_commands: проверка строки на команды и кавычки.
 */
 
-void	parser_commands(char *line, t_parser *p, t_file *file, t_redir *r)
+void	parser_commands(char *line, t_parser *p, t_file *file)
 {
 	char *name;
 	char *previous_char;
@@ -217,10 +217,10 @@ void	parser_commands(char *line, t_parser *p, t_file *file, t_redir *r)
 	else if ((*line == '>' || *line == '<') && p->flag_redir == 0)
 	{
 		line = what_is_redir(line, p, p->map_comand);
-		set_redir_map(p, r);
+		set_redir_map(p);
 	}
 	else if (p->flag_redir != 0)
-		parser_redir(p->map_comand, p, file, r);
+		parser_redir(p->map_comand, p, file);
 	else
 	{
 		send_command_execute(p->map_comand, p);
@@ -229,7 +229,7 @@ void	parser_commands(char *line, t_parser *p, t_file *file, t_redir *r)
 	}
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
-		parser_commands(++line, p, file, r);
+		parser_commands(++line, p, file);
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;
 }

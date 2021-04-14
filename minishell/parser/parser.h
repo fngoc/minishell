@@ -40,12 +40,8 @@ typedef	struct	s_parser
 	int			flag_redir;
 	char		*first_arg_redir;
 	char		*second_arg_redir;
+	char		**map_command_redir;
 }				t_parser;
-
-typedef	struct	s_redir
-{
-	char		**map_command;
-}				t_redir;
 
 void			parser(void);
 
@@ -79,7 +75,7 @@ char			*check_buffer(t_parser *p);
 
 void			send_command_execute(char **map_comand, t_parser *p);
 
-void			parser_commands(char *line, t_parser *p, t_file *file, t_redir *r);
+void			parser_commands(char *line, t_parser *p, t_file *file);
 
 void			privacy_check(char *line, t_parser *p);
 
@@ -117,9 +113,9 @@ char			*without_quotation_marks(char **line);
 
 char			*what_is_redir(char *line, t_parser *p, char **map);
 
-void			parser_redir(char **map_comand, t_parser *p, t_file *file, t_redir *r);
+void			parser_redir(char **map_comand, t_parser *p, t_file *file);
 
-void			set_redir_map(t_parser *p, t_redir *r);
+void			set_redir_map(t_parser *p);
 
 char			*get_pwd();
 

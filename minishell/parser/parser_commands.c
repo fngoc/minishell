@@ -228,6 +228,7 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 	}
 	else
 	{
+
 		send_command_execute(p->map_comand, p);
 		dup2(1, STDIN_FILENO);
 		dup2(0, STDOUT_FILENO);

@@ -21,6 +21,7 @@ void 	forward_redirect(t_file *file, char *file_name)
 		set_errno(2);
 		return ;
 	}
+
 	file->fd_stdout = fd;
 }
 
@@ -29,6 +30,7 @@ void 	forward_redirect(t_file *file, char *file_name)
 void 	back_redirect(t_file *file, char *file_name)
 {
 	int fd;
+
 
 //	if ((fd = open(file_name, O_DIRECTORY)) > 0)
 //	{
@@ -45,12 +47,13 @@ void 	back_redirect(t_file *file, char *file_name)
 		set_errno(1);
 		return ;
 	}
-	if (file->fd_stdin >= 0)
-	{
+
+//	if (file->fd_stdin >= 0)
+//	{
 		file->fd_stdin = fd;
-	}
+//	}
 	dup2(file->fd_stdin, STDIN_FILENO);
-//	close(fd);
+	close(fd);
 }
 
 void 	double_redirect(t_file *file, char *file_name)
@@ -89,8 +92,7 @@ void	pipe_process(char **argv, t_parser *p, t_file *file)
 	else
 	{
 		dup2(file->fd_stdin, STDIN_FILENO);
-		if (!(file->fd_stdout))
-			close(file->fd_stdout);
+		close(file->fd_stdout);
 		wait(NULL);
 		close(file->fd_stdin);
 		set_errno(0);

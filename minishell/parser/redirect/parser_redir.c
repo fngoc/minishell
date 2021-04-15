@@ -5,7 +5,15 @@
 */
 
 void	parser_redir(char **map_comand, t_parser *p, t_file *file, char c)
-{	
+{
+	if ((checking_folder(p->map_comand[0])) == 0)
+	{
+		ft_putstr_fd(p->map_comand[0], 2);
+		ft_putendl_fd(": Is a directory", 2);
+		return ;
+	}
+	if (!map_comand[0])
+		error("syntax error near unexpected token \'newline\'", 15);
 	p->file_name = ft_strdup(map_comand[0]);
 	if (c == '<' || c == '>')
 	{

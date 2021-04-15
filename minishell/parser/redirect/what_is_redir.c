@@ -9,6 +9,12 @@ char	*what_is_redir(char *line, t_parser *p)
     char *tmp;
 
 	tmp = NULL;
+	if (p->flag_please == 1)
+	{
+		p->flag_please = 0;
+		p->flag_redir = 3;
+		return (line);
+	}
 	if (*line == '<')
 	{
 		p->flag_redir = 1;

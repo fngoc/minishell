@@ -66,6 +66,7 @@ static	void	read_line(int fd, t_parser *p)
 		p->flag_folder = 0;
 		p->redir_here = 0;
 		p->flag_redir = 0;
+		p->flag_please = 0;
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
 	free_read_line_exit(p);
@@ -89,6 +90,7 @@ static	void	init_parser(t_parser *p)
 	p->flag_redir = 0;
 	p->flag_folder = 0;
 	p->redir_here = 0;
+	p->flag_please = 0;
 }
 
 /*

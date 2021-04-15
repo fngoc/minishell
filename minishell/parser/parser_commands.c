@@ -303,7 +303,11 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 	}
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
+	{
+		if (*line == '>' && *(line + 1) == '>')
+			++line;
 		parser_commands(++line, p, file);
+	}
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;
 }

@@ -38,8 +38,9 @@ typedef	struct	s_parser
 	int			flag_quotation_mark;
 	int			coll_space;
 	int			flag_redir;
-	char		*first_arg_redir;
-	char		*second_arg_redir;
+	int			redir_here;
+	int			flag_folder;
+	char		*file_name;
 	char		**map_command_redir;
 }				t_parser;
 
@@ -111,7 +112,7 @@ char			*single_quote(char **line);
 
 char			*without_quotation_marks(char **line);
 
-char			*what_is_redir(char *line, t_parser *p, char **map);
+char			*what_is_redir(char *line, t_parser *p);
 
 void			parser_redir(char **map_comand, t_parser *p, t_file *file, char c);
 

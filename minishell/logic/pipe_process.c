@@ -24,13 +24,25 @@ void 	forward_redirect(t_file *file, char *file_name)
 	file->fd_stdout = fd;
 }
 
+
+//TODO names of command
 void 	back_redirect(t_file *file, char *file_name)
 {
 	int fd;
 
+//	if ((fd = open(file_name, O_DIRECTORY)) > 0)
+//	{
+//		print_promt(file_name);
+//		ft_putendl_fd(": cat: stdin: Is a directory", 2);
+//		set_errno(1);
+//		return ;
+//	}
+
 	if ((fd = open(file_name, O_RDONLY, 0644)) == -1)
 	{
-		set_errno(errno);
+		print_promt(file_name);
+		ft_putendl_fd(": No such file or directory", 2);
+		set_errno(1);
 		return ;
 	}
 	if (file->fd_stdin >= 0)
@@ -38,7 +50,7 @@ void 	back_redirect(t_file *file, char *file_name)
 		file->fd_stdin = fd;
 	}
 	dup2(file->fd_stdin, STDIN_FILENO);
-	close(fd);
+//	close(fd);
 }
 
 void 	double_redirect(t_file *file, char *file_name)
@@ -77,7 +89,8 @@ void	pipe_process(char **argv, t_parser *p, t_file *file)
 	else
 	{
 		dup2(file->fd_stdin, STDIN_FILENO);
-		close(file->fd_stdout);
+		if (!(file->fd_stdout))
+			close(file->fd_stdout);
 		wait(NULL);
 		close(file->fd_stdin);
 		set_errno(0);

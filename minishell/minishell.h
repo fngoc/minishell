@@ -9,6 +9,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <signal.h>
+# include <dirent.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include "libft/libft.h"
@@ -183,6 +184,8 @@ void			forward_redirect(t_file *file, char *file_name);
 void 			double_redirect(t_file *file, char *file_name);
 
 void 			back_redirect(t_file *file, char *file_name);
+
+int				checking_folder(char *file);
 
 g_list			*params;
 

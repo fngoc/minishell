@@ -19,13 +19,13 @@ SRC = main.c \
 	parser/parser.c \
 	parser/signals.c \
 	parser/set_line.c \
-	parser/privacy_check.c \
 	parser/parser_commands.c \
 	parser/make_file.c \
 	parser/init.c \
 	parser/get_history.c \
-	parser/checking_quotes.c \
-	parser/check_buffer.c \
+	parser/checks/checking_quotes.c \
+	parser/checks/privacy_check.c \
+	parser/checks/check_buffer.c \
 	parser/utils/is_arrow.c \
 	parser/utils/ft_istab.c \
 	parser/utils/ft_strjoin_free_free.c \
@@ -46,6 +46,7 @@ SRC = main.c \
 	parser/redirect/what_is_redir.c \
 	parser/redirect/parser_redir.c \
 	parser/redirect/set_redir_map.c \
+	parser/redirect/checking_folder.c \
 	parser/echo/without_quotation_marks.c \
 	parser/echo/single_quote.c \
 	parser/echo/ft_echo.c \

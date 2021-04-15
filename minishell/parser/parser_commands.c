@@ -220,6 +220,14 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 		line = what_is_redir(line, p);
 		if (p->flag_folder == 1)
 		{
+			if ((checking_folder(p->map_comand[0])) == 0)
+			{
+				ft_putstr_fd(p->map_comand[0], 2);
+				ft_putendl_fd(": Is a directory", 2);
+				return ;
+			}
+			if (!p->map_comand[0])
+				error("syntax error near unexpected token \'newline\'", 15);
 			p->file_name = ft_strdup(p->map_comand[0]);
 			if (*line == '<' || *line == '>')
 			{
@@ -267,6 +275,14 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 	}
     else if (p->flag_folder == 1 && p->redir_here == 0 && p->flag_redir == 0)
     {
+		if ((checking_folder(p->map_comand[0])) == 0)
+		{
+			ft_putstr_fd(p->map_comand[0], 2);
+			ft_putendl_fd(": Is a directory", 2);
+			return ;
+		}
+		if (!p->map_comand[0])
+			error("syntax error near unexpected token \'newline\'", 15);
 		p->file_name = ft_strdup(p->map_comand[0]);
         line = what_is_redir(line, p);
         if (p->flag_redir == 1)
@@ -300,10 +316,15 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
 	{
-		if (*line == '>' && *(line + 1) == '>')
+		if (*line == '>')
 		{
-			++line;
-			p->flag_please = 1;
+			if (*(line + 1) == '>')
+			{
+				++line;
+				p->flag_please = 1;
+			}
+			else
+				p->flag_please = 2;
 		}
 		if (*line == '<')
 			p->flag_please_1 = 1;

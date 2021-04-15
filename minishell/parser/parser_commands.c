@@ -235,6 +235,7 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 					get_pipe_id(file);
 					double_redirect(file, p->file_name);
 				}
+				free(p->file_name);
 			}
 			else 
 			{
@@ -285,8 +286,8 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 			double_redirect(file, p->file_name);
 			pipe_process(p->map_command_redir, p, file);
 		}
-		// free(p->file_name);
-		// free_map(p->map_command_redir);
+		free(p->file_name);
+		free_map(p->map_command_redir);
     }
 	else if (p->flag_redir != 0)
 	{
@@ -305,7 +306,12 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 	if (ft_strlen(line) > 1)
 	{
 		if (*line == '>' && *(line + 1) == '>')
+		{
 			++line;
+			p->flag_please = 1;
+		}
+		if (*line == '<')
+			p->flag_please_1 = 1;
 		parser_commands(++line, p, file);
 	}
 	p->flag_echo_n = 0;

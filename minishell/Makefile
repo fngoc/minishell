@@ -18,7 +18,6 @@ SRC = main.c \
 	\
 	parser/parser.c \
 	parser/signals.c \
-	parser/set_redir_map.c \
 	parser/set_line.c \
 	parser/privacy_check.c \
 	parser/parser_commands.c \
@@ -46,6 +45,7 @@ SRC = main.c \
 	parser/sends/send_command_execute.c \
 	parser/redirect/what_is_redir.c \
 	parser/redirect/parser_redir.c \
+	parser/redirect/set_redir_map.c \
 	parser/echo/without_quotation_marks.c \
 	parser/echo/single_quote.c \
 	parser/echo/ft_echo.c \

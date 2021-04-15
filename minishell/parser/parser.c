@@ -40,8 +40,8 @@ static	void	read_line(int fd, t_parser *p)
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
 		t_file file;
-		dup2(1, STDIN_FILENO);
-		dup2(0, STDOUT_FILENO);
+//		dup2(1, STDIN_FILENO);
+//		dup2(0, STDOUT_FILENO);
 		if (p->buf != NULL)
 			free(p->buf);
 		if (!(p->buf = ft_calloc(2, sizeof(char))))

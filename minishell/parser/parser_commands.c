@@ -291,15 +291,15 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 	else if (p->flag_redir != 0)
 	{
 		parser_redir(p->map_comand, p, file, *line);
-		dup2(1, STDIN_FILENO);
-		dup2(0, STDOUT_FILENO);
+
+//		dup2(1, STDIN_FILENO);
+//		dup2(0, STDOUT_FILENO);
 	}
 	else
 	{
-
 		send_command_execute(p->map_comand, p);
-		dup2(1, STDIN_FILENO);
-		dup2(0, STDOUT_FILENO);
+//		dup2(1, STDIN_FILENO);
+//		dup2(0, STDOUT_FILENO);
 	}
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)

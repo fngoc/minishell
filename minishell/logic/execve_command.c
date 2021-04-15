@@ -132,6 +132,8 @@ int 	exec(char *command, char **argv)
 	fd = open(command, O_RDONLY);
 
 	ft_putendl_fd(command, 1);
+	ft_putendl_fd("im here", 1);
+	printf("%d\n", errno);
 	//check for permission denied or executable
 	if (fd > 0)
 	{

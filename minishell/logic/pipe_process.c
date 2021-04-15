@@ -23,6 +23,7 @@ void 	forward_redirect(t_file *file, char *file_name)
 	}
 
 	file->fd_stdout = fd;
+
 }
 
 
@@ -39,7 +40,7 @@ void 	back_redirect(t_file *file, char *file_name)
 //		set_errno(1);
 //		return ;
 //	}
-
+	printf("%s\n", file_name);
 	if ((fd = open(file_name, O_RDONLY, 0644)) == -1)
 	{
 		print_promt(file_name);

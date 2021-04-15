@@ -42,7 +42,6 @@ static	void	read_line(int fd, t_parser *p)
 	{
 		if (file.g_fd >= 0)
 			close(file.g_fd);
-		file.back_redir = 0;
 		dup2(4, 0);
 		dup2(3, 1);
 		if (p->buf != NULL)

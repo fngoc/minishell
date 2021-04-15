@@ -28,21 +28,15 @@ void 	forward_redirect(t_file *file, char *file_name)
 
 void 	back_redirect(t_file *file, char *file_name)
 {
-	if (file->g_fd != 0)
-		close(file->g_fd);
-
 	if ((file->g_fd = open(file_name, O_RDONLY, 0644)) == -1)
 	{
 		return ;
 	}
 
-	if (file->g_fd >= 0)
-		file->fd_stdin = file->g_fd;
+	file->fd_stdin = file->g_fd;
 	file->g_fd = 0;
 	dup2(file->fd_stdin, STDIN_FILENO);
 	file->def_stdout = file->fd_stdout;
-	dup2(STDOUT_FILENO, file->fd_stdout);
-	file->back_redir = 1;
 }
 
 void 	double_redirect(t_file *file, char *file_name)

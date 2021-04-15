@@ -63,6 +63,9 @@ static	void	read_line(int fd, t_parser *p)
 		privacy_check(p->str, p);
 		if (ft_strlen(p->str) > 0)
 			parser_commands(p->str, p, &file);
+		p->flag_folder = 0;
+		p->redir_here = 0;
+		p->flag_redir = 0;
 		ft_bzero(p->str, ft_strlen(p->str));
 	}
 	free_read_line_exit(p);
@@ -84,6 +87,8 @@ static	void	init_parser(t_parser *p)
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;
 	p->flag_redir = 0;
+	p->flag_folder = 0;
+	p->redir_here = 0;
 }
 
 /*

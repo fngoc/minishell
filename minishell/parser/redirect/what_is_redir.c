@@ -4,12 +4,11 @@
 ** what_is_redir: выставление флага редиректа.
 */
 
-char	*what_is_redir(char *line, t_parser *p, char **map)
+char	*what_is_redir(char *line, t_parser *p)
 {
     char *tmp;
 
 	tmp = NULL;
-	p->first_arg_redir = ft_strdup(map[0]);
 	if (*line == '<')
 	{
 		p->flag_redir = 1;

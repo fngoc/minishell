@@ -214,12 +214,80 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 		get_pipe_id(file);
 		pipe_process(p->map_comand, p, file);
 	}
-	else if ((*line == '>' || *line == '<') && p->flag_redir == 0)
+	else if ((*line == '>' || *line == '<' || p->redir_here == 1) && p->flag_redir == 0)
 	{
-		line = what_is_redir(line, p, p->map_comand);
-		set_redir_map(p);
+		p->redir_here = 1;
+		line = what_is_redir(line, p);
+		if (p->flag_folder == 1)
+		{
+			p->file_name = ft_strdup(p->map_comand[0]);
+			if (*line == '<' || *line == '>')
+			{
+				if (p->flag_redir == 1)
+					back_redirect(file, p->file_name);
+				else if (p->flag_redir == 2)
+				{
+					get_pipe_id(file);
+					forward_redirect(file, p->file_name);
+				}
+				else if (p->flag_redir == 3)
+				{
+					get_pipe_id(file);
+					double_redirect(file, p->file_name);
+				}
+			}
+			else 
+			{
+				if (p->flag_redir == 1)
+				{
+					back_redirect(file, p->file_name);
+					pipe_process(p->map_command_redir, p, file);
+				}
+				else if (p->flag_redir == 2)
+				{
+					get_pipe_id(file);
+					forward_redirect(file, p->file_name);
+					pipe_process(p->map_command_redir, p, file);
+				}
+				else if (p->flag_redir == 3)
+				{
+					get_pipe_id(file);
+					double_redirect(file, p->file_name);
+					pipe_process(p->map_command_redir, p, file);
+				}
+				free(p->file_name);
+				free_map(p->map_command_redir);
+			}
+			p->flag_folder = 0;
+			p->redir_here = 0;
+		}
+		else
+			set_redir_map(p);
 	}
-
+    else if (p->flag_folder == 1 && p->redir_here == 0 && p->flag_redir == 0)
+    {
+		p->file_name = ft_strdup(p->map_comand[0]);
+        line = what_is_redir(line, p);
+        if (p->flag_redir == 1)
+		{
+			back_redirect(file, p->file_name);
+			pipe_process(p->map_command_redir, p, file);
+		}
+		else if (p->flag_redir == 2)
+		{
+			get_pipe_id(file);
+			forward_redirect(file, p->file_name);
+			pipe_process(p->map_command_redir, p, file);
+		}
+		else if (p->flag_redir == 3)
+		{
+			get_pipe_id(file);
+			double_redirect(file, p->file_name);
+			pipe_process(p->map_command_redir, p, file);
+		}
+		// free(p->file_name);
+		// free_map(p->map_command_redir);
+    }
 	else if (p->flag_redir != 0)
 	{
 		parser_redir(p->map_comand, p, file, *line);

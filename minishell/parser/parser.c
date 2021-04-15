@@ -37,18 +37,21 @@ static void		free_read_line_exit(t_parser *p)
 
 static	void	read_line(int fd, t_parser *p)
 {
+	t_file file;
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
-		t_file file;
-		dup2(1, STDIN_FILENO);
-		dup2(0, STDOUT_FILENO);
+		if (file.g_fd >= 0)
+			close(file.g_fd);
+		file.back_redir = 0;
+		dup2(4, 0);
+		dup2(3, 1);
 		if (p->buf != NULL)
 			free(p->buf);
 		if (!(p->buf = ft_calloc(2, sizeof(char))))
 			error("Allocated error", 11);
 		tputs(save_cursor, 1, &ft_putchar);
 		write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		while (((p->len_str = read(0, p->buf, 100)) != -1) &&
+		while (((p->len_str = read(STDOUT_FILENO, p->buf, 100)) != -1) &&
 		ft_strcmp(p->buf, "\n") && ft_strcmp(p->buf, "\4"))
 		{
 			p->backspace = 0;

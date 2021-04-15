@@ -15,6 +15,12 @@ char	*what_is_redir(char *line, t_parser *p)
 		p->flag_redir = 3;
 		return (line);
 	}
+	if (p->flag_please_1 == 1)
+	{
+		p->flag_please_1 = 0;
+		p->flag_redir = 1;
+		return (line);
+	}
 	if (*line == '<')
 	{
 		p->flag_redir = 1;

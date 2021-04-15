@@ -41,6 +41,7 @@ typedef	struct	s_parser
 	int			redir_here;
 	int			flag_folder;
 	int			flag_please;
+	int			flag_please_1;
 	char		*file_name;
 	char		**map_command_redir;
 }				t_parser;

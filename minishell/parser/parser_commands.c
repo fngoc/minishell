@@ -309,6 +309,8 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 			++line;
 			p->flag_please = 1;
 		}
+		if (*line == '<')
+			p->flag_please_1 = 1;
 		parser_commands(++line, p, file);
 	}
 	p->flag_echo_n = 0;

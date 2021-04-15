@@ -53,7 +53,8 @@ void 	back_redirect(t_file *file, char *file_name)
 		file->fd_stdin = fd;
 //	}
 	dup2(file->fd_stdin, STDIN_FILENO);
-	close(fd);
+	// close(fd);
+
 }
 
 void 	double_redirect(t_file *file, char *file_name)

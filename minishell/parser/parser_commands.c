@@ -304,10 +304,15 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
 	{
-		if (*line == '>' && *(line + 1) == '>')
+		if (*line == '>')
 		{
-			++line;
-			p->flag_please = 1;
+			if (*(line + 1) == '>')
+			{
+				++line;
+				p->flag_please = 1;
+			}
+			else
+				p->flag_please = 2;
 		}
 		if (*line == '<')
 			p->flag_please_1 = 1;

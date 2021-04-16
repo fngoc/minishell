@@ -59,7 +59,16 @@ void	cd(char *dir)
 	}
 	old_content = ft_strdup(get_var_param(params->env, "PWD"));
 	if (*dir == '\0')
+	{
 		dir = get_var_param(params->env, "HOME");
+		if (dir == NULL)
+		{
+			print_promt("cd: HOME not set\n");
+			free(old_content);
+			set_errno(1);
+			return;
+		}
+	}
 	if (*dir == '-')
 	{
 		dir = get_var_param(params->env, "OLDPWD");

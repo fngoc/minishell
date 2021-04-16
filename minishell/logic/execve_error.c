@@ -6,11 +6,37 @@
 /*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:31:56 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/16 17:32:36 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/16 17:48:44 by drarlean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	err_with_char(char err_name, char *command, char *error_text)
+{
+	if (err_name == 'd')
+	{
+		print_promt(command);
+		ft_putstr_fd(error_text, 2);
+		set_errno(126);
+		return (1);
+	}
+	else if (err_name == 'p')
+	{
+		print_promt(command);
+		ft_putstr_fd(error_text, 2);
+		set_errno(126);
+		return (1);
+	}
+	else if (err_name == 'f')
+	{
+		print_promt(command);
+		ft_putstr_fd(error_text, 2);
+		set_errno(1);
+		return (1);
+	}
+	return (0);
+}
 
 static	char	*delet_first_exe(char *str)
 {
@@ -20,43 +46,26 @@ static	char	*delet_first_exe(char *str)
 	return (new_char);
 }
 
-int				err_exit(int err, char *command, char err_name, char *error_text)
+static void		command_not_found(char *command)
+{
+	print_promt(command);
+	ft_putstr_fd(": command not found\n", 2);
+	set_errno(127);
+}
+
+int				err_exit(int err, char *command, char err_name, char *err_text)
 {
 	char *str_print;
+
 	if (*command == '$')
 	{
 		if ((str_print = get_var_param(params->env, delet_first_exe(command))))
-		{
-			print_promt(str_print);
-			ft_putstr_fd(": command not found\n", 2);
-			set_errno(127);
-		}
+			command_not_found(str_print);
 	}
 	else if ((str_print = get_var_param(params->env, delet_first_exe(command))))
-	{
-		print_promt(str_print);
-		ft_putstr_fd(": command not found\n", 2);
-		set_errno(127);
-	}
-	else if (err_name == 'd')
-	{
-		print_promt(command);
-		ft_putstr_fd(error_text, 2);
-		set_errno(126);
-	}
-	else if (err_name == 'p')
-	{
-		print_promt(command);
-		ft_putstr_fd(error_text, 2);
-		set_errno(126);
-	}
-
-	else if (err_name == 'f')
-	{
-		print_promt(command);
-		ft_putstr_fd(error_text, 2);
-		set_errno(1);
-	}
+		command_not_found(str_print);
+	else if (err_with_char(err_name, command, err_text) == 1)
+		return (err);
 	else
 	{
 		print_promt(command);

@@ -15,7 +15,6 @@ int		validate_key(char *key)
 	int i;
 
 	i = -1;
-
 	if (ft_isdigit(key[0]))
 		return (1);
 	if (!ft_isalpha(key[0]))
@@ -68,6 +67,18 @@ char 	*get_key_by_full_param(char *full_param)
 	return (key);
 }
 
+static 	void not_valid_identifier(char *var, char **key, char **tmp_var)
+{
+	print_promt("export: ");
+	ft_putstr_fd("\'", 2);
+	ft_putstr_fd(var, 2);
+	ft_putstr_fd("\'", 2);
+	ft_putendl_fd(" not a valid identifier", 2);
+	set_errno(1);
+	free(*key);
+	free(*tmp_var);
+}
+
 void 	export_var(char *var)
 {
 	t_list *tmp;
@@ -86,14 +97,7 @@ void 	export_var(char *var)
 	}
 	if (validate_key(key) == 1)
 	{
-		print_promt("export: ");
-		ft_putstr_fd("\'", 2);
-		ft_putstr_fd(var, 2);
-		ft_putstr_fd("\'", 2);
-		ft_putendl_fd(" not a valid identifier", 2);
-		set_errno(1);
-		free(key);
-		free(tmp_var);
+		not_valid_identifier(var, &key, &tmp_var);
 		return ;
 	}
 

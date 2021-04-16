@@ -1,50 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_process.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 18:13:22 by drarlean          #+#    #+#             */
+/*   Updated: 2021/04/16 18:17:50 by drarlean         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-void 	get_pipe_id(t_file *file)
-{
-	int fd[2];
-
-	if (pipe(fd) == -1)
-	{
-		set_errno(errno);
-	}
-	file->fd_stdin = fd[0];
-	file->fd_stdout = fd[1];
-}
-
-void 	forward_redirect(t_file *file, char *file_name)
+void			forward_redirect(t_file *file, char *file_name)
 {
 	if (file->g_fd != 0)
 		close(file->g_fd);
-
-	if ((file->g_fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+	if ((file->g_fd = open(
+					file_name, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 	{
 		set_errno(2);
 		return ;
 	}
-
 	file->fd_stdout = file->g_fd;
 }
 
-void 	back_redirect(t_file *file, char *file_name)
+void			back_redirect(t_file *file, char *file_name)
 {
 	if ((file->g_fd = open(file_name, O_RDONLY, 0644)) == -1)
 	{
 		return ;
 	}
-
 	file->fd_stdin = file->g_fd;
 	file->g_fd = 0;
 	dup2(file->fd_stdin, STDIN_FILENO);
 	file->def_stdout = file->fd_stdout;
 }
 
-void 	double_redirect(t_file *file, char *file_name)
+void			double_redirect(t_file *file, char *file_name)
 {
 	if (file->g_fd != 0)
 		close(file->g_fd);
-
-	if ((file->g_fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
+	if ((file->g_fd = open(
+					file_name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
 		set_errno(errno);
 		return ;
@@ -52,18 +50,21 @@ void 	double_redirect(t_file *file, char *file_name)
 	file->fd_stdout = file->g_fd;
 }
 
-void	pipe_process(char **argv, t_parser *p, t_file *file)
+static	void	fork_errno(void)
 {
-	pid_t pid;
 	int err;
 
-	if ((pid = fork()) == -1)
-	{
-		err = errno;
-		set_errno(err);
-	}
+	err = errno;
+	set_errno(err);
+}
 
-	if (pid == 0)
+void			pipe_process(char **argv, t_parser *p, t_file *file)
+{
+	pid_t pid;
+
+	if ((pid = fork()) == -1)
+		fork_errno();
+	else if (pid == 0)
 	{
 		dup2(file->fd_stdout, STDOUT_FILENO);
 		send_command_execute(argv, p);

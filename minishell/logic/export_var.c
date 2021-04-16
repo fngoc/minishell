@@ -104,7 +104,6 @@ void 	export_var(char *var)
 	// если не нашли переменную в енв, добавляем новую
 	if (get_env_list_pos(params->env, key) == NULL)
 	{
-
 		if (*(tmp_var + ft_strlen(key) - 1) == '+')
 		{
 			var[ft_strlen(key) - 1] = '\0';

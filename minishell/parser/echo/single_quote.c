@@ -12,8 +12,8 @@ char    *single_quote(char **line)
 	++(*line);
 	while (**line != '\'' && **line != '\0')
 	{
-		if (**line == '\\')
-			++(*line);
+		// if (**line == '\\')
+		// 	++(*line);
 		str = ft_strjoin_char_free(str, *(*line)++);
 	}
 	if (**line == '\0')

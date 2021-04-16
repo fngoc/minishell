@@ -104,6 +104,5 @@ char    *without_quotation_marks(char **line)
 			str = ft_strjoin_char_free(str, *(*line)++);
 		}
 	}
-	printf("|%s|\n", str);
 	return (str);
 }

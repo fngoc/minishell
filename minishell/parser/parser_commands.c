@@ -15,13 +15,13 @@ static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, c
 	{
 		while (what == '\'' && **line != '\'' && **line != '\0')
 		{
-			if (**line == '\\')
-			{
-				++(*line);
-				*name = ft_strjoin_char_free(*name, **line);
-				++(*line);
-				continue ;
-			}
+			// if (**line == '\\')
+			// {
+			// 	++(*line);
+			// 	*name = ft_strjoin_char_free(*name, **line);
+			// 	++(*line);
+			// 	continue ;
+			// }
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
 		}
@@ -30,13 +30,13 @@ static	void quotation_mark_found(t_parser *p, int *i, char **p_c, char **name, c
 	{
 		while ((**line != '\"' && **line != '\'') && **line != '\0')
 		{
-			if (**line == '\\')
-			{
-				++(*line);
-				*name = ft_strjoin_char_free(*name, **line);
-				++(*line);
-				continue ;
-			}
+			// if (**line == '\\')
+			// {
+			// 	++(*line);
+			// 	*name = ft_strjoin_char_free(*name, **line);
+			// 	++(*line);
+			// 	continue ;
+			// }
 			*name = ft_strjoin_char_free(*name, **line);
 			++(*line);
 		}

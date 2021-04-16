@@ -15,8 +15,8 @@ char    *double_quote(char **line)
 	{
 		if (**line != '$')
 		{
-			if (**line == '\\')
-				++(*line);
+			// if (**line == '\\')
+			// 	++(*line);
 			str = ft_strjoin_char_free(str, *(*line)++);
 		}
 		if (**line == '$')
@@ -24,11 +24,11 @@ char    *double_quote(char **line)
 			tmp = NULL;
 			while (**line != ' ' && **line != '\"' && **line != '\'')
 			{
-				if (**line == '\\')
-				{
-					++(*line);
-					continue ;
-				}
+				// if (**line == '\\')
+				// {
+				// 	++(*line);
+				// 	continue ;
+				// }
 				tmp = ft_strjoin_char_free(tmp, *(*line)++);
 			}
 			if ((tmp = get_var_param(params->env, delet_first(tmp))))

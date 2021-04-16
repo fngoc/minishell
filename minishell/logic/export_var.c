@@ -73,7 +73,6 @@ void 	export_var(char *var)
 	t_list *tmp;
 	char *key;
 	char *tmp_var;
-	char *tmp_value;
 
 	tmp_var = ft_strdup(var);
 	tmp = params->env;
@@ -110,29 +109,16 @@ void 	export_var(char *var)
 		tmp = params->env;
 	}
 
-	else if (*(tmp_var + ft_strlen(key)) == '=' &&
-	*(tmp_var + ft_strlen(key) - 1) == '+')
-	{
-		tmp_value = ft_strdup(get_var_param(tmp, key));
-		tmp = get_env_list_pos(params->env, key);
-		if (*(tmp_var + ft_strlen(key) + 1) != 0)
-		{
-			free(tmp->content);
-			tmp_var[ft_strlen(tmp_var) - 1] = '\0';
-			tmp->content = ft_strjoin(tmp_var, tmp_value);
-		}
-		else
-		{
-			free(tmp->content);
-			tmp->content = ft_strdup(key);
-		}
-		free(tmp_value);
-	}
 	// если есть символ равно в новой переменной, проvеряем что внутри
 	else if (*(tmp_var + ft_strlen(key)) == '=')
 	{
 		tmp = get_env_list_pos(params->env, key);
 		if (*(tmp_var + ft_strlen(key) + 1) != 0)
+		{
+			free(tmp->content);
+			tmp->content = ft_strdup(tmp_var);
+		}
+		else if (*(tmp_var + ft_strlen(key)) == '=')
 		{
 			free(tmp->content);
 			tmp->content = ft_strdup(tmp_var);

@@ -19,12 +19,18 @@ void 	print_env()
 	t_list *tmp;
 
 	tmp = params->env;
+	int check;
+
+	check = 0;
 	while (params->env)
 	{
-		if (ft_strncmp("err", params->env->content, 3) == 0)
-		{
-			params->env = params->env->next;
-			continue;
+		if (check == 0) {
+			if (ft_strncmp("err", params->env->content, 3) == 0)
+			{
+				params->env = params->env->next;
+				check = 1;
+				continue;
+			}
 		}
 		if (check_null_value(params->env->content) == 1)
 		{

@@ -6,13 +6,13 @@
 /*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:31:56 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/16 17:48:44 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/16 18:25:19 by drarlean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	err_with_char(char err_name, char *command, char *error_text)
+static int			err_with_char(char err_name, char *command, char *error_text)
 {
 	if (err_name == 'd')
 	{

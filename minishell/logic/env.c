@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 15:33:03 by drarlean          #+#    #+#             */
+/*   Updated: 2021/04/16 15:44:28 by drarlean         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int		check_null_value(char *content)
 {
-	int i = -1;
+	int i;
 
+	i = -1;
 	while (content[++i])
 	{
 		if (content[i] == '=')
@@ -14,23 +27,17 @@ int		check_null_value(char *content)
 	return (1);
 }
 
-void 	print_env()
+void	print_env(void)
 {
 	t_list *tmp;
 
 	tmp = params->env;
-	int check;
-
-	check = 0;
 	while (params->env)
 	{
-		if (check == 0) {
-			if (ft_strncmp("err", params->env->content, 3) == 0)
-			{
-				params->env = params->env->next;
-				check = 1;
-				continue;
-			}
+		if (ft_strncmp("err", params->env->content, 3) == 0)
+		{
+			params->env = params->env->next;
+			continue;
 		}
 		if (check_null_value(params->env->content) == 1)
 		{

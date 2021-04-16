@@ -290,9 +290,7 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 		parser_redir(p->map_comand, p, file, *line);
 	}
 	else
-	{
 		send_command_execute(p->map_comand, p);
-	}
 	free_map(p->map_comand);
 	if (ft_strlen(line) > 1)
 	{

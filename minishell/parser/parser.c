@@ -28,7 +28,7 @@ static void		free_read_line_exit(t_parser *p)
 	free(p->buf);
 	free(p->str);
 	free_map(p->map_history);
-	ft_putendl_fd("exit", 1);
+	ft_putendl_fd("\nexit", 1);
 }
 
 /*
@@ -58,6 +58,11 @@ static	void	read_line(int fd, t_parser *p)
 			if (p->buf == NULL)
 				break ;
 			checks(p);
+		}
+		if (!ft_strcmp(p->buf, "\4"))
+		{
+			free_read_line_exit(p);
+			return ;
 		}
 		write(1, "\n", 1);
 		p->step_history = p->len_map;

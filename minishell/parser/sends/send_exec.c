@@ -16,6 +16,12 @@ void	send_exec(char **map)
 			++lvl;
 			export_var(ft_strjoin("SHLVL=", ft_itoa(lvl)));
 		}
+		if (!ft_strcmp(map[0], "cat") && map[1] == NULL)
+		{
+			write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			return ;
+		}
 		if (!exec(map[0], map))
 		{
 			write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);

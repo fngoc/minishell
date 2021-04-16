@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 /*
 ** make_file: создаем фаил с иcторией.

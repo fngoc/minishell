@@ -18,11 +18,11 @@ SRC = main.c \
 	\
 	parser/parser.c \
 	parser/signals.c \
-	parser/set_line.c \
 	parser/parser_commands.c \
-	parser/make_file.c \
 	parser/init.c \
-	parser/get_history.c \
+	parser/history/make_file.c \
+	parser/history/get_history.c \
+	parser/history/set_line.c \
 	parser/checks/checking_quotes.c \
 	parser/checks/privacy_check.c \
 	parser/checks/check_buffer.c \

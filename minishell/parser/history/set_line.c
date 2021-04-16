@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 /*
 ** set_line: установка линиии в историю.

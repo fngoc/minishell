@@ -1,82 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execve_command.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 17:25:48 by drarlean          #+#    #+#             */
+/*   Updated: 2021/04/16 17:30:56 by drarlean         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-static	char	*delet_first_exe(char *str)
+char		**list_to_arr(void)
 {
-	char *new_char;
-
-	new_char = ++str;
-	return (new_char);
-}
-
-static int err_exit(int err, char *command, char err_name)
-{
-	char *str_print;
-	if (*command == '$')
-	{
-		if ((str_print = get_var_param(params->env, delet_first_exe(command))))
-		{
-			print_promt(str_print);
-			ft_putstr_fd(": command not found\n", 2);
-			set_errno(127);
-		}
-	}
-	else if ((str_print = get_var_param(params->env, delet_first_exe(command))))
-	{
-		print_promt(str_print);
-		ft_putstr_fd(": command not found\n", 2);
-		set_errno(127);
-	}
-	else if (err_name == 'd')
-	{
-		print_promt(command);
-		ft_putstr_fd(": is a directory\n", 2);
-		set_errno(126);
-	}
-	else if (err_name == 'p')
-	{
-		print_promt(command);
-		ft_putstr_fd(": Permission denied\n", 2);
-		set_errno(126);
-	}
-
-	else if (err_name == 'f')
-	{
-		print_promt(command);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		set_errno(1);
-	}
-	else
-	{
-		print_promt(command);
-		ft_putstr_fd(": command not found\n", 2);
-		set_errno(127);
-	}
-	return (err);
-}
-
-char	**list_to_arr() {
-	t_list *tmp;
-	int i;
+	t_list	*tmp;
+	int		i;
+	char	**arr;
 
 	tmp = params->env;
-	char **arr;
 	if (!(arr = ft_calloc(ft_lstsize(tmp) + 1, sizeof(char *))))
 		error("Allocated error", 11);
-
 	i = -1;
 	while (tmp)
 	{
 		arr[++i] = ft_strdup(tmp->content);
 		tmp = tmp->next;
 	}
-
-	return arr;
+	return (arr);
 }
 
-void 	exec_command(char *command, char **argv, char **env)
+void		exec_command(char *command, char **argv, char **env)
 {
-	pid_t pid;
-	int err;
+	pid_t	pid;
+	int		err;
 
 	pid = fork();
 	if (pid == -1)
@@ -84,10 +41,9 @@ void 	exec_command(char *command, char **argv, char **env)
 		err = errno;
 		set_errno(err);
 	}
-
 	if (pid == 0)
 	{
-		if(execve(command,argv, env) == -1)
+		if (execve(command, argv, env) == -1)
 		{
 			err = errno;
 			set_errno(err);
@@ -96,97 +52,76 @@ void 	exec_command(char *command, char **argv, char **env)
 			set_errno(0);
 		exit(0);
 	}
-
 	if (pid > 0)
 		wait(&pid);
 }
 
-int check_executable(char *command)
+int			check_executable(char *command)
 {
 	struct stat f;
 
 	lstat(command, &f);
-
-		if (f.st_mode & S_IFREG) {
-			if (f.st_mode & S_IXUSR) {
-				return 1;
-			} else {
-				return 0;
-			}
+	if (f.st_mode & S_IFREG)
+	{
+		if (f.st_mode & S_IXUSR)
+		{
+			return (1);
 		}
-
-	return 0;
+		else
+		{
+			return (0);
+		}
+	}
+	return (0);
 }
 
-int 	exec(char *command, char **argv)
+int			permission_denied(char *command, char **argv, char **ev, int fd)
 {
-	int fd;
-	char *str;
-	char *str2;
-	char **splitted;
-	char **ev;
-	char **tmp;
-	char *tmp_join;
+	if (ft_strchr(command, '/'))
+	{
+		if (check_executable(command))
+		{
+			exec_command(command, argv, ev);
+		}
+		else
+		{
+			if (open(command, O_DIRECTORY) > 0)
+				err_exit(126, command, 'd', ": is a directory\n");
+			else
+				err_exit(126, command, 'p', ": Permission denied\n");
+		}
+		free_map(ev);
+		close(fd);
+		return (1);
+	}
+	return (0);
+}
+
+int			exec(char *command, char **argv)
+{
+	int		fd;
+	char	*path_non_splitted;
+	char	**ev;
 
 	ev = list_to_arr();
 	fd = open(command, O_RDONLY);
-
-	//check for permission denied or executable
 	if (fd > 0)
 	{
-		if(ft_strchr(command, '/'))
-		{
-			if (check_executable(command)) {
-				exec_command(command, argv, ev);
-			}
-			else
-			{
-				if (open(command, O_DIRECTORY) > 0)
-					err_exit(126, command, 'd');
-				else
-					err_exit(126, command, 'p');
-			}
-			free_map(ev);
-			close(fd);
-			return(1);
-		}
+		if (permission_denied(command, argv, ev, fd) == 1)
+			return (1);
 	}
-	str2 = get_var_param(params->env, "PATH");
-	if ((fd < 0 && ft_strchr(command, '/')) || str2 == NULL)
+	path_non_splitted = get_var_param(params->env, "PATH");
+	if ((fd < 0 && ft_strchr(command, '/')) || path_non_splitted == NULL)
 	{
 		free_map(ev);
-		err_exit(127, command, 'f');
-		return(1);
+		err_exit(127, command, 'f', ": No such file or directory\n");
+		return (1);
 	}
-	splitted = ft_split(str2, ':');
-	tmp = splitted;
-
-		while (*splitted)
-		{
-			tmp_join = ft_strjoin("/", command);
-			str = ft_strjoin(*splitted, tmp_join);
-			fd = open(str, O_RDONLY);
-			if (fd > 0)
-			{
-				exec_command(str, argv, ev);
-				free(tmp_join);
-				free(str);
-				break;
-			}
-			close(fd);
-			free(tmp_join);
-			free(str);
-			splitted++;
-		}
-		free_map(tmp);
-		free_map(ev);
-		if (fd == -1 && ft_strchr(command, '/'))
-		{
-			err_exit(127, command, 'f');
-		}
-		else if (fd == -1)
-		{
-			err_exit(127, command, ' ');
-		}
-	return 1;
+	fd = execve_path(path_non_splitted, argv, ev, command);
+	free_map(ev);
+	if (fd == -1 && ft_strchr(command, '/'))
+		err_exit(127, command, 'f', ": No such file or directory\n");
+	else if (fd == -1)
+		err_exit(127, command, ' ', "");
+	return (1);
 }

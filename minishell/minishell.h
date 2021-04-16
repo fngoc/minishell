@@ -191,6 +191,12 @@ int				check_echo_flag_n(char **line);
 
 int				cd_error(int fd, char *dir, char *true_path);
 
+int				err_exit(int err, char *command, char err_name, char *error_text);
+
+void			exec_command(char *command, char **argv, char **env);
+
+int				execve_path(char *path_non_splitted, char **argv, char **ev, char *command);
+
 g_list			*params;
 
 #endif

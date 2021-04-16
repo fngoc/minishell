@@ -187,6 +187,8 @@ void 			back_redirect(t_file *file, char *file_name);
 
 int				checking_folder(char *file);
 
+int				check_echo_flag_n(char **line);
+
 g_list			*params;
 
 #endif

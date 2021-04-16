@@ -6,7 +6,7 @@
 
 char	*what_is_redir(char *line, t_parser *p)
 {
-    char *tmp;
+	char *tmp;
 
 	tmp = NULL;
 	if (p->flag_please == 1)
@@ -39,6 +39,8 @@ char	*what_is_redir(char *line, t_parser *p)
 		if (*tmp == '>')
 		{
 			p->flag_redir = 3;
+			if (*(tmp + 1) == '>' || *(tmp + 1) == '<')
+				error("You can not write at the beginning of the command > or <", 258);
 			return (++line);
 		}
 	}

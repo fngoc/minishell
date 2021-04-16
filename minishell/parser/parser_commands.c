@@ -91,33 +91,6 @@ static	void quotation_mark_not_found(t_parser *p, int *i, char **p_c, char **nam
 }
 
 /*
-** check_echo_flag_n: проверка на -n.
-*/
-
-int	check_echo_flag_n(char **line)
-{
-	while (**line != '\0')
-	{
-		if (ft_istab(**line))
-			++(*line);
-		if (**line == ';')
-			return (2);
-		if (**line == '-')
-		{
-			++(*line);
-			if (**line == 'n')
-			{
-				++(*line);
-				return (1);
-			}
-		}
-		else
-			return (0);
-	}
-	return (0);
-}
-
-/*
 ** parser_echo: парсим echo.
 */
 
@@ -141,6 +114,11 @@ void parser_echo(t_parser *p, char **line, int *i)
 	}
 	while ((**line != ';' && **line != '|' && **line != '>' && **line != '<' && **line != '\0') || flag_mark == 1)
 	{
+		if (**line == '-' && *(*line + 1) == 'n' && *(*line + 2) == ' ' && p->flag_echo_n == 1)
+		{
+			++(*line);
+			++(*line);
+		}
 		if (**line == '\\')
 		{
 			name = ft_strjoin_char_free(name, *(*line)++);
@@ -156,6 +134,8 @@ void parser_echo(t_parser *p, char **line, int *i)
 		if (**line == '\0')
 			break ;
 	}
+	if (ft_strlen(name) == 0)
+		error("Syntax error near unexpected token", 258);
 	p->map_comand[++*i] = ft_strdup(name);
 	free(name);
 }
@@ -330,7 +310,6 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 			p->flag_please_1 = 1;
 		parser_commands(++line, p, file);
 	}
-
 	p->flag_echo_n = 0;
 	p->flag_quotation_mark = 0;
 }

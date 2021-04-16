@@ -19,7 +19,7 @@ static	void	send_cd(char **map)
 	if (map[1] != NULL && !ft_strcmp(map[1], ".."))
 		cd("..");
 	else if (map[1] == NULL || !ft_strcmp(map[1], "~"))
-		cd("");
+		cd("~");
 	else if (map[1] != NULL)
 		cd(map[1]);
 }

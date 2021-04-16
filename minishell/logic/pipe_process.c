@@ -14,59 +14,42 @@ void 	get_pipe_id(t_file *file)
 
 void 	forward_redirect(t_file *file, char *file_name)
 {
-	int fd;
+	if (file->g_fd != 0)
+		close(file->g_fd);
 
-	if ((fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+	if ((file->g_fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 	{
 		set_errno(2);
 		return ;
 	}
 
-	file->fd_stdout = fd;
+	file->fd_stdout = file->g_fd;
 }
 
-
-//TODO names of command
 void 	back_redirect(t_file *file, char *file_name)
 {
-	int fd;
-
-
-//	if ((fd = open(file_name, O_DIRECTORY)) > 0)
-//	{
-//		print_promt(file_name);
-//		ft_putendl_fd(": cat: stdin: Is a directory", 2);
-//		set_errno(1);
-//		return ;
-//	}
-
-	if ((fd = open(file_name, O_RDONLY, 0644)) == -1)
+	if ((file->g_fd = open(file_name, O_RDONLY, 0644)) == -1)
 	{
-		print_promt(file_name);
-		ft_putendl_fd(": No such file or directory", 2);
-		set_errno(1);
 		return ;
 	}
 
-//	if (file->fd_stdin >= 0)
-//	{
-		file->fd_stdin = fd;
-//	}
+	file->fd_stdin = file->g_fd;
+	file->g_fd = 0;
 	dup2(file->fd_stdin, STDIN_FILENO);
-	// close(fd);
-
+	file->def_stdout = file->fd_stdout;
 }
 
 void 	double_redirect(t_file *file, char *file_name)
 {
-	int fd;
+	if (file->g_fd != 0)
+		close(file->g_fd);
 
-	if ((fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
+	if ((file->g_fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0644)) == -1)
 	{
 		set_errno(errno);
 		return ;
 	}
-	file->fd_stdout = fd;
+	file->fd_stdout = file->g_fd;
 }
 
 void	pipe_process(char **argv, t_parser *p, t_file *file)
@@ -96,7 +79,7 @@ void	pipe_process(char **argv, t_parser *p, t_file *file)
 		close(file->fd_stdout);
 		wait(NULL);
 		close(file->fd_stdin);
+		file->fd_stdout = file->def_stdout;
 		set_errno(0);
 	}
-	wait(NULL);
 }

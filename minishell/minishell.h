@@ -18,6 +18,8 @@ typedef struct	s_file
 {
 	int		fd_stdin;
 	int		fd_stdout;
+	int 	def_stdout;
+	int 	g_fd;
 }				t_file;
 
 typedef struct	list

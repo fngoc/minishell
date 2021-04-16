@@ -131,7 +131,6 @@ int 	exec(char *command, char **argv)
 	ev = list_to_arr();
 	fd = open(command, O_RDONLY);
 
-	ft_putendl_fd(command, 1);
 	//check for permission denied or executable
 	if (fd > 0)
 	{

@@ -51,6 +51,7 @@ SRC = main.c \
 	parser/echo/single_quote.c \
 	parser/echo/ft_echo.c \
 	parser/echo/double_quote.c \
+	parser/echo/check_echo_flag_n.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \

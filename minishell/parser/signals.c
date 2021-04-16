@@ -30,7 +30,5 @@ void	ft_sigint(int sig)
 		ft_putchar_fd('\n', 1);
 		if (pid)
 			write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		else
-			ft_putendl_fd("^C", 1);
 	}
 }

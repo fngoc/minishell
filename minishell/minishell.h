@@ -189,6 +189,8 @@ int				checking_folder(char *file);
 
 int				check_echo_flag_n(char **line);
 
+int				cd_error(int fd, char *dir, char *true_path);
+
 g_list			*params;
 
 #endif

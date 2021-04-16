@@ -1,31 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 14:46:11 by drarlean          #+#    #+#             */
+/*   Updated: 2021/04/16 15:31:39 by drarlean         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-static	int cd_error(int fd, char *dir, char *true_path)
+int				minus_check(char **dir, char **old_content)
 {
-	if (fd == -1)
+	if (**dir == '-')
 	{
-		fd = open(dir, O_RDONLY);
-		if (fd == -1)
+		*dir = get_var_param(params->env, "OLDPWD");
+		if (*dir == NULL)
 		{
-			write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-			ft_putstr_fd("cd: ", 2);
-			ft_putstr_fd(true_path, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
+			print_promt("cd: OLDPWD not set\n");
+			free(*old_content);
 			set_errno(1);
+			return (0);
 		}
-		else
-			{
-				ft_putstr_fd("cd : ", 2);
-				ft_putstr_fd(true_path, 2);
-				ft_putstr_fd(": Not a directory\n", 2);
-				set_errno(1);
-			}
-		return (0);
 	}
 	return (1);
 }
 
-static void 	null_check(char *old_content, t_list *start, char *param)
+int				tilda_check(char **dir, char **old_content)
+{
+	char *tilda;
+
+	if (**dir == '\0' || (**dir == '~' && *(*dir + 1) == '\0'))
+	{
+		*dir = get_var_param(params->env, "HOME");
+		if (*dir == NULL)
+		{
+			print_promt("cd: HOME not set\n");
+			free(*old_content);
+			set_errno(1);
+			return (0);
+		}
+	}
+	if (**dir == '~')
+	{
+		tilda = ft_strjoin(get_var_param(params->env, "HOME"), *dir + 1);
+		*dir = tilda;
+		free(tilda);
+	}
+	return (1);
+}
+
+static void		null_check(char *old_content, t_list *start, char *param)
 {
 	char *tmp;
 
@@ -44,14 +71,26 @@ static void 	null_check(char *old_content, t_list *start, char *param)
 	}
 }
 
-void	cd(char *dir)
+void			do_cd(char *dir, char **old_content)
 {
-	char *old_content;
-	int fd;
 	t_list *start;
-	char *tmp;
-	char *tilda;
-	char *true_path;
+
+	chdir(dir);
+	start = get_env_list_pos(params->env, "PWD");
+	null_check(*old_content, start, "PWD");
+	free(start->content);
+	start->content = change_value_by_key("PWD", get_pwd());
+	start = get_env_list_pos(params->env, "OLDPWD");
+	null_check(*old_content, start, "OLDPWD");
+	free(*old_content);
+}
+
+void			cd(char *dir)
+{
+	char	*old_content;
+	int		fd;
+	char	*tmp;
+	char	*true_path;
 
 	true_path = dir;
 	if (get_var_param(params->env, "PWD") == NULL)
@@ -61,50 +100,16 @@ void	cd(char *dir)
 		free(tmp);
 	}
 	old_content = ft_strdup(get_var_param(params->env, "PWD"));
-	if (*dir == '\0' || (*dir == '~' && *(dir + 1) == '\0'))
-	{
-		dir = get_var_param(params->env, "HOME");
-		if (dir == NULL)
-		{
-			print_promt("cd: HOME not set\n");
-			free(old_content);
-			set_errno(1);
-			return;
-		}
-	}
-	if (*dir == '~')
-	{
-		tilda = ft_strjoin(get_var_param(params->env, "HOME"), dir + 1);
-		dir = tilda;
-		free(tilda);
-	}
-	else if (*dir == '-')
-	{
-		dir = get_var_param(params->env, "OLDPWD");
-		if (dir == NULL)
-		{
-			print_promt("cd: OLDPWD not set\n");
-			free(old_content);
-			set_errno(1);
-			return ;
-		}
-	}
-
+	if (tilda_check(&dir, &old_content) == 0)
+		return ;
+	else if (minus_check(&dir, &old_content) == 0)
+		return ;
 	fd = open(dir, O_DIRECTORY);
 	if (!cd_error(fd, dir, true_path))
 	{
 		free(old_content);
-		return;
+		return ;
 	}
 	else
-	{
-		chdir(dir);
-		start = get_env_list_pos(params->env, "PWD");
-		null_check(old_content, start, "PWD");
-		free(start->content);
-		start->content = change_value_by_key("PWD", get_pwd());
-		start = get_env_list_pos(params->env, "OLDPWD");
-		null_check(old_content, start, "OLDPWD");
-		free(old_content);
-	}
+		do_cd(dir, &old_content);
 }

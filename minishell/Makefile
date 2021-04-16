@@ -68,6 +68,7 @@ SRC = main.c \
 	logic/pipe_process.c \
 	logic/utils/print_promt.c \
 	logic/utils/set_error.c \
+	logic/utils/cd_utils.c \
 
 OBJ = $(SRC:.c=.o)
 

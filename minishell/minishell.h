@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:05:04 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 14:29:42 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/17 16:24:40 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ typedef	struct	s_parser
 	char		**map_command_redir;
 	char		*previous_char;
 }				t_parser;
+
+typedef	struct	s_norm
+{
+	char		*buf;
+	int			flag;
+}				t_norm;
 
 void			parser(void);
 
@@ -231,6 +237,8 @@ void			send_redir_one(t_parser *p, t_file *file, char symbol);
 void			send_redir_two(t_parser *p, t_file *file, char **line);
 
 int				redirect_found(t_parser *p, t_file *file, char **line);
+
+void			write_cycle(char **line, char **str);
 
 g_list			*params;
 

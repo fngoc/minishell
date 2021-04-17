@@ -1,108 +1,114 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   without_quotation_marks.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/17 16:23:28 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 16:24:14 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-/*
-** without_quotation_marks: без кавычек.
-*/
+static	void	dollar_found(char **str, char **line, char **tmp, t_norm *n)
+{
+	*tmp = NULL;
+	while (**line != ' ' && **line != '\"' && **line != '\'' && **line != '\0')
+	{
+		if (**line == '\\')
+		{
+			++(*line);
+			n->flag = 1;
+			n->buf = ft_strjoin_char_free(n->buf, **line);
+			continue ;
+		}
+		*tmp = ft_strjoin_char_free(*tmp, *(*line)++);
+	}
+	if ((*tmp = get_var_param(params->env, delet_first(*tmp))))
+	{
+		if (*str != NULL)
+			*str = ft_strjoin_fix(*str, *tmp);
+		else
+			*str = ft_strdup(*tmp);
+	}
+	if (n->flag)
+		*str = ft_strjoin_fix(*str, n->buf);
+}
 
-char    *without_quotation_marks(char **line)
+static	void	double_mark_found(char **str, char **line, char **tmp)
+{
+	++(*line);
+	while (**line != '\"' && **line != '\0')
+	{
+		if (**line != '$')
+			*str = ft_strjoin_char_free(*str, *(*line)++);
+		if (**line == '$')
+		{
+			*tmp = NULL;
+			while (**line != ' ' && **line != '\"'
+				&& **line != '\'' && **line != '\\')
+				*tmp = ft_strjoin_char_free(*tmp, *(*line)++);
+			if ((*tmp = get_var_param(params->env, delet_first(*tmp))))
+			{
+				if (*str != NULL)
+					*str = ft_strjoin_fix(*str, *tmp);
+				else
+					*str = *tmp;
+			}
+		}
+	}
+	if (**line == '\"')
+		++(*line);
+}
+
+static	void	else_step(char **line, char **str)
+{
+	if (**line == '\\')
+		++(*line);
+	*str = ft_strjoin_char_free(*str, *(*line)++);
+}
+
+static	int		continue_func_norm(char **line, char **str)
+{
+	++(*line);
+	if (**line == '\'')
+	{
+		++(*line);
+		return (1);
+	}
+	else
+		write_cycle(line, str);
+	if (**line == '\'')
+		++(*line);
+	if (**line == '\"')
+		return (1);
+	return (0);
+}
+
+char			*without_quotation_marks(char **line)
 {
 	char	*str;
 	char	*tmp;
-	char	*buf;
-	int		flag;
+	t_norm	n;
 
-	flag = 0;
+	n.flag = 0;
+	n.buf = NULL;
 	str = NULL;
-	buf = NULL;
 	while (**line != ' ' && **line != '\0')
 	{
 		if (**line == '$')
-		{
-			tmp = NULL;
-			while (**line != ' ' && **line != '\"' && **line != '\'' && **line != '\0')
-			{
-				if (**line == '\\')
-				{
-					++(*line);
-					flag = 1;
-					buf = ft_strjoin_char_free(buf, **line);
-					continue ;
-				}
-				tmp = ft_strjoin_char_free(tmp, *(*line)++);
-			}
-			if ((tmp = get_var_param(params->env, delet_first(tmp))))
-			{
-				if (str != NULL)
-					str = ft_strjoin_fix(str, tmp);
-				else
-					str = ft_strdup(tmp);
-			}
-			if (flag)
-				str = ft_strjoin_fix(str, buf);
-		}
+			dollar_found(&str, line, &tmp, &n);
 		if (**line == '\"')
-		{
-			++(*line);
-			while (**line != '\"' && **line != '\0')
-			{
-				if (**line != '$')
-				{
-					// if (**line == '\\')
-					// 	++(*line);
-					str = ft_strjoin_char_free(str, *(*line)++);
-				}
-				if (**line == '$')
-				{
-					tmp = NULL;
-					while (**line != ' ' && **line != '\"' && **line != '\'' && **line != '\\')
-					{
-						// if (**line == '\\')
-						// {
-						// 	++(*line);
-						// 	continue ;
-						// }
-						tmp = ft_strjoin_char_free(tmp, *(*line)++);
-					}
-					if ((tmp = get_var_param(params->env, delet_first(tmp))))
-					{
-						if (str != NULL)
-							str = ft_strjoin_fix(str, tmp);
-						else
-							str = tmp;
-					}
-				}
-			}
-			if (**line == '\"')
-				++(*line);
-		}
+			double_mark_found(&str, line, &tmp);
 		if (**line == '\'')
 		{
-			++(*line);
-			if (**line == '\'')
-			{
-				++(*line);
-				continue ;
-			}
-			else
-			{
-				while (**line != '\'' && **line != '\0')
-				{
-					// if (**line == '\\')
-					// 	++(*line);
-					str = ft_strjoin_char_free(str, *(*line)++);
-				}
-			}
-			if (**line == '\'')
-				++(*line);
-			if (**line == '\"')
+			if (continue_func_norm(line, &str) == 1)
 				continue ;
 		}
 		if (ft_strlen(*line) > 0)
-		{
-			if (**line == '\\')
-				++(*line);
-			str = ft_strjoin_char_free(str, *(*line)++);
-		}
+			else_step(line, &str);
 	}
 	return (str);
 }

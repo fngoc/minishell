@@ -6,7 +6,7 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/16 17:15:20 by fngoc             #+#    #+#              #
-#    Updated: 2021/04/17 14:34:15 by fngoc            ###   ########.fr        #
+#    Updated: 2021/04/17 16:24:58 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ SRC = main.c \
 	parser/echo/ft_echo.c \
 	parser/echo/double_quote.c \
 	parser/echo/parser_echo.c \
+	parser/echo/write_cycle.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \

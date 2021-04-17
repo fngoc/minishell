@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:05:04 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 12:05:53 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/17 14:29:42 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,26 @@ void			quotation_mark_found(t_parser *p, int *i, char **name, char **line);
 void			quotation_mark_not_found(t_parser *p, int *i, char **name, char **line);
 
 void			parser_echo(t_parser *p, char **line, int *i);
+
+void			checking_repetitions(t_parser *p, char symbol);
+
+void			if_first_redir(t_file *file, t_parser *p);
+
+void			if_second_redir(t_file *file, t_parser *p);
+
+void			if_first_redir_flags(t_file *file, t_parser *p);
+
+void			nullifying_flags(t_parser *p);
+
+void			checking_for_recursion(t_file *file, t_parser *p, char **line);
+
+void			branching(t_parser *p, int *i, char **name, char **line);
+
+void			send_redir_one(t_parser *p, t_file *file, char symbol);
+
+void			send_redir_two(t_parser *p, t_file *file, char **line);
+
+int				redirect_found(t_parser *p, t_file *file, char **line);
 
 g_list			*params;
 

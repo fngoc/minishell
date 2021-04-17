@@ -6,7 +6,7 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/16 17:15:20 by fngoc             #+#    #+#              #
-#    Updated: 2021/04/17 12:06:07 by fngoc            ###   ########.fr        #
+#    Updated: 2021/04/17 14:34:15 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC = main.c \
 	parser/checks/checking_quotes.c \
 	parser/checks/privacy_check.c \
 	parser/checks/check_buffer.c \
+	parser/checks/check_echo_flag_n.c \
 	parser/checks/fd_check.c \
 	parser/utils/is_arrow.c \
 	parser/utils/ft_istab.c \
@@ -55,6 +56,8 @@ SRC = main.c \
 	parser/utils/error.c \
 	parser/utils/delet_last_char.c \
 	parser/utils/delet_first.c \
+	parser/utils/parser_utils_one.c \
+	parser/utils/parser_utils_two.c \
 	parser/sends/send_question_mark.c \
 	parser/sends/send_exit.c \
 	parser/sends/send_exec.c \
@@ -69,7 +72,6 @@ SRC = main.c \
 	parser/echo/single_quote.c \
 	parser/echo/ft_echo.c \
 	parser/echo/double_quote.c \
-	parser/echo/check_echo_flag_n.c \
 	parser/echo/parser_echo.c \
 	\
 	logic/execve_command.c \

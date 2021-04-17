@@ -1,10 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   double_quote.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/17 14:47:36 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 14:47:40 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
+
+static	void	branching_quote(char **str, char **line)
+{
+	++(*line);
+	if (**line != ' ' && **line != '\0')
+	{
+		if (**line == '\'')
+			*str = ft_strjoin_free_free(*str, single_quote(line));
+		else if (**line == '\"')
+			*str = ft_strjoin_free_free(*str, double_quote(line));
+		else
+			*str = ft_strjoin_free_free(*str, without_quotation_marks(line));
+	}
+}
 
 /*
 ** double_quote: двайная кавычка.
 */
 
-char    *double_quote(char **line)
+char			*double_quote(char **line)
 {
 	char *str;
 	char *tmp;
@@ -14,23 +40,12 @@ char    *double_quote(char **line)
 	while (**line != '\"' && **line != '\0')
 	{
 		if (**line != '$')
-		{
-			// if (**line == '\\')
-			// 	++(*line);
 			str = ft_strjoin_char_free(str, *(*line)++);
-		}
 		if (**line == '$')
 		{
 			tmp = NULL;
 			while (**line != ' ' && **line != '\"' && **line != '\'')
-			{
-				// if (**line == '\\')
-				// {
-				// 	++(*line);
-				// 	continue ;
-				// }
 				tmp = ft_strjoin_char_free(tmp, *(*line)++);
-			}
 			if ((tmp = get_var_param(params->env, delet_first(tmp))))
 			{
 				if (str != NULL)
@@ -40,15 +55,6 @@ char    *double_quote(char **line)
 			}
 		}
 	}
-	++(*line);
-	if (**line != ' ' && **line != '\0')
-	{
-		if (**line == '\'')
-			str = ft_strjoin_free_free(str, single_quote(line));
-		else if (**line == '\"')
-			str = ft_strjoin_free_free(str, double_quote(line));
-		else
-			str = ft_strjoin_free_free(str, without_quotation_marks(line));
-	}
+	branching_quote(&str, line);
 	return (str);
 }

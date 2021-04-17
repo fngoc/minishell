@@ -26,10 +26,6 @@ static	void	branching_quote(char **str, char **line)
 	}
 }
 
-/*
-** double_quote: двайная кавычка.
-*/
-
 char			*double_quote(char **line)
 {
 	char *str;

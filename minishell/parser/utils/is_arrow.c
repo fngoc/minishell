@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** is_arrow: проверка.
-*/
-
 int	is_arrow(char const *buf)
 {
 	return (!(ft_strcmp(buf, "\e[C") && ft_strcmp(buf, "\e[B")

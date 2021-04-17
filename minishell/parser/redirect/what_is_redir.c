@@ -34,10 +34,6 @@ static	char	*checking_flags(char *line, t_parser *p)
 	return (line);
 }
 
-/*
-** what_is_redir: выставление флага редиректа.
-*/
-
 char			*what_is_redir(char *line, t_parser *p)
 {
 	char *tmp;

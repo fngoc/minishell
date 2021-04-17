@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** send_echo: отправка команды echo на выполнение.
-*/
-
 void	send_echo(char **map, t_parser *p)
 {
 	if (map[1] != NULL)

@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** single_quote: одна кавычка.
-*/
-
 char	*single_quote(char **line)
 {
 	char	*str;

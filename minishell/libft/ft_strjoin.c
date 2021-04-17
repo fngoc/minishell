@@ -12,12 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_substr:  выделяет и возвращает новую строку,
-** которая является результатом конкатенации
-** из 's1' и 's2'.
-*/
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*p;

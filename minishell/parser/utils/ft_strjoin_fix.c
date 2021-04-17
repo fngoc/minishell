@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** ft_strjoin_fix: чистит первый аргумент.
-*/
-
 char	*ft_strjoin_fix(char *s1, char *s2)
 {
 	char	*p;

@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strtrim: возвращает строку с удаленными
-** символами 'set' по бокам.
-*/
-
 static int	is_char(char const c, char const *str)
 {
 	int i;

@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** set_redir_map: устанавливаем мапу команд для редиректа.
-*/
-
 void	set_redir_map(t_parser *p)
 {
 	int i;

@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** checking_folder: проверка на папку для редиректа.
-*/
-
 int	checking_folder(char *file)
 {
 	struct stat f;

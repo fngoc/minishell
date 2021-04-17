@@ -53,10 +53,6 @@ static	void	double_pointer_movement_check(char **line, t_parser *p)
 	}
 }
 
-/*
-** parser_echo: парсим echo.
-*/
-
 void			parser_echo(t_parser *p, char **line, int *i)
 {
 	char	*name;

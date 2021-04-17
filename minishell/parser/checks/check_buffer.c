@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** tabs: кнопка tab.
-*/
-
 static	void	tabs(t_parser *p)
 {
 	ft_bzero(p->str, ft_strlen(p->str));
@@ -24,10 +20,6 @@ static	void	tabs(t_parser *p)
 	write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 	free(p->buf);
 }
-
-/*
-** backspace: кнопка бэкспейс.
-*/
 
 static	void	backspace(t_parser *p)
 {
@@ -39,10 +31,6 @@ static	void	backspace(t_parser *p)
 		++p->backspace;
 	}
 }
-
-/*
-** arrow_in_down: стрелочка вниз.
-*/
 
 static	void	arrow_in_down(t_parser *p)
 {
@@ -62,10 +50,6 @@ static	void	arrow_in_down(t_parser *p)
 	}
 }
 
-/*
-** arrow_at_top: стрелочка вверх.
-*/
-
 static	void	arrow_at_top(t_parser *p)
 {
 	if (p->step_history >= 0)
@@ -76,10 +60,6 @@ static	void	arrow_at_top(t_parser *p)
 		get_history_previous(p);
 	}
 }
-
-/*
-** check_buffer: провека буфера.
-*/
 
 char			*check_buffer(t_parser *p)
 {

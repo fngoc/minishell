@@ -12,10 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strjoin_fix: чистит себя.
-*/
-
 char	*ft_strjoin_fix(char *s1, char *s2)
 {
 	char	*p;
@@ -44,11 +40,6 @@ char	*ft_strjoin_fix(char *s1, char *s2)
 	return (p);
 }
 
-/*
-** chek_line: проверка статической переменной
-** на остаток.
-*/
-
 char	*chek_line(char **static_str, char **line)
 {
 	char	*p_n;
@@ -73,12 +64,6 @@ char	*chek_line(char **static_str, char **line)
 		*line = ft_strnew(0);
 	return (p_n);
 }
-
-/*
-** get_next_line: читает строку, прочитанную из
-** дескриптора файла, остонавливаясь на '\n'
-** прочитаная строка без '\n'.
-*/
 
 int		get_next_line(int fd, char **line)
 {

@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_putstr_fd: Выводит строку в
-** указанный файл дескриптор.
-*/
-
 void	ft_putstr_fd(char *s, int fd)
 {
 	int len;

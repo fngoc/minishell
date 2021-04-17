@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** error: печатает текст ошибки и выходит из программы.
-*/
-
 void	error(char *str, int err)
 {
 	char *tmp;

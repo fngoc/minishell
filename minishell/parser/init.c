@@ -12,10 +12,6 @@
 
 #include "../minishell.h"
 
-/*
-** init: инициализация term.
-*/
-
 struct termios	init(void)
 {
 	struct termios	term;

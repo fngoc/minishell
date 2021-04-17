@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** send_exec: отправка команд на выполнение.
-*/
-
 void	send_exec(char **map)
 {
 	int lvl;

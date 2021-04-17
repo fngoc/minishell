@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_atoi: конвертирует строку, на которую
-** указывает параметр str, в величину типа int.
-*/
-
 int	ft_atoi(const char *str)
 {
 	int			i;

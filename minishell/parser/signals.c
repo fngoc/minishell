@@ -12,10 +12,6 @@
 
 #include "../minishell.h"
 
-/*
-** ft_quit: обработка сигнала ctr+\.
-*/
-
 void	ft_quit(int sig)
 {
 	int		pid;
@@ -26,10 +22,6 @@ void	ft_quit(int sig)
 	if (!pid)
 		ft_putendl_fd("Quit: 3", 1);
 }
-
-/*
-** ft_sigint: обработка сигнала ctr+с.
-*/
 
 void	ft_sigint(int sig)
 {

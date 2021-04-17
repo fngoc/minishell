@@ -12,12 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strlcat: копирование ведётся не в начало dst,
-** а таким образом, чтобы продолжить
-** строку, на которую указывает dst.
-*/
-
 size_t	ft_strlcat(char *dst, const char *src, size_t dsize)
 {
 	const char	*odst;

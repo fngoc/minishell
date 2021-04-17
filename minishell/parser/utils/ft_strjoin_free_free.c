@@ -18,10 +18,6 @@ static	void	zeroing(int *i, int *j)
 	*j = 0;
 }
 
-/*
-** ft_strjoin_free_free: чистить все аргументы.
-*/
-
 char			*ft_strjoin_free_free(char *s1, char *s2)
 {
 	char	*p;

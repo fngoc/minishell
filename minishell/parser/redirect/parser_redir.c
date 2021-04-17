@@ -54,10 +54,6 @@ static	void	if_last_file_redir(t_file *file, t_parser *p)
 	p->flag_folder = 1;
 }
 
-/*
-** parser_redir: парсим рудиректы.
-*/
-
 void			parser_redir(char **map_comand, t_parser *p,
 										t_file *file, char c)
 {

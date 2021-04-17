@@ -18,10 +18,6 @@ static	void	double_pointer_movement(char **line)
 	++(*line);
 }
 
-/*
-** check_echo_flag_n: проверка на -n.
-*/
-
 int				check_echo_flag_n(char **line)
 {
 	while (**line != '\0')

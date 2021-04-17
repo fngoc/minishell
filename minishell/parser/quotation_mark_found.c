@@ -23,10 +23,6 @@ static	void	set_in_map(int *i, char *name, t_parser *p)
 		p->map_comand[++*i] = NULL;
 }
 
-/*
-** quotation_mark_found: найдена кавычка.
-*/
-
 void			quotation_mark_found(t_parser *p, int *i,
 							char **name, char **line)
 {

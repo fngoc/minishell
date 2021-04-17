@@ -12,10 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_lstsize: возвращает длину списка.
-*/
-
 int	ft_lstsize(t_list *lst)
 {
 	int		i;

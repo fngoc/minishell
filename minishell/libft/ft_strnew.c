@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strnew: создает новую строку размером size
-** и заполняет ее нулями.
-*/
-
 char	*ft_strnew(unsigned int size)
 {
 	char	*str;

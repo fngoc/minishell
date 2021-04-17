@@ -12,10 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** main: запуск программы
-*/
-
 int		main(int argc, char **argv, char **env)
 {
 	(void)argc;

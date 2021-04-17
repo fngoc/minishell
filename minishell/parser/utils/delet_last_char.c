@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** delet_last_char: удаление из строки к-во char.
-*/
-
 char	*delet_last_char(char *str, int coll_backspace)
 {
 	int len;

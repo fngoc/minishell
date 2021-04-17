@@ -18,10 +18,6 @@ static	void	send_in_map(int *i, char *str_arg, char **map_arg)
 	free(str_arg);
 }
 
-/*
-** pars_line_echo: парсинг строки для echo.
-*/
-
 static	char	**pars_line_echo(char *line, int memory)
 {
 	char	*str_arg;
@@ -50,10 +46,6 @@ static	char	**pars_line_echo(char *line, int memory)
 	}
 	return (map_arg);
 }
-
-/*
-** ft_echo: команда echo.
-*/
 
 void			ft_echo(char *line, int n_flag, int memory)
 {

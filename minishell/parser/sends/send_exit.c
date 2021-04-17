@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** send_exit_norm: функция для нормы.
-*/
-
 static	void	send_exit_norm(int flag, int flag_minus, char *str)
 {
 	if (flag == 0 && flag_minus == 1)
@@ -44,10 +40,6 @@ static	void	checking_and_nullifying(int *flag, int *i,
 		error("too many arguments", 255);
 	}
 }
-
-/*
-** send_exit: выполнение команды exit.
-*/
 
 void			send_exit(char **map)
 {

@@ -12,11 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** ft_strjoin_char_free: добавляет символ в конец строки
-** при этом очищает оставшуюся строку.
-*/
-
 char	*ft_strjoin_char_free(char *s1, char c)
 {
 	char	*p;

@@ -12,12 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_memmove: копирует n байт из массива,
-** на который указывает аргумент source,
-** в массив, на который указывает аргумент destination.
-*/
-
 void	*ft_memmove(void *destination, const void *source, size_t n)
 {
 	const unsigned char	*s;

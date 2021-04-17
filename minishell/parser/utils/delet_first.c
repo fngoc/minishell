@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** delet_first: удалить первый символ строки.
-*/
-
 char	*delet_first(char *str)
 {
 	char *new_char;

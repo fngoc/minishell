@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** set_line: установка линиии в историю.
-*/
-
 void	set_line(char const *str, int fd, t_parser *p)
 {
 	char	*str_in_history;

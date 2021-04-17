@@ -12,12 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** ft_strcmp: побайтно сравнивает коды
-** символов двух строк, на которые указывают
-** аргументы функции.
-*/
-
 int	ft_strcmp(const char *str1, const char *str2)
 {
 	size_t	i;

@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** send_env: отправка команды env на выполнение.
-*/
-
 void	send_env(char **map)
 {
 	if (map[1] == NULL)

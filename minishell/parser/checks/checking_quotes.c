@@ -12,10 +12,6 @@
 
 #include "../../minishell.h"
 
-/*
-** single_norm: функция для нормы.
-*/
-
 static	void	single_norm(int *flag_in, int *open, int *coll, char c)
 {
 	if (*flag_in == 1 && c == '\"')
@@ -33,10 +29,6 @@ static	void	single_norm(int *flag_in, int *open, int *coll, char c)
 		*open = 0;
 	}
 }
-
-/*
-** checking_single_quotes: одинарных кавычек.
-*/
 
 void			checking_single_quotes(char *line)
 {
@@ -65,10 +57,6 @@ void			checking_single_quotes(char *line)
 		error("Unclosed quotation single mark", 258);
 }
 
-/*
-** double_norm: функция для нормы.
-*/
-
 static	void	double_norm(int *flag_in, int *open, int *coll, char c)
 {
 	if (*flag_in == 1 && c == '\'')
@@ -86,10 +74,6 @@ static	void	double_norm(int *flag_in, int *open, int *coll, char c)
 		*open = 0;
 	}
 }
-
-/*
-** checking_double_quotes: проверка двойных кавычек.
-*/
 
 void			checking_double_quotes(char *line)
 {

@@ -12,10 +12,6 @@
 
 #include "../minishell.h"
 
-/*
-** checks: проверки.
-*/
-
 static	void	checks(t_parser *p)
 {
 	char	*tmp_p_str;
@@ -31,10 +27,6 @@ static	void	checks(t_parser *p)
 		p->str = delet_last_char(p->str, 1);
 }
 
-/*
-** free_read_line_exit: очистка после парсинга строки.
-*/
-
 static void		free_read_line_exit(t_parser *p)
 {
 	free(p->buf);
@@ -42,10 +34,6 @@ static void		free_read_line_exit(t_parser *p)
 	free_map(p->map_history);
 	ft_putendl_fd("exit", 1);
 }
-
-/*
-** read_line: чтение линии.
-*/
 
 static	void	read_line(int fd, t_parser *p)
 {
@@ -74,10 +62,6 @@ static	void	read_line(int fd, t_parser *p)
 	free_read_line_exit(p);
 }
 
-/*
-** init_parser: начальные значения структуры парсера.
-*/
-
 static	void	init_parser(t_parser *p)
 {
 	p->step_history = -1;
@@ -95,10 +79,6 @@ static	void	init_parser(t_parser *p)
 	p->flag_please = 0;
 	p->flag_please_1 = 0;
 }
-
-/*
-** parser: запуск парсера.
-*/
 
 void			parser(void)
 {

@@ -6,7 +6,7 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/16 17:15:20 by fngoc             #+#    #+#              #
-#    Updated: 2021/04/16 18:08:07 by fngoc            ###   ########.fr        #
+#    Updated: 2021/04/17 12:06:07 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ FCLEAN = fclean
 SRC = main.c \
 	\
 	parser/parser.c \
+	parser/quotation_mark_found.c \
+	parser/quotation_mark_not_found.c \
 	parser/after_reading_line.c \
 	parser/signals.c \
 	parser/parser_commands.c \
@@ -68,6 +70,7 @@ SRC = main.c \
 	parser/echo/ft_echo.c \
 	parser/echo/double_quote.c \
 	parser/echo/check_echo_flag_n.c \
+	parser/echo/parser_echo.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \

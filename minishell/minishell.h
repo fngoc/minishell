@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:05:04 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/16 18:06:28 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/17 12:05:53 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef	struct	s_parser
 	int			flag_please_1;
 	char		*file_name;
 	char		**map_command_redir;
+	char		*previous_char;
 }				t_parser;
 
 void			parser(void);
@@ -204,6 +205,12 @@ int				check_echo_flag_n(char **line);
 void			after_reading_line(t_parser *p, int fd, t_file *file);
 
 void			fd_check(t_file *file);
+
+void			quotation_mark_found(t_parser *p, int *i, char **name, char **line);
+
+void			quotation_mark_not_found(t_parser *p, int *i, char **name, char **line);
+
+void			parser_echo(t_parser *p, char **line, int *i);
 
 g_list			*params;
 

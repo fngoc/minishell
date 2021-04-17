@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   fd_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 09:07:24 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 09:07:39 by fngoc            ###   ########.fr       */
+/*   Created: 2021/04/16 18:04:34 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/16 18:08:24 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/*
-** error: печатает текст ошибки и выходит из программы.
-*/
-
-void	error(char *str, int err)
+void	fd_check(t_file *file)
 {
-	char *tmp;
-	char *res;
-
-	ft_putendl_fd(str, 2);
-	tmp = ft_itoa(err);
-	res = ft_strjoin("err=", tmp);
-	export_var(res);
-	free(tmp);
-	free(res);
-	exit(err);
+	if (file->g_fd >= 0)
+		close(file->g_fd);
+	dup2(4, 0);
+	dup2(3, 1);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 17:05:04 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/16 18:06:28 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 
 # define MINISHELL_H
@@ -188,6 +200,10 @@ void 			back_redirect(t_file *file, char *file_name);
 int				checking_folder(char *file);
 
 int				check_echo_flag_n(char **line);
+
+void			after_reading_line(t_parser *p, int fd, t_file *file);
+
+void			fd_check(t_file *file);
 
 g_list			*params;
 

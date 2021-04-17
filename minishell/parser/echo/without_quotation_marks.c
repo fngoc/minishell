@@ -47,20 +47,20 @@ char    *without_quotation_marks(char **line)
 			{
 				if (**line != '$')
 				{
-					if (**line == '\\')
-						++(*line);
+					// if (**line == '\\')
+					// 	++(*line);
 					str = ft_strjoin_char_free(str, *(*line)++);
 				}
 				if (**line == '$')
 				{
 					tmp = NULL;
-					while (**line != ' ' && **line != '\"' && **line != '\'')
+					while (**line != ' ' && **line != '\"' && **line != '\'' && **line != '\\')
 					{
-						if (**line == '\\')
-						{
-							++(*line);
-							continue ;
-						}
+						// if (**line == '\\')
+						// {
+						// 	++(*line);
+						// 	continue ;
+						// }
 						tmp = ft_strjoin_char_free(tmp, *(*line)++);
 					}
 					if ((tmp = get_var_param(params->env, delet_first(tmp))))
@@ -87,8 +87,8 @@ char    *without_quotation_marks(char **line)
 			{
 				while (**line != '\'' && **line != '\0')
 				{
-					if (**line == '\\')
-						++(*line);
+					// if (**line == '\\')
+					// 	++(*line);
 					str = ft_strjoin_char_free(str, *(*line)++);
 				}
 			}

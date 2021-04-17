@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   after_reading_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 09:07:24 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 09:07:39 by fngoc            ###   ########.fr       */
+/*   Created: 2021/04/16 17:53:55 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 09:06:26 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-/*
-** error: печатает текст ошибки и выходит из программы.
-*/
-
-void	error(char *str, int err)
+void	after_reading_line(t_parser *p, int fd, t_file *file)
 {
-	char *tmp;
-	char *res;
-
-	ft_putendl_fd(str, 2);
-	tmp = ft_itoa(err);
-	res = ft_strjoin("err=", tmp);
-	export_var(res);
-	free(tmp);
-	free(res);
-	exit(err);
+	write(1, "\n", 1);
+	p->step_history = p->len_map;
+	set_line(p->str, fd, p);
+	privacy_check(p->str, p);
+	if (ft_strlen(p->str) > 0)
+		parser_commands(p->str, p, file);
+	p->flag_folder = 0;
+	p->redir_here = 0;
+	p->flag_redir = 0;
+	p->flag_please = 0;
+	p->flag_please_1 = 0;
+	ft_bzero(p->str, ft_strlen(p->str));
 }

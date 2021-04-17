@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   send_exit.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/17 09:17:23 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 09:37:29 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 /*
@@ -19,6 +31,20 @@ static	void	send_exit_norm(int flag, int flag_minus, char *str)
 	}
 }
 
+static	void	checking_and_nullifying(int *flag, int *i,
+								int *flag_minus, char **map)
+{
+	*flag = 0;
+	*i = -1;
+	*flag_minus = 0;
+	if (map[1] != NULL && map[2] != NULL)
+	{
+		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		ft_putstr_fd("exit: ", 2);
+		error("too many arguments", 255);
+	}
+}
+
 /*
 ** send_exit: выполнение команды exit.
 */
@@ -29,16 +55,8 @@ void			send_exit(char **map)
 	int i;
 	int flag_minus;
 
-	flag = 0;
-	i = -1;
-	flag_minus = 0;
-	if (map[1] != NULL && map[2] != NULL)
-	{
-		write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-		ft_putstr_fd("exit: ", 2);
-		error("too many arguments", 255);
-	}
-	else if (map[1] != NULL)
+	checking_and_nullifying(&flag, &i, &flag_minus, map);
+	if (map[1] != NULL)
 	{
 		while (map[1][++i] != '\0')
 		{

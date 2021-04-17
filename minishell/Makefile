@@ -1,14 +1,28 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/04/16 17:15:20 by fngoc             #+#    #+#              #
+#    Updated: 2021/04/16 18:08:07 by fngoc            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 .PHONY: all clean bonus fclean re run
 
 NAME = minishell
 
-HEADERS = minishell.h
+HEADER = minishell.h
 
 LIBFT_DIR = libft/
 
 LIBFT = $(LIBFT_DIR)libft.a
 
 MAKEB = make bonus
+
+MAKEC = make clean
 
 CLEAN = clean
 
@@ -17,6 +31,7 @@ FCLEAN = fclean
 SRC = main.c \
 	\
 	parser/parser.c \
+	parser/after_reading_line.c \
 	parser/signals.c \
 	parser/parser_commands.c \
 	parser/init.c \
@@ -26,6 +41,7 @@ SRC = main.c \
 	parser/checks/checking_quotes.c \
 	parser/checks/privacy_check.c \
 	parser/checks/check_buffer.c \
+	parser/checks/fd_check.c \
 	parser/utils/is_arrow.c \
 	parser/utils/ft_istab.c \
 	parser/utils/ft_strjoin_free_free.c \
@@ -91,17 +107,16 @@ MAGENTA ='\033[1;35m'
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) 
-	@cd $(LIBFT_DIR) && mv ./libft.a ../
-	@$(CC) $(FLAG) $(SRC) libft.a -ltermcap $(OPTIONOBJ) $(NAME)
-	@echo $(GREEN)"You can run!"$(WHITE)
-
-$(LIBFT):
+$(NAME): $(HEADER) $(SRC)
 	@cd $(LIBFT_DIR) && $(MAKEB)
 	@echo ${GREEN}"libft is assembled!"$(WHITE)
+	@cd $(LIBFT_DIR) && mv ./libft.a ../
+	@cd $(LIBFT_DIR) && $(MAKEC)
+	@$(CC) $(FLAG) $(SRC) libft.a -ltermcap $(OPTIONOBJ) $(NAME)
+	@echo $(GREEN)"You can run!"$(WHITE)	
 
-%.o: %.c
-	@$(CC) $(FLAG) $< $(OPTIONOBJ) $@
+%.o: %.c $(HEADER)
+	$(CC) $(FLAG) $< $(OPTIONOBJ) $@
 
 clean:
 	@$(DEL) $(OBJ)

@@ -292,6 +292,14 @@ void	parser_commands(char *line, t_parser *p, t_file *file)
 	else
 		send_command_execute(p->map_comand, p);
 	free_map(p->map_comand);
+	if (*line == ';')
+	{
+		p->flag_folder = 0;
+		p->redir_here = 0;
+		p->flag_redir = 0;
+		p->flag_please = 0;
+		p->flag_please_1 = 0;
+	}
 	if (ft_strlen(line) > 1)
 	{
 		if (*line == '>')

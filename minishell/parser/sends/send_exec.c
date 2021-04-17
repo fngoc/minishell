@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   send_exec.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/17 09:39:53 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 09:39:54 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 /*
@@ -15,12 +27,6 @@ void	send_exec(char **map)
 			lvl = ft_atoi(get_var_param(params->env, "SHLVL"));
 			++lvl;
 			export_var(ft_strjoin("SHLVL=", ft_itoa(lvl)));
-		}
-		if (!ft_strcmp(map[0], "cat") && map[1] == NULL)
-		{
-			write(2, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
-			ft_putstr_fd(": No such file or directory\n", 2);
-			return ;
 		}
 		if (!exec(map[0], map))
 		{

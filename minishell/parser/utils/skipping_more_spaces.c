@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   skipping_more_spaces.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 17:04:45 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/18 11:28:24 by fngoc            ###   ########.fr       */
+/*   Created: 2021/04/18 10:53:11 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/18 10:53:14 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
-int		main(int argc, char **argv, char **env)
+void	skipping_more_spaces(char **line)
 {
-	(void)argc;
-	(void)argv;
-	(void)env;
-	if (!(params = malloc(sizeof(g_list))))
-		error("Allocated error", 11);
-	params->env = env_copy(env);
-	dup2(STDOUT_FILENO, 3);
-	dup2(STDIN_FILENO, 4);
-	parser();
-	return (0);
+	if (**line == ' ')
+	{
+		while (**line == ' ')
+			++(*line);
+	}
 }

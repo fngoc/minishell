@@ -6,7 +6,7 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/16 17:15:20 by fngoc             #+#    #+#              #
-#    Updated: 2021/04/17 16:24:58 by fngoc            ###   ########.fr        #
+#    Updated: 2021/04/18 10:59:02 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRC = main.c \
 	parser/utils/delet_first.c \
 	parser/utils/parser_utils_one.c \
 	parser/utils/parser_utils_two.c \
+	parser/utils/skipping_more_spaces.c \
 	parser/sends/send_question_mark.c \
 	parser/sends/send_exit.c \
 	parser/sends/send_exec.c \
@@ -74,6 +75,7 @@ SRC = main.c \
 	parser/echo/double_quote.c \
 	parser/echo/parser_echo.c \
 	parser/echo/write_cycle.c \
+	parser/echo/double_echo_n_check_start.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \

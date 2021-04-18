@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:17:13 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 15:18:37 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/18 11:27:35 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,11 @@ static	void	checking_quotation_marks_one(char **name,
 static	void	send_in_map(char **name, int *i, t_parser *p)
 {
 	if (ft_strlen(*name) == 0)
-		error("Syntax error near unexpected token", 258);
-	p->map_comand[++*i] = ft_strdup(*name);
-	free(*name);
-}
-
-static	void	double_pointer_movement_check(char **line, t_parser *p)
-{
-	if (**line == '-' && *(*line + 1) == 'n'
-		&& *(*line + 2) == ' ' && p->flag_echo_n == 1)
+		p->map_comand[++*i] = NULL;
+	else
 	{
-		++(*line);
-		++(*line);
+		p->map_comand[++*i] = ft_strdup(*name);
+		free(*name);
 	}
 }
 
@@ -65,10 +58,10 @@ void			parser_echo(t_parser *p, char **line, int *i)
 		return ;
 	}
 	checking_quotation_marks_one(&name, line, &flag_mark);
+	double_echo_n_check_start(line, p);
 	while ((**line != ';' && **line != '|' && **line != '>'
 	&& **line != '<' && **line != '\0') || flag_mark == 1)
 	{
-		double_pointer_movement_check(line, p);
 		if (**line == '\\')
 		{
 			name = ft_strjoin_char_free(name, *(*line)++);

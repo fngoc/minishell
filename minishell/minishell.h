@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:05:04 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 16:24:40 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/18 10:58:45 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,10 @@ void			send_redir_two(t_parser *p, t_file *file, char **line);
 int				redirect_found(t_parser *p, t_file *file, char **line);
 
 void			write_cycle(char **line, char **str);
+
+void			skipping_more_spaces(char **line);
+
+void			double_echo_n_check_start(char **line, t_parser *p);
 
 g_list			*params;
 

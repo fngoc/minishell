@@ -6,13 +6,14 @@
 /*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:31:56 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/16 18:25:19 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/18 12:43:35 by drarlean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int			err_with_char(char err_name, char *command, char *error_text)
+static int			err_with_char(char err_name,
+		char *command, char *error_text)
 {
 	if (err_name == 'd')
 	{
@@ -38,7 +39,7 @@ static int			err_with_char(char err_name, char *command, char *error_text)
 	return (0);
 }
 
-static	char	*delet_first_exe(char *str)
+static	char		*delet_first_exe(char *str)
 {
 	char *new_char;
 
@@ -46,14 +47,15 @@ static	char	*delet_first_exe(char *str)
 	return (new_char);
 }
 
-static void		command_not_found(char *command)
+static void			command_not_found(char *command)
 {
 	print_promt(command);
 	ft_putstr_fd(": command not found\n", 2);
 	set_errno(127);
 }
 
-int				err_exit(int err, char *command, char err_name, char *err_text)
+int					err_exit(int err,
+		char *command, char err_name, char *err_text)
 {
 	char *str_print;
 

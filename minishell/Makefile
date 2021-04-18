@@ -96,6 +96,7 @@ SRC = main.c \
 	logic/utils/execve_utils.c \
 	logic/utils/get_pipe_fd.c \
 	logic/execve_error.c \
+	logic/utils/export_utils.c \
 
 OBJ = $(SRC:.c=.o)
 

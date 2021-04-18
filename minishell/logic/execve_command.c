@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include "../minishell.h"
 
 char		**list_to_arr(void)
@@ -50,10 +51,13 @@ void		exec_command(char *command, char **argv, char **env)
 		}
 		else
 			set_errno(0);
-		exit(0);
+		exit(err);
 	}
 	if (pid > 0)
-		wait(&pid);
+	{
+		wait(&err);
+		set_errno(err >> 8);
+	}
 }
 
 int			check_executable(char *command)

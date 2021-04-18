@@ -252,6 +252,12 @@ void			skipping_more_spaces(char **line);
 
 void			double_echo_n_check_start(char **line, t_parser *p);
 
+int				validate_key(char *key);
+
+void			not_valid_identifier(char *var, char **key, char **tmp_var);
+
+void			after_equals_sign(t_list *tmp, char *tmp_var, char *key);
+
 g_list			*params;
 
 #endif

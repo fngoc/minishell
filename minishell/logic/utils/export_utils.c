@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/18 13:51:29 by drarlean          #+#    #+#             */
+/*   Updated: 2021/04/18 13:52:52 by drarlean         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-void not_valid_identifier(char *var, char **key, char **tmp_var)
+void		not_valid_identifier(char *var, char **key, char **tmp_var)
 {
 	print_promt("export: ");
 	ft_putstr_fd("\'", 2);
@@ -12,7 +24,7 @@ void not_valid_identifier(char *var, char **key, char **tmp_var)
 	free(*tmp_var);
 }
 
-int		validate_key(char *key)
+int			validate_key(char *key)
 {
 	int i;
 
@@ -40,12 +52,12 @@ int		validate_key(char *key)
 	return (0);
 }
 
-char 	*get_key_by_full_param(char *full_param)
+char		*get_key_by_full_param(char *full_param)
 {
-	int length;
-	char *ptr;
-	char *key;
-	int i;
+	int		length;
+	char	*ptr;
+	char	*key;
+	int		i;
 
 	i = -1;
 	length = 0;
@@ -53,7 +65,7 @@ char 	*get_key_by_full_param(char *full_param)
 	while (*full_param)
 	{
 		if (*full_param == '=')
-			break;
+			break ;
 		length++;
 		full_param++;
 	}
@@ -63,13 +75,13 @@ char 	*get_key_by_full_param(char *full_param)
 	while (++i < length)
 	{
 		if (*full_param == '=')
-			break;
+			break ;
 		key[i] = full_param[i];
 	}
 	return (key);
 }
 
-void 	after_equals_sign(t_list *tmp, char *tmp_var, char *key)
+void		after_equals_sign(t_list *tmp, char *tmp_var, char *key)
 {
 	tmp = get_env_list_pos(params->env, key);
 	if (*(tmp_var + ft_strlen(key) + 1) != 0)
@@ -88,4 +100,3 @@ void 	after_equals_sign(t_list *tmp, char *tmp_var, char *key)
 		tmp->content = ft_strdup(key);
 	}
 }
-

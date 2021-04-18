@@ -1,18 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execve_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/18 13:50:15 by drarlean          #+#    #+#             */
+/*   Updated: 2021/04/18 13:51:15 by drarlean         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-static 	void 	free_strs_execve(char **tmp_join, char **tmp_str)
+static void		free_strs_execve(char **tmp_join, char **tmp_str)
 {
 	free(*tmp_join);
 	free(*tmp_str);
 }
 
-int 	execve_path(char *path_non_splitted, char **argv, char **ev, char *command)
+int				execve_path(char *path_non_splitted,
+		char **argv, char **ev, char *command)
 {
-	char **splitted;
-	char **tmp;
-	char *tmp_str;
-	char *tmp_join;
-	int fd;
+	char	**splitted;
+	char	**tmp;
+	char	*tmp_str;
+	char	*tmp_join;
+	int		fd;
 
 	splitted = ft_split(path_non_splitted, ':');
 	tmp = splitted;
@@ -25,7 +38,7 @@ int 	execve_path(char *path_non_splitted, char **argv, char **ev, char *command)
 		{
 			exec_command(tmp_str, argv, ev);
 			free_strs_execve(&tmp_join, &tmp_str);
-			break;
+			break ;
 		}
 		close(fd);
 		free_strs_execve(&tmp_join, &tmp_str);
@@ -34,4 +47,3 @@ int 	execve_path(char *path_non_splitted, char **argv, char **ev, char *command)
 	free_map(tmp);
 	return (fd);
 }
-

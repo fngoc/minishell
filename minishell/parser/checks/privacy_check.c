@@ -1,9 +1,16 @@
-#include "../../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   privacy_check.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/17 14:32:13 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 14:32:14 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
-** counting_spaces: подсчет пробелов для
-** будущего выделения памяти.
-*/
+#include "../../minishell.h"
 
 static	void	counting_spaces(char *line, t_parser *p)
 {
@@ -16,19 +23,11 @@ static	void	counting_spaces(char *line, t_parser *p)
 	}
 }
 
-/*
-** checking_redir: проверка на синтаксис редиректов.
-*/
-
 static	void	checking_redir(char *line)
 {
 	if (line[ft_strlen(line) - 1] == '>' || line[ft_strlen(line) - 1] == '<')
 		error("syntax error near unexpected token \'newline\'", 15);
 }
-
-/*
-** privacy_check: проверка на все.
-*/
 
 void			privacy_check(char *line, t_parser *p)
 {

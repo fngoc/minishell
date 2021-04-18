@@ -12,13 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strlcpy: копирует из строки src в
-** буфер dst не более чем size - 1 символов
-** и гарантированно устанавливает в
-** конец строки нулевой символ.
-*/
-
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	char		*d;

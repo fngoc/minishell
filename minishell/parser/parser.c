@@ -1,8 +1,16 @@
-#include "../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 17:43:08 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/16 18:05:43 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
-** checks: проверки.
-*/
+#include "../minishell.h"
 
 static	void	checks(t_parser *p)
 {
@@ -19,10 +27,6 @@ static	void	checks(t_parser *p)
 		p->str = delet_last_char(p->str, 1);
 }
 
-/*
-** free_read_line_exit: очистка после парсинга строки.
-*/
-
 static void		free_read_line_exit(t_parser *p)
 {
 	free(p->buf);
@@ -31,19 +35,13 @@ static void		free_read_line_exit(t_parser *p)
 	ft_putendl_fd("exit", 1);
 }
 
-/*
-** read_line: чтение линии.
-*/
-
 static	void	read_line(int fd, t_parser *p)
 {
 	t_file file;
+
 	while (p->buf == NULL || ft_strcmp(p->buf, "\4"))
 	{
-		if (file.g_fd >= 0)
-			close(file.g_fd);
-		dup2(4, 0);
-		dup2(3, 1);
+		fd_check(&file);
 		if (p->buf != NULL)
 			free(p->buf);
 		if (!(p->buf = ft_calloc(2, sizeof(char))))
@@ -59,25 +57,10 @@ static	void	read_line(int fd, t_parser *p)
 				break ;
 			checks(p);
 		}
-		write(1, "\n", 1);
-		p->step_history = p->len_map;
-		set_line(p->str, fd, p);
-		privacy_check(p->str, p);
-		if (ft_strlen(p->str) > 0)
-			parser_commands(p->str, p, &file);
-		p->flag_folder = 0;
-		p->redir_here = 0;
-		p->flag_redir = 0;
-		p->flag_please = 0;
-		p->flag_please_1 = 0;
-		ft_bzero(p->str, ft_strlen(p->str));
+		after_reading_line(p, fd, &file);
 	}
 	free_read_line_exit(p);
 }
-
-/*
-** init_parser: начальные значения структуры парсера.
-*/
 
 static	void	init_parser(t_parser *p)
 {
@@ -96,10 +79,6 @@ static	void	init_parser(t_parser *p)
 	p->flag_please = 0;
 	p->flag_please_1 = 0;
 }
-
-/*
-** parser: запуск парсера.
-*/
 
 void			parser(void)
 {

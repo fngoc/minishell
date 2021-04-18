@@ -12,10 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strcpy: копируют строку src в dst включая '\0'.
-*/
-
 char	*ft_strcpy(char *dst, const char *src)
 {
 	int i;

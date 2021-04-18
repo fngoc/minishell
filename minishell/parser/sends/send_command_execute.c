@@ -1,18 +1,22 @@
-#include "../../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   send_command_execute.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/17 09:41:14 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 09:41:14 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
-** send_pwd: отправка команды pwd на выполнение.
-*/
+#include "../../minishell.h"
 
 static	void	send_pwd(void)
 {
 	print_pwd();
 	write(1, "\n", 1);
 }
-
-/*
-** send_cd: отправка команды cd на выполнение.
-*/
 
 static	void	send_cd(char **map)
 {
@@ -24,10 +28,6 @@ static	void	send_cd(char **map)
 		cd(map[1]);
 }
 
-/*
-** send_export: отправка команды export на выполнение.
-*/
-
 static	void	send_export(char **map)
 {
 	if (map[1] != NULL)
@@ -36,19 +36,11 @@ static	void	send_export(char **map)
 		export();
 }
 
-/*
-** send_unset: отправка команды unset на выполнение.
-*/
-
 static	void	send_unset(char **map)
 {
 	if (map[1] != NULL)
 		unset(map[1]);
 }
-
-/*
-** send_command_execute: отправка команд на выполнение.
-*/
 
 void			send_command_execute(char **map_comand, t_parser *p)
 {

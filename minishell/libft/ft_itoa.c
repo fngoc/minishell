@@ -12,10 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_itoa: преобразует число из int в строку.
-*/
-
 char	*ft_itoa(int nbr)
 {
 	int		temp;

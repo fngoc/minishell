@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_putnbr_fd: Выводит целое число 'n'
-** в указанный файл дескриптор.
-*/
-
 static void	print_symbole(long int n, int fd)
 {
 	if (n > 9)

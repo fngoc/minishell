@@ -1,8 +1,16 @@
-#include "../../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_buffer.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/17 14:33:02 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 14:33:02 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
-** tabs: кнопка tab.
-*/
+#include "../../minishell.h"
 
 static	void	tabs(t_parser *p)
 {
@@ -12,10 +20,6 @@ static	void	tabs(t_parser *p)
 	write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
 	free(p->buf);
 }
-
-/*
-** backspace: кнопка бэкспейс.
-*/
 
 static	void	backspace(t_parser *p)
 {
@@ -27,10 +31,6 @@ static	void	backspace(t_parser *p)
 		++p->backspace;
 	}
 }
-
-/*
-** arrow_in_down: стрелочка вниз.
-*/
 
 static	void	arrow_in_down(t_parser *p)
 {
@@ -50,10 +50,6 @@ static	void	arrow_in_down(t_parser *p)
 	}
 }
 
-/*
-** arrow_at_top: стрелочка вверх.
-*/
-
 static	void	arrow_at_top(t_parser *p)
 {
 	if (p->step_history >= 0)
@@ -64,10 +60,6 @@ static	void	arrow_at_top(t_parser *p)
 		get_history_previous(p);
 	}
 }
-
-/*
-** check_buffer: провека буфера.
-*/
 
 char			*check_buffer(t_parser *p)
 {

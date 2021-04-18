@@ -12,12 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strchr: возвращает указатель на первое
-** вхождение символа c в строку, на которую
-** указывает s.
-*/
-
 char	*ft_strchr(const char *s, int c)
 {
 	const char	*tmp;

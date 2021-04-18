@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_memcmp: сравнивает первые n символов
-** массивов, адресуемых параметрами s1 и s2.
-*/
-
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	const unsigned char *tmp1;

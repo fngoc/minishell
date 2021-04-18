@@ -1,10 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_redir.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/17 09:50:07 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/17 09:55:27 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-/*
-** parser_redir: парсим рудиректы.
-*/
+static	void	if_not_last_file_redir(t_file *file, t_parser *p)
+{
+	if (p->flag_redir == 1)
+		back_redirect(file, p->file_name);
+	else if (p->flag_redir == 2)
+	{
+		get_pipe_id(file);
+		forward_redirect(file, p->file_name);
+	}
+	else if (p->flag_redir == 3)
+	{
+		get_pipe_id(file);
+		double_redirect(file, p->file_name);
+	}
+	free(p->file_name);
+	p->flag_folder = 1;
+}
 
-void	parser_redir(char **map_comand, t_parser *p, t_file *file, char c)
+static	void	if_last_file_redir(t_file *file, t_parser *p)
+{
+	if (p->flag_redir == 1)
+	{
+		back_redirect(file, p->file_name);
+		pipe_process(p->map_command_redir, p, file);
+	}
+	else if (p->flag_redir == 2)
+	{
+		get_pipe_id(file);
+		forward_redirect(file, p->file_name);
+		pipe_process(p->map_command_redir, p, file);
+	}
+	else if (p->flag_redir == 3)
+	{
+		get_pipe_id(file);
+		double_redirect(file, p->file_name);
+		pipe_process(p->map_command_redir, p, file);
+	}
+	free(p->file_name);
+	free_map(p->map_command_redir);
+	p->flag_folder = 1;
+}
+
+void			parser_redir(char **map_comand, t_parser *p,
+										t_file *file, char c)
 {
 	if ((checking_folder(p->map_comand[0])) == 0)
 	{
@@ -16,44 +67,8 @@ void	parser_redir(char **map_comand, t_parser *p, t_file *file, char c)
 		error("syntax error near unexpected token \'newline\'", 15);
 	p->file_name = ft_strdup(map_comand[0]);
 	if (c == '<' || c == '>')
-	{
-		if (p->flag_redir == 1)
-			back_redirect(file, p->file_name);
-		else if (p->flag_redir == 2)
-		{
-			get_pipe_id(file);
-			forward_redirect(file, p->file_name);
-		}
-		else if (p->flag_redir == 3)
-		{
-			get_pipe_id(file);
-			double_redirect(file, p->file_name);
-		}
-		free(p->file_name);
-		p->flag_folder = 1;
-	}
+		if_not_last_file_redir(file, p);
 	else
-	{
-		if (p->flag_redir == 1)
-		{
-			back_redirect(file, p->file_name);
-			pipe_process(p->map_command_redir, p, file);
-		}
-		else if (p->flag_redir == 2)
-		{
-			get_pipe_id(file);
-			forward_redirect(file, p->file_name);
-			pipe_process(p->map_command_redir, p, file);
-		}
-		else if (p->flag_redir == 3)
-		{
-			get_pipe_id(file);
-			double_redirect(file, p->file_name);
-			pipe_process(p->map_command_redir, p, file);
-		}
-		free(p->file_name);
-		free_map(p->map_command_redir);
-		p->flag_folder = 1;
-	}
+		if_last_file_redir(file, p);
 	p->flag_redir = 0;
 }

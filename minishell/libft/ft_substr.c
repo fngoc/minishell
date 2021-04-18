@@ -12,12 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_substr: выделяет и возвращает подстроку
-** из строки 's'. Подстрока начинается с
-** индекса ’start’ и имеет максимальный размер 'len'.
-*/
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*p;

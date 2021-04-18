@@ -12,10 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strlen: возвращает количество символов в строке.
-*/
-
 size_t	ft_strlen(const char *s)
 {
 	size_t i;

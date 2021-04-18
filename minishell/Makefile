@@ -1,14 +1,28 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/04/16 17:15:20 by fngoc             #+#    #+#              #
+#    Updated: 2021/04/18 10:59:02 by fngoc            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 .PHONY: all clean bonus fclean re run
 
 NAME = minishell
 
-HEADERS = minishell.h
+HEADER = minishell.h
 
 LIBFT_DIR = libft/
 
 LIBFT = $(LIBFT_DIR)libft.a
 
 MAKEB = make bonus
+
+MAKEC = make clean
 
 CLEAN = clean
 
@@ -17,15 +31,20 @@ FCLEAN = fclean
 SRC = main.c \
 	\
 	parser/parser.c \
+	parser/quotation_mark_found.c \
+	parser/quotation_mark_not_found.c \
+	parser/after_reading_line.c \
 	parser/signals.c \
-	parser/set_line.c \
 	parser/parser_commands.c \
-	parser/make_file.c \
 	parser/init.c \
-	parser/get_history.c \
+	parser/history/make_file.c \
+	parser/history/get_history.c \
+	parser/history/set_line.c \
 	parser/checks/checking_quotes.c \
 	parser/checks/privacy_check.c \
 	parser/checks/check_buffer.c \
+	parser/checks/check_echo_flag_n.c \
+	parser/checks/fd_check.c \
 	parser/utils/is_arrow.c \
 	parser/utils/ft_istab.c \
 	parser/utils/ft_strjoin_free_free.c \
@@ -37,6 +56,9 @@ SRC = main.c \
 	parser/utils/error.c \
 	parser/utils/delet_last_char.c \
 	parser/utils/delet_first.c \
+	parser/utils/parser_utils_one.c \
+	parser/utils/parser_utils_two.c \
+	parser/utils/skipping_more_spaces.c \
 	parser/sends/send_question_mark.c \
 	parser/sends/send_exit.c \
 	parser/sends/send_exec.c \
@@ -51,7 +73,9 @@ SRC = main.c \
 	parser/echo/single_quote.c \
 	parser/echo/ft_echo.c \
 	parser/echo/double_quote.c \
-	parser/echo/check_echo_flag_n.c \
+	parser/echo/parser_echo.c \
+	parser/echo/write_cycle.c \
+	parser/echo/double_echo_n_check_start.c \
 	\
 	logic/execve_command.c \
 	logic/utils/free_lst.c \
@@ -95,17 +119,16 @@ MAGENTA ='\033[1;35m'
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) 
-	@cd $(LIBFT_DIR) && mv ./libft.a ../
-	@$(CC) $(FLAG) $(SRC) libft.a -ltermcap $(OPTIONOBJ) $(NAME)
-	@echo $(GREEN)"You can run!"$(WHITE)
-
-$(LIBFT):
+$(NAME): $(HEADER) $(SRC)
 	@cd $(LIBFT_DIR) && $(MAKEB)
 	@echo ${GREEN}"libft is assembled!"$(WHITE)
+	@cd $(LIBFT_DIR) && mv ./libft.a ../
+	@cd $(LIBFT_DIR) && $(MAKEC)
+	@$(CC) $(FLAG) $(SRC) libft.a -ltermcap $(OPTIONOBJ) $(NAME)
+	@echo $(GREEN)"You can run!"$(WHITE)	
 
-%.o: %.c
-	@$(CC) $(FLAG) $< $(OPTIONOBJ) $@
+%.o: %.c $(HEADER)
+	$(CC) $(FLAG) $< $(OPTIONOBJ) $@
 
 clean:
 	@$(DEL) $(OBJ)

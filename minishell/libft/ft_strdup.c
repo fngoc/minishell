@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strdup: дублирует строку, на
-** которую указывает аргумент str.
-*/
-
 char	*ft_strdup(const char *s1)
 {
 	char	*str_dup;

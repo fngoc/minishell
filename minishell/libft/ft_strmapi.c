@@ -12,12 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_strmapi: Применяет функцию 'f' к каждому
-** символу string 's' для создания новой
-** строки в результате последовательного применения 'f'.
-*/
-
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char	*p;

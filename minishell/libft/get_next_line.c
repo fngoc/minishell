@@ -6,15 +6,11 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 16:33:25 by fngoc             #+#    #+#             */
-/*   Updated: 2021/03/27 13:28:59 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/17 10:22:25 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** ft_strjoin_fix: чистит себя.
-*/
 
 char	*ft_strjoin_fix(char *s1, char *s2)
 {
@@ -44,11 +40,6 @@ char	*ft_strjoin_fix(char *s1, char *s2)
 	return (p);
 }
 
-/*
-** chek_line: проверка статической переменной
-** на остаток.
-*/
-
 char	*chek_line(char **static_str, char **line)
 {
 	char	*p_n;
@@ -73,12 +64,6 @@ char	*chek_line(char **static_str, char **line)
 		*line = ft_strnew(0);
 	return (p_n);
 }
-
-/*
-** get_next_line: читает строку, прочитанную из
-** дескриптора файла, остонавливаясь на '\n'
-** прочитаная строка без '\n'.
-*/
 
 int		get_next_line(int fd, char **line)
 {

@@ -12,11 +12,6 @@
 
 #include "libft.h"
 
-/*
-** ft_putendl_fd: Выводит строку в указанный файл
-** дескриптор, за которым следует новая строка.
-*/
-
 void	ft_putendl_fd(char *s, int fd)
 {
 	int		len;

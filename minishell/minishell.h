@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 17:05:04 by fngoc             #+#    #+#             */
+/*   Updated: 2021/04/18 10:58:45 by fngoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 
 # define MINISHELL_H
@@ -47,7 +59,14 @@ typedef	struct	s_parser
 	int			flag_please_1;
 	char		*file_name;
 	char		**map_command_redir;
+	char		*previous_char;
 }				t_parser;
+
+typedef	struct	s_norm
+{
+	char		*buf;
+	int			flag;
+}				t_norm;
 
 void			parser(void);
 
@@ -196,6 +215,42 @@ int				err_exit(int err, char *command, char err_name, char *err_text);
 void			exec_command(char *command, char **argv, char **env);
 
 int				execve_path(char *path_non_splitted, char **argv, char **ev, char *command);
+
+void			after_reading_line(t_parser *p, int fd, t_file *file);
+
+void			fd_check(t_file *file);
+
+void			quotation_mark_found(t_parser *p, int *i, char **name, char **line);
+
+void			quotation_mark_not_found(t_parser *p, int *i, char **name, char **line);
+
+void			parser_echo(t_parser *p, char **line, int *i);
+
+void			checking_repetitions(t_parser *p, char symbol);
+
+void			if_first_redir(t_file *file, t_parser *p);
+
+void			if_second_redir(t_file *file, t_parser *p);
+
+void			if_first_redir_flags(t_file *file, t_parser *p);
+
+void			nullifying_flags(t_parser *p);
+
+void			checking_for_recursion(t_file *file, t_parser *p, char **line);
+
+void			branching(t_parser *p, int *i, char **name, char **line);
+
+void			send_redir_one(t_parser *p, t_file *file, char symbol);
+
+void			send_redir_two(t_parser *p, t_file *file, char **line);
+
+int				redirect_found(t_parser *p, t_file *file, char **line);
+
+void			write_cycle(char **line, char **str);
+
+void			skipping_more_spaces(char **line);
+
+void			double_echo_n_check_start(char **line, t_parser *p);
 
 g_list			*params;
 

@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 14:47:36 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 14:47:40 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char			*double_quote(char **line)
 			tmp = NULL;
 			while (**line != ' ' && **line != '\"' && **line != '\'')
 				tmp = ft_strjoin_char_free(tmp, *(*line)++);
-			if ((tmp = get_var_param(params->env, delet_first(tmp))))
+			if ((tmp = get_var_param(g_params->env, delet_first(tmp))))
 			{
 				if (str != NULL)
 					str = ft_strjoin_fix(str, tmp);

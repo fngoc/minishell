@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_copy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 14:43:22 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/16 14:44:00 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ t_list	*list_copy(void)
 	t_list *tmp;
 	t_list *new;
 
-	tmp = params->env;
+	tmp = g_params->env;
 	new = NULL;
-	while (params->env)
+	while (g_params->env)
 	{
-		ft_lstadd_back(&new, ft_lstnew(ft_strdup(params->env->content)));
-		params->env = params->env->next;
+		ft_lstadd_back(&new, ft_lstnew(ft_strdup(g_params->env->content)));
+		g_params->env = g_params->env->next;
 	}
-	params->env = tmp;
+	g_params->env = tmp;
 	return (new);
 }

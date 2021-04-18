@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 09:39:53 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 09:39:54 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	send_exec(char **map)
 	{
 		if (!ft_strcmp(map[0], "./minishell"))
 		{
-			lvl = ft_atoi(get_var_param(params->env, "SHLVL"));
+			lvl = ft_atoi(get_var_param(g_params->env, "SHLVL"));
 			++lvl;
 			export_var(ft_strjoin("SHLVL=", ft_itoa(lvl)));
 		}

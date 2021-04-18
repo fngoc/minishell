@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:05:04 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/18 10:58:45 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:20 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@
 
 typedef struct	s_file
 {
-	int		fd_stdin;
-	int		fd_stdout;
-	int 	def_stdout;
-	int 	g_fd;
+	int			fd_stdin;
+	int			fd_stdout;
+	int			def_stdout;
+	int			g_fd;
 }				t_file;
 
-typedef struct	list
+typedef	struct	s_env
 {
-	t_list	*env;
-}				g_list;
+	t_list		*env;
+}				t_env;
 
 typedef	struct	s_parser
 {
@@ -112,7 +112,7 @@ void			ft_sigint(int sig);
 
 void			ft_quit(int sig);
 
-void 			ft_echo(char *str, int n_flag, int memory);
+void			ft_echo(char *str, int n_flag, int memory);
 
 void			send_exit(char **map);
 
@@ -138,13 +138,14 @@ char			*without_quotation_marks(char **line);
 
 char			*what_is_redir(char *line, t_parser *p);
 
-void			parser_redir(char **map_comand, t_parser *p, t_file *file, char c);
+void			parser_redir(char **map_comand, t_parser *p,
+										t_file *file, char c);
 
 void			set_redir_map(t_parser *p);
 
 char			*get_pwd();
 
-void 			print_pwd();
+void			print_pwd();
 
 t_list			*env_copy(char **env_original);
 
@@ -200,9 +201,9 @@ void			get_pipe_id(t_file *file);
 
 void			forward_redirect(t_file *file, char *file_name);
 
-void 			double_redirect(t_file *file, char *file_name);
+void			double_redirect(t_file *file, char *file_name);
 
-void 			back_redirect(t_file *file, char *file_name);
+void			back_redirect(t_file *file, char *file_name);
 
 int				checking_folder(char *file);
 
@@ -214,15 +215,18 @@ int				err_exit(int err, char *command, char err_name, char *err_text);
 
 void			exec_command(char *command, char **argv, char **env);
 
-int				execve_path(char *path_non_splitted, char **argv, char **ev, char *command);
+int				execve_path(char *path_non_splitted, char **argv,
+										char **ev, char *command);
 
 void			after_reading_line(t_parser *p, int fd, t_file *file);
 
 void			fd_check(t_file *file);
 
-void			quotation_mark_found(t_parser *p, int *i, char **name, char **line);
+void			quotation_mark_found(t_parser *p, int *i, char **name,
+														char **line);
 
-void			quotation_mark_not_found(t_parser *p, int *i, char **name, char **line);
+void			quotation_mark_not_found(t_parser *p, int *i, char **name,
+															char **line);
 
 void			parser_echo(t_parser *p, char **line, int *i);
 
@@ -258,6 +262,6 @@ void			not_valid_identifier(char *var, char **key, char **tmp_var);
 
 void			after_equals_sign(t_list *tmp, char *tmp_var, char *key);
 
-g_list			*params;
+t_env			*g_params;
 
 #endif

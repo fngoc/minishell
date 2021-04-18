@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 13:51:29 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/18 13:52:52 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char		*get_key_by_full_param(char *full_param)
 
 void		after_equals_sign(t_list *tmp, char *tmp_var, char *key)
 {
-	tmp = get_env_list_pos(params->env, key);
+	tmp = get_env_list_pos(g_params->env, key);
 	if (*(tmp_var + ft_strlen(key) + 1) != 0)
 	{
 		free(tmp->content);

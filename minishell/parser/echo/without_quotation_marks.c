@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:23:28 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 16:24:14 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static	void	dollar_found(char **str, char **line, char **tmp, t_norm *n)
 		}
 		*tmp = ft_strjoin_char_free(*tmp, *(*line)++);
 	}
-	if ((*tmp = get_var_param(params->env, delet_first(*tmp))))
+	if ((*tmp = get_var_param(g_params->env, delet_first(*tmp))))
 	{
 		if (*str != NULL)
 			*str = ft_strjoin_fix(*str, *tmp);
@@ -50,7 +50,7 @@ static	void	double_mark_found(char **str, char **line, char **tmp)
 			while (**line != ' ' && **line != '\"'
 				&& **line != '\'' && **line != '\\')
 				*tmp = ft_strjoin_char_free(*tmp, *(*line)++);
-			if ((*tmp = get_var_param(params->env, delet_first(*tmp))))
+			if ((*tmp = get_var_param(g_params->env, delet_first(*tmp))))
 			{
 				if (*str != NULL)
 					*str = ft_strjoin_fix(*str, *tmp);

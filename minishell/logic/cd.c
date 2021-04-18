@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 14:46:11 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/16 15:31:39 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int				minus_check(char **dir, char **old_content)
 {
 	if (**dir == '-')
 	{
-		*dir = get_var_param(params->env, "OLDPWD");
+		*dir = get_var_param(g_params->env, "OLDPWD");
 		if (*dir == NULL)
 		{
 			print_promt("cd: OLDPWD not set\n");
@@ -34,7 +34,7 @@ int				tilda_check(char **dir, char **old_content)
 
 	if (**dir == '\0' || (**dir == '~' && *(*dir + 1) == '\0'))
 	{
-		*dir = get_var_param(params->env, "HOME");
+		*dir = get_var_param(g_params->env, "HOME");
 		if (*dir == NULL)
 		{
 			print_promt("cd: HOME not set\n");
@@ -45,7 +45,7 @@ int				tilda_check(char **dir, char **old_content)
 	}
 	if (**dir == '~')
 	{
-		tilda = ft_strjoin(get_var_param(params->env, "HOME"), *dir + 1);
+		tilda = ft_strjoin(get_var_param(g_params->env, "HOME"), *dir + 1);
 		*dir = tilda;
 		free(tilda);
 	}
@@ -76,11 +76,11 @@ void			do_cd(char *dir, char **old_content)
 	t_list *start;
 
 	chdir(dir);
-	start = get_env_list_pos(params->env, "PWD");
+	start = get_env_list_pos(g_params->env, "PWD");
 	null_check(*old_content, start, "PWD");
 	free(start->content);
 	start->content = change_value_by_key("PWD", get_pwd());
-	start = get_env_list_pos(params->env, "OLDPWD");
+	start = get_env_list_pos(g_params->env, "OLDPWD");
 	null_check(*old_content, start, "OLDPWD");
 	free(*old_content);
 }
@@ -93,13 +93,13 @@ void			cd(char *dir)
 	char	*true_path;
 
 	true_path = dir;
-	if (get_var_param(params->env, "PWD") == NULL)
+	if (get_var_param(g_params->env, "PWD") == NULL)
 	{
 		tmp = ft_strjoin("PWD=", get_pwd());
 		export_var(tmp);
 		free(tmp);
 	}
-	old_content = ft_strdup(get_var_param(params->env, "PWD"));
+	old_content = ft_strdup(get_var_param(g_params->env, "PWD"));
 	if (tilda_check(&dir, &old_content) == 0)
 		return ;
 	else if (minus_check(&dir, &old_content) == 0)

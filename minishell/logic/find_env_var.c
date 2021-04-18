@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 13:42:46 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/18 13:45:44 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_var_param(t_list *env, char *param)
 	int flag;
 
 	if (ft_strlen(param) == 1 && !ft_strcmp(param, "?"))
-		return (get_var_param(params->env, "err"));
+		return (get_var_param(g_params->env, "err"));
 	flag = 0;
 	while (env)
 	{

@@ -6,7 +6,7 @@
 /*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:04:45 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/18 11:28:24 by fngoc            ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-	if (!(params = malloc(sizeof(g_list))))
+	if (!(g_params = malloc(sizeof(t_env))))
 		error("Allocated error", 11);
-	params->env = env_copy(env);
+	g_params->env = env_copy(env);
 	dup2(STDOUT_FILENO, 3);
 	dup2(STDIN_FILENO, 4);
 	parser();

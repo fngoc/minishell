@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:25:48 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/16 17:30:56 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char		**list_to_arr(void)
 	int		i;
 	char	**arr;
 
-	tmp = params->env;
+	tmp = g_params->env;
 	if (!(arr = ft_calloc(ft_lstsize(tmp) + 1, sizeof(char *))))
 		error("Allocated error", 11);
 	i = -1;
@@ -114,7 +114,7 @@ int			exec(char *command, char **argv)
 		if (permission_denied(command, argv, ev, fd) == 1)
 			return (1);
 	}
-	path_non_splitted = get_var_param(params->env, "PATH");
+	path_non_splitted = get_var_param(g_params->env, "PATH");
 	if ((fd < 0 && ft_strchr(command, '/')) || path_non_splitted == NULL)
 	{
 		free_map(ev);

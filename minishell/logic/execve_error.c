@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:31:56 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/18 12:43:35 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int					err_exit(int err,
 
 	if (*command == '$')
 	{
-		if ((str_print = get_var_param(params->env, delet_first_exe(command))))
+		if ((str_print = get_var_param(g_params->env, delet_first_exe(command))))
 			command_not_found(str_print);
 	}
-	else if ((str_print = get_var_param(params->env, delet_first_exe(command))))
+	else if ((str_print = get_var_param(g_params->env, delet_first_exe(command))))
 		command_not_found(str_print);
 	else if (err_with_char(err_name, command, err_text) == 1)
 		return (err);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 13:47:53 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/18 13:49:00 by drarlean         ###   ########.fr       */
+/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		unset(char *param)
 	t_list **prev;
 	t_list *temp;
 
-	if (params->env == NULL)
+	if (g_params->env == NULL)
 		return (0);
-	prev = &params->env;
+	prev = &g_params->env;
 	while ((*prev))
 	{
 		if (ft_strncmp((*prev)->content, param, ft_strlen(param)) == 0

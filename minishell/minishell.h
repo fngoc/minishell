@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 17:05:04 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/18 14:07:20 by fngoc            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 
 # define MINISHELL_H
@@ -143,9 +131,9 @@ void			parser_redir(char **map_comand, t_parser *p,
 
 void			set_redir_map(t_parser *p);
 
-char			*get_pwd();
+char			*get_pwd(void);
 
-void			print_pwd();
+void			print_pwd(void);
 
 t_list			*env_copy(char **env_original);
 
@@ -161,17 +149,17 @@ t_list			*get_env_list_pos(t_list *env, char *param);
 
 void			cd(char *dir);
 
-void			export();
+void			export(void);
 
 void			sort_export(t_list *new);
 
 void			free_lst_map(t_list **lst);
 
-t_list			*list_copy();
+t_list			*list_copy(void);
 
 void			export_var(char *var);
 
-void			print_env();
+void			print_env(void);
 
 char			*get_key_by_full_param(char *full_param);
 
@@ -181,7 +169,7 @@ int				exec(char *command, char **argv);
 
 char			*remove_double_quotes(const char *var);
 
-char			**list_to_arr();
+char			**list_to_arr(void);
 
 void			dollar_variable(char *param);
 
@@ -203,7 +191,7 @@ void			forward_redirect(t_file *file, char *file_name);
 
 void			double_redirect(t_file *file, char *file_name);
 
-void			back_redirect(t_file *file, char *file_name);
+int				back_redirect(t_file *file, char *file_name);
 
 int				checking_folder(char *file);
 

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe_process.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: drarlean <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 18:13:22 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/16 18:17:50 by drarlean         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
 void			forward_redirect(t_file *file, char *file_name)
@@ -25,16 +13,20 @@ void			forward_redirect(t_file *file, char *file_name)
 	file->fd_stdout = file->g_fd;
 }
 
-void			back_redirect(t_file *file, char *file_name)
+int				back_redirect(t_file *file, char *file_name)
 {
 	if ((file->g_fd = open(file_name, O_RDONLY, 0644)) == -1)
 	{
-		return ;
+		write(1, "\033[0;35m(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  \033[0m", 41);
+		ft_putstr_fd(file_name, 2);
+		ft_putendl_fd(" No such file or directory", 2);
+		return (1);
 	}
 	file->fd_stdin = file->g_fd;
 	file->g_fd = 0;
 	dup2(file->fd_stdin, STDIN_FILENO);
 	file->def_stdout = file->fd_stdout;
+	return (0);
 }
 
 void			double_redirect(t_file *file, char *file_name)

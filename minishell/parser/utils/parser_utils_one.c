@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser_utils_one.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 14:28:14 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 14:28:15 by fngoc            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../minishell.h"
 
 void	checking_repetitions(t_parser *p, char symbol)
@@ -31,7 +19,10 @@ void	checking_repetitions(t_parser *p, char symbol)
 void	if_first_redir(t_file *file, t_parser *p)
 {
 	if (p->flag_redir == 1)
-		back_redirect(file, p->file_name);
+	{
+		if ((back_redirect(file, p->file_name)) == 1)
+			return ;
+	}
 	else if (p->flag_redir == 2)
 	{
 		get_pipe_id(file);
@@ -49,7 +40,8 @@ void	if_second_redir(t_file *file, t_parser *p)
 {
 	if (p->flag_redir == 1)
 	{
-		back_redirect(file, p->file_name);
+		if ((back_redirect(file, p->file_name)) == 1)
+			return ;
 		pipe_process(p->map_command_redir, p, file);
 	}
 	else if (p->flag_redir == 2)
@@ -72,7 +64,8 @@ void	if_first_redir_flags(t_file *file, t_parser *p)
 {
 	if (p->flag_redir == 1)
 	{
-		back_redirect(file, p->file_name);
+		if ((back_redirect(file, p->file_name)) == 1)
+			return ;
 		pipe_process(p->map_command_redir, p, file);
 	}
 	else if (p->flag_redir == 2)

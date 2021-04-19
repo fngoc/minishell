@@ -1,21 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser_redir.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 09:50:07 by fngoc             #+#    #+#             */
-/*   Updated: 2021/04/17 09:55:27 by fngoc            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../minishell.h"
 
 static	void	if_not_last_file_redir(t_file *file, t_parser *p)
 {
 	if (p->flag_redir == 1)
-		back_redirect(file, p->file_name);
+	{
+		if ((back_redirect(file, p->file_name)) == 1)
+			return ;
+	}
 	else if (p->flag_redir == 2)
 	{
 		get_pipe_id(file);
@@ -34,7 +25,8 @@ static	void	if_last_file_redir(t_file *file, t_parser *p)
 {
 	if (p->flag_redir == 1)
 	{
-		back_redirect(file, p->file_name);
+		if ((back_redirect(file, p->file_name)) == 1)
+			return ;
 		pipe_process(p->map_command_redir, p, file);
 	}
 	else if (p->flag_redir == 2)

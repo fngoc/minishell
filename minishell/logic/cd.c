@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 14:46:11 by drarlean          #+#    #+#             */
-/*   Updated: 2021/04/18 14:07:50 by fngoc            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
 int				minus_check(char **dir, char **old_content)
@@ -24,6 +12,7 @@ int				minus_check(char **dir, char **old_content)
 			set_errno(1);
 			return (0);
 		}
+		ft_putendl_fd(*dir, 1);
 	}
 	return (1);
 }

@@ -11,3 +11,7 @@ The compilation was performed as follows: ``gcc -Wall -Wextra -Werror``.
 All files pass to ``Norminette``.
 
 No memory leaks.
+
+## Evaluation
+
+![alt tag](media/appraisal_minishell.png "Appraisal minishell")

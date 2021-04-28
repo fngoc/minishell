@@ -90,7 +90,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-FLAG = -Wall -Werror -Wextra -g
+FLAG = -Wall -Werror -Wextra
 
 OPTIONOBJ = -o
 

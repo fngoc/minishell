@@ -44,7 +44,3 @@ No memory leaks.
 ``make fclean`` deletes all ``.o`` files, also deletes ``libfе.a`` and ``minishell_history``.
 
 Starting the program: ``./minishell``.
-
-## Evaluation
-
-![alt tag](media/appraisal_minishell.png "Appraisal minishell")

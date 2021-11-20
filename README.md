@@ -33,7 +33,7 @@ No memory leaks.
 * **ctrl-C**, **ctrl-D** and **ctrl-\\** should have the same result as in bash. 
 * Use up and down arrows to navigate through the command using termcap (mandatory) history which we will then be able to edit (at least like we can for classic lines) if we feel like it (the line, not the history).
 
-## Using
+## Usage
 
 ``make`` and ``make all`` compile the library ``libfе.a``, placing them in the root folder.
 
